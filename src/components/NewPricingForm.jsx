@@ -304,7 +304,7 @@ function NewPricingForm() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6 font-sans">
+    <div className="max-w-3xl mx-auto p-4 sm:p-6 space-y-6 font-sans">
       {/* Hidden div for PDF rendering */}
       <div style={{ position: 'fixed', left: '-2000px', top: 0 }} aria-hidden="true">
         <QuotePDFDocument 
@@ -325,7 +325,7 @@ function NewPricingForm() {
       </div>
 
       {/* Total Price Display - TOP */}
-      <div className="text-right pt-4 space-y-1">
+      <div className="pt-4 space-y-1 text-center sm:text-right">
         <div className="text-3xl font-bold uppercase tracking-wide text-black">
           Total (excl. VAT): {formatCurrency(calculatedSubtotal)}
         </div>
@@ -388,7 +388,7 @@ function NewPricingForm() {
           <button 
             type="button" 
             onClick={handleOpenQuoteModal}
-            className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium py-1 px-3 rounded transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+            className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium py-1 px-3 rounded transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 w-full sm:w-auto"
           >
             Email me this quote
           </button>
@@ -502,7 +502,7 @@ function NewPricingForm() {
       {/* Quote Modal */}
       {isQuoteModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white p-6 md:p-8 rounded-lg shadow-xl w-full max-w-md space-y-4">
+          <div className="bg-white p-4 sm:p-6 md:p-8 rounded-lg shadow-xl w-full max-w-md space-y-4">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold text-black">Email Your Quote</h2>
               <button onClick={handleCloseQuoteModal} className="text-black hover:text-gray-700 text-2xl">&times;</button>
