@@ -1,3 +1,5 @@
+export const prerender = false; // Ensures this is treated as a server-rendered API route
+
 import nodemailer from 'nodemailer';
 
 // Access environment variables
