@@ -858,14 +858,29 @@ import Footer from '../components/Footer.astro';
 	}
 
 	@media (max-width: 768px) {
+		main {
+			scroll-snap-type: none; /* Disable scroll snap for the entire page on mobile */
+		}
+
+		.portfolio .section-content { /* Add these styles for mobile */
+			height: auto;
+			overflow: visible; /* Or overflow: auto; if scrollbar is desired within section */
+			/* Consider adjusting padding if needed, but grid already has top padding */
+		}
+
 		.video-grid {
 			grid-template-columns: 1fr;
 			padding: 4rem 0 0 0;
+			height: auto; /* Allow height to adjust to content */
 		}
 
 		.video-card {
 			grid-column: 1;
 			aspect-ratio: 16/9;
+		}
+
+		.video-section.portfolio {
+			scroll-snap-align: none; /* Disable snap for portfolio on mobile */
 		}
 	}
 
@@ -1599,6 +1614,30 @@ import Footer from '../components/Footer.astro';
 			}, { passive: true });
 		});
 
+		// --- START: Mobile Portfolio Randomization & Limit ---
+		const portfolioGrid = document.querySelector('.video-grid');
+		if (portfolioGrid && window.innerWidth <= 768) {
+			const allVideoCards = Array.from(portfolioGrid.querySelectorAll('.video-card'));
+			const numVideosToShow = 6;
+
+			if (allVideoCards.length > numVideosToShow) {
+				// Fisher-Yates shuffle
+				for (let i = allVideoCards.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[allVideoCards[i], allVideoCards[j]] = [allVideoCards[j], allVideoCards[i]];
+				}
+
+				const visibleCards = allVideoCards.slice(0, numVideosToShow);
+				
+				allVideoCards.forEach(card => {
+					if (!visibleCards.includes(card)) {
+						(card as HTMLElement).style.display = 'none';
+					}
+				});
+			}
+		}
+		// --- END: Mobile Portfolio Randomization & Limit ---
+
 		// Lightbox Functionality
 		const lightbox = document.getElementById('artistLightbox') as HTMLElement;
 		const lightboxCloseBtn = lightbox?.querySelector('.lightbox-close') as HTMLButtonElement;
@@ -1609,7 +1648,8 @@ import Footer from '../components/Footer.astro';
 		const youtubePlayer = document.getElementById('youtubePlayer') as HTMLIFrameElement;
 		const allVideos = document.querySelectorAll('video');
 
-		const videoThumbnails = document.querySelectorAll('.video-thumbnail');
+		// Query for thumbnails AFTER potentially hiding some cards for mobile
+		const videoThumbnails = document.querySelectorAll('.video-grid .video-card:not([style*="display: none"]) .video-thumbnail');
 
 		videoThumbnails.forEach(thumbnail => {
 			thumbnail.addEventListener('click', (e) => {
