@@ -1,4 +1,4 @@
-# Astro Starter Kit: Basics
+# Thisisgrain
 
 ```sh
 npm create astro@latest -- --template basics
