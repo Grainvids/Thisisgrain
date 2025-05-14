@@ -870,7 +870,7 @@ import Footer from '../components/Footer.astro';
 
 		.video-grid {
 			grid-template-columns: 1fr;
-			padding: 4rem 0 0 0;
+			padding: 0; /* Removed top padding */
 			height: auto; /* Allow height to adjust to content */
 		}
 
@@ -881,6 +881,11 @@ import Footer from '../components/Footer.astro';
 
 		.video-section.portfolio {
 			scroll-snap-align: none; /* Disable snap for portfolio on mobile */
+		}
+
+		.behind-grain .section-content {
+			padding: 2.88rem 1.92rem; /* Existing mobile padding */
+			padding-bottom: 20%; /* Changed to 20% bottom padding */
 		}
 	}
 
