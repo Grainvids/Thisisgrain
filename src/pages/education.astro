@@ -235,7 +235,7 @@ import Footer from '../components/Footer.astro';
         min-height: 100vh;
         background: #f5f5f5;
         position: relative;
-        overflow-x: hidden; /* Prevent horizontal scroll */
+        /* overflow-x: hidden; */ /* Temporarily comment out to test sticky */
     }
 
     .content-section {
@@ -330,8 +330,7 @@ import Footer from '../components/Footer.astro';
     /* Sidebar Navigation */
     .sidebar-nav {
         position: sticky;
-        top: 50%;
-        transform: translateY(-50%);
+        top: 4rem;
         height: fit-content;
         padding: 2rem;
         background: white;
@@ -759,7 +758,6 @@ import Footer from '../components/Footer.astro';
         .sidebar-nav {
             position: relative;
             top: 0;
-            transform: none;
             margin-bottom: 2rem;
             padding: 1rem 0; /* Adjust padding for mobile */
         }
