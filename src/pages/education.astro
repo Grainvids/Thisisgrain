@@ -1,0 +1,841 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Logo from '../components/Logo.astro';
+import NewPricingForm from '../components/NewPricingForm.jsx';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-background"></div>
+            <div class="hero-content">
+                <nav class="breadcrumb">
+                    <a href="/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="/services">Services</a>
+                    <span class="separator">/</span>
+                    <span>Education</span>
+                </nav>
+                <h1>Education</h1>
+                <p class="hero-subtitle">Professional video for your music department</p>
+            </div>
+        </section>
+
+        <!-- Main Content Section -->
+        <section class="content-section">
+            <div class="content-container">
+                <!-- Left Sidebar Navigation -->
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="#overview" class="active">Overview</a></li>
+                        <li><a href="#benefits">Benefits</a></li>
+                        <li><a href="#process">Process</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Right Content Area -->
+                <div class="content-area">
+                    <section id="overview" class="content-block">
+                        <h2>What We Do</h2>
+                        <p>We film live music performances for students. High-quality video and audio, shot by experienced music video directors. Ideal for student portfolios, promo material, and real-world on-camera experience.</p>
+                        <p>The day is split into 5 hourly sections.</p>
+                        <p>We cut and mix live, working with your students to create content they can watch back instantly.</p>
+                        
+                        <div class="overview-video">
+                            <video 
+                                autoplay 
+                                muted 
+                                loop 
+                                playsinline 
+                                preload="auto"
+                                class="content-video"
+                            >
+                                <source src="/education-content.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </section>
+
+                    <section id="benefits" class="content-block">
+                        <h2>Benefits</h2>
+                        <div class="benefits-grid">
+                            <div class="benefit-item">
+                                <h3>Build Performance Confidence</h3>
+                                <p>Playing for camera pushes students to focus, listen and perform under pressure. It's a different kind of stage presence.</p>
+                            </div>
+                            <div class="benefit-item">
+                                <h3>Real-world Experience</h3>
+                                <p>Music video shoots are part of professional music careers. Give your students a taste of how it works.</p>
+                            </div>
+                            <div class="benefit-item">
+                                <h3>Better Applications</h3>
+                                <p>Audition tapes, portfolio content, showreels—great video helps students stand out when applying to conservatoires, universities, or jobs.</p>
+                            </div>
+                            <div class="benefit-item">
+                                <h3>Content for Your School</h3>
+                                <p>Use the footage to promote your music department on your website, social media or open days.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="process" class="content-block">
+                        <h2>Workflow</h2>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-number">01</div>
+                                <div class="timeline-content">
+                                    <h3>Location</h3>
+                                    <p>We collaborate with your institution to find filming locations that bring character. Let's see what your city has to offer.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-number">02</div>
+                                <div class="timeline-content">
+                                    <h3>Setup</h3>
+                                    <p>You bring the students, we'll do the rest. Our team will turn the venue into a boutique recording studio / film set on the day.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-number">03</div>
+                                <div class="timeline-content">
+                                    <h3>Action</h3>
+                                    <p>Each artist is our latest collaborator and we're quick on our feet, changing lighting, sound and camera setups to suit their style.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-number">04</div>
+                                <div class="timeline-content">
+                                    <h3>Review</h3>
+                                    <p>Everything is cut and mixed live, so we'll step behind the monitor with each artist and coach them on how to improve.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-number">05</div>
+                                <div class="timeline-content">
+                                    <h3>Showtime</h3>
+                                    <p>Once we're set up, we're rolling. Dealers choice. Spend the hour focused on nailing one tune, or rattle through a bunch.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-number">06</div>
+                                <div class="timeline-content">
+                                    <h3>Delivery</h3>
+                                    <p>And we're done! We deliver the final videos straight away. No fuss.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="pricing" class="content-block">
+                        <h2>Pricing</h2>
+                        <NewPricingForm client:load />
+                    </section>
+
+                    <section id="contact" class="content-block">
+                        <h2>Get in Touch</h2>
+                        <p>Ready to discuss your project? Contact us to learn more about our services and how we can help your music department.</p>
+                        <a href="/contact" class="cta-button">Contact Us</a>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="client-logos-section">
+        <div class="container">
+            <h3 class="section-title">Trusted By</h3>
+            <div class="client-logos-grid">
+                <img src="/client_a.png" alt="Client A Logo" />
+                <img src="/client_b.svg" alt="Client B Logo" class="client-b-logo" />
+                <img src="/client_c.svg" alt="Client C Logo" />
+                <img src="/client_d.svg" alt="Client D Logo" />
+                <img src="/client_e.png" alt="Client E Logo" />
+            </div>
+        </div>
+    </section>
+
+    <Footer />
+</Layout>
+
+<style>
+    main {
+        width: 100%;
+        min-height: 100vh;
+        background: #f5f5f5;
+        position: relative;
+    }
+
+    .content-section {
+        position: relative;
+        z-index: 1;
+        padding: 4rem 0;
+    }
+
+    .hero {
+        position: relative;
+        height: 64vh;
+        min-height: 480px;
+        display: flex;
+        align-items: center;
+        color: white;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/education-hero.jpg');
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.7);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        width: 100%;
+    }
+
+    .breadcrumb {
+        margin-bottom: 2rem;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb a {
+        color: white;
+        text-decoration: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .breadcrumb a:hover {
+        opacity: 0.8;
+    }
+
+    .separator {
+        margin: 0 0.5rem;
+        opacity: 0.5;
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+        font-weight: 900;
+        font-style: italic;
+        letter-spacing: -0.1em;
+        font-family: "Arial Black", Arial, sans-serif;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+        text-transform: lowercase;
+        color: var(--accent-color);
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        font-weight: 400;
+        text-transform: lowercase;
+        opacity: 0.9;
+    }
+
+    /* Main Content Section */
+    .content-container {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 4rem;
+    }
+
+    /* Sidebar Navigation */
+    .sidebar-nav {
+        position: sticky;
+        top: 50%;
+        transform: translateY(-50%);
+        height: fit-content;
+        padding: 2rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar-nav li {
+        margin-bottom: 1rem;
+    }
+
+    .sidebar-nav li:last-child {
+        margin-bottom: 0;
+    }
+
+    .sidebar-nav a {
+        color: #666;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+        display: block;
+        padding: 0.5rem 0;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+        color: #000;
+    }
+
+    /* Content Area */
+    .content-area {
+        max-width: 800px;
+    }
+
+    .content-block {
+        margin-bottom: 6rem;
+        scroll-margin-top: 2rem;
+    }
+
+    .content-block h2 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        font-style: italic;
+        letter-spacing: -0.1em;
+        font-family: "Arial Black", Arial, sans-serif;
+        margin-bottom: 2rem;
+        color: #000;
+        text-transform: lowercase;
+    }
+
+    .content-block p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #333;
+        margin-bottom: 2rem;
+    }
+
+    /* Benefits Grid */
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .benefit-item {
+        padding: 2rem;
+        background: white;
+        border-radius: 4px;
+        transition: transform 0.3s ease;
+    }
+
+    .benefit-item:hover {
+        transform: translateY(-5px);
+    }
+
+    .benefit-item h3 {
+        font-size: 1.5rem;
+        font-weight: 900;
+        font-style: italic;
+        letter-spacing: -0.1em;
+        font-family: "Arial Black", Arial, sans-serif;
+        margin-bottom: 1rem;
+        color: #000;
+        text-transform: lowercase;
+    }
+
+    .benefit-item p {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #666;
+        margin: 0;
+    }
+
+    /* Timeline */
+    .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 1rem 0;
+    }
+
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 25px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--accent-color);
+        opacity: 0.2;
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 1.5rem;
+        padding-left: 60px;
+    }
+
+    .timeline-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .timeline-number {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 30px;
+        height: 30px;
+        background: var(--accent-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        font-weight: 900;
+        font-family: "Arial Black", Arial, sans-serif;
+    }
+
+    .timeline-content {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.3rem;
+        font-weight: 900;
+        font-style: italic;
+        letter-spacing: -0.1em;
+        font-family: "Arial Black", Arial, sans-serif;
+        margin-bottom: 0.5rem;
+        color: #000;
+        text-transform: lowercase;
+        position: relative;
+        padding-right: 2rem;
+    }
+
+    .timeline-content h3::after {
+        content: '−';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+        color: var(--accent-color);
+        transition: transform 0.3s ease;
+    }
+
+    .timeline-item.expanded .timeline-content h3::after {
+        content: '+';
+    }
+
+    .timeline-content p {
+        color: #666;
+        line-height: 1.6;
+        margin: 0;
+        font-size: 0.95rem;
+        max-height: 200px;
+        overflow: hidden;
+        transition: max-height 0.3s ease, margin-top 0.3s ease;
+        margin-top: 1rem;
+    }
+
+    .timeline-item.expanded .timeline-content p {
+        max-height: 0;
+        margin-top: 0;
+    }
+
+    .timeline-content:hover {
+        transform: none;
+    }
+
+    /* CTA Button */
+    .cta-button {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: var(--accent-color);
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+        background: #ff5e2a;
+    }
+
+    /* Pricing Grid */
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .pricing-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .pricing-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .pricing-card.featured {
+        border: 2px solid var(--accent-color);
+    }
+
+    .pricing-card h3 {
+        font-size: 1.5rem;
+        font-weight: 900;
+        font-style: italic;
+        letter-spacing: -0.1em;
+        font-family: "Arial Black", Arial, sans-serif;
+        margin-bottom: 1rem;
+        color: #000;
+        text-transform: lowercase;
+    }
+
+    .price {
+        font-size: 2.5rem;
+        font-weight: 300;
+        color: var(--accent-color);
+        margin-bottom: 2rem;
+    }
+
+    .pricing-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2rem 0;
+        text-align: left;
+    }
+
+    .pricing-features li {
+        padding: 0.5rem 0;
+        color: #666;
+        position: relative;
+        padding-left: 1.5rem;
+    }
+
+    .pricing-features li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--accent-color);
+    }
+
+    .pricing-cta {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: var(--accent-color);
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .pricing-cta:hover {
+        background: #ff5e2a;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .content-container {
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+        }
+
+        .timeline {
+            padding: 1rem 0;
+        }
+
+        .timeline::before {
+            left: 30px;
+        }
+
+        .timeline-item {
+            padding-left: 70px;
+        }
+
+        .timeline-number {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+
+        .timeline-content {
+            padding: 1.5rem;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.3rem;
+        }
+
+        .pricing-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .content-container {
+            grid-template-columns: 1fr;
+        }
+
+        .sidebar-nav {
+            position: relative;
+            top: 0;
+            transform: none;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-nav ul {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .sidebar-nav li {
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .hero {
+            height: 48vh;
+            min-height: 320px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+        }
+
+        .content-block h2 {
+            font-size: 2rem;
+        }
+
+        .timeline {
+            padding: 1rem 0;
+        }
+
+        .timeline::before {
+            left: 30px;
+        }
+
+        .timeline-item {
+            padding-left: 70px;
+        }
+
+        .timeline-number {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+
+        .timeline-content {
+            padding: 1.5rem;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.3rem;
+        }
+
+        .pricing-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .overview-video {
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        position: relative;
+        margin: 3rem 0;
+        background: #000;
+        overflow: hidden;
+    }
+
+    .content-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .content-video.loaded {
+        opacity: 1;
+    }
+
+    /* Client Logos Section Styles */
+    .client-logos-section {
+        background-color: #080808; /* Match the background color from index.astro */
+        padding: 4rem 2rem;
+        text-align: center;
+        width: 100%; /* Ensure it takes full width */
+        position: relative; /* Added to ensure z-index works if needed later */
+        z-index: 1; /* Ensures it's above the grainy background */
+    }
+
+    .client-logos-section .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .client-logos-section .section-title {
+        font-size: 1.2rem; /* Smaller title */
+        color: rgba(255, 255, 255, 0.5);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 3rem;
+        font-weight: 400;
+    }
+
+    .client-logos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 3rem 2rem;
+        align-items: center;
+        justify-items: center;
+    }
+
+    .client-logos-grid img {
+        max-height: 60px; /* Adjust based on your logos */
+        max-width: 100%;
+        object-fit: contain;
+        /* Make logos white and adjust opacity */
+        filter: brightness(0) invert(1) opacity(0.7); 
+        transition: filter 0.3s ease; /* Changed transition property */
+    }
+
+    .client-logos-grid img.client-b-logo {
+        transform: scale(1.2);
+        /* Adjust max-height if scaling creates layout issues, e.g. */
+        /* max-height: calc(60px * 1.1); */
+    }
+
+    .client-logos-grid img:hover {
+        filter: brightness(0) invert(1) opacity(1); /* Full opacity on hover */
+    }
+
+    /* Responsive adjustments for client logos if needed */
+    @media (max-width: 768px) {
+        .client-logos-grid {
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 2rem 1.5rem;
+        }
+        .client-logos-section .section-title {
+            margin-bottom: 2rem;
+        }
+        .client-logos-grid img {
+            max-height: 50px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                if (!targetId) return;
+                
+                const targetElement = document.querySelector<HTMLElement>(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+
+                    // Update active state
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Update active state on scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.content-block').forEach(block => {
+            observer.observe(block);
+        });
+
+        // Timeline item toggle for mobile/click
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        timelineItems.forEach(item => {
+            // Use the .timeline-content div as the click target
+            const content = item.querySelector('.timeline-content');
+            content?.addEventListener('click', () => {
+                item.classList.toggle('expanded');
+            });
+            // Also allow Enter/Space key for accessibility
+            content?.addEventListener('keydown', (e: Event) => {
+                const keyboardEvent = e as KeyboardEvent;
+                if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
+                    keyboardEvent.preventDefault(); // Prevent default space scroll
+                    item.classList.toggle('expanded');
+                }
+            });
+        });
+
+        // Video loading
+        const contentVideo = document.querySelector('.content-video');
+        if (contentVideo instanceof HTMLVideoElement) {
+            contentVideo.addEventListener('loadeddata', () => {
+                contentVideo.classList.add('loaded');
+            });
+        }
+    });
+</script> 

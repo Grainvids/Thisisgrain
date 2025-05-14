@@ -1,0 +1,1741 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Logo from '../components/Logo.astro';
+import Footer from '../components/Footer.astro';
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<Layout>
+	<main class="snap-container">
+		<section class="video-section hero" data-theme="light">
+			<video 
+				autoplay 
+				muted 
+				loop 
+				playsinline 
+				preload="auto"
+				class="section-video"
+			>
+				<source src="/hero.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="overlay"></div>
+			<div class="section-content">
+				<div class="scroll-indicator">
+					<span class="scroll-text">Scroll Down</span>
+					<svg class="scroll-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none">
+						<path d="M12 4L12 20M12 20L18 14M12 20L6 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</div>
+			</div>
+		</section>
+
+		<section class="video-section striking" data-theme="dark">
+			<div class="slideshow">
+				<div class="slide active" style="background-image: url('/slide1.jpg')"></div>
+				<div class="slide" style="background-image: url('/slide2.jpg')"></div>
+				<div class="slide" style="background-image: url('/slide3.jpg')"></div>
+				<div class="slide" style="background-image: url('/slide4.jpg')"></div>
+				<div class="slide" style="background-image: url('/slide5.jpg')"></div>
+				
+				<button class="slide-nav prev" aria-label="Previous slide">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+						<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</button>
+				<button class="slide-nav next" aria-label="Next slide">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+						<path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</button>
+				
+				<div class="slide-dots">
+					<button class="dot active" aria-label="Go to slide 1"></button>
+					<button class="dot" aria-label="Go to slide 2"></button>
+					<button class="dot" aria-label="Go to slide 3"></button>
+					<button class="dot" aria-label="Go to slide 4"></button>
+					<button class="dot" aria-label="Go to slide 5"></button>
+				</div>
+			</div>
+			<div class="overlay"></div>
+			<div class="section-content">
+				<div class="content-grid">
+					<div class="title-container">
+						<h2><span>Production</span><br><span>that Just</span><br><span>hits Right.</span></h2>
+					</div>
+					<div class="text-container">
+						<p>Grain is a production collective that uniquely combines the talents of three individuals who have been working together independently for the last 15 years. By merging the fields of Directing, Cinematography, and the audio landscape, we offer a distinctive and innovative approach that breaks away from conventional norms and goes against the Grain.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="portfolio" class="video-section portfolio" data-theme="dark">
+			<video 
+				autoplay 
+				muted 
+				loop 
+				playsinline 
+				preload="metadata"
+				class="section-video"
+			>
+				<source src="/portfolio.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="overlay"></div>
+			<div class="section-content">
+				<div class="video-grid">
+					<div class="video-card large" data-youtube-id="6q1x5p9A1CU">
+						<div class="video-thumbnail">
+							<video src="/project1.mp4" muted loop playsinline></video>
+							<div class="video-info">
+								<h3>STONE - Save Yourself feat. DOPE LEMON</h3>
+								<p>Music Video</p>
+							</div>
+						</div>
+					</div>
+					<div class="video-card medium" data-youtube-id="xM2qQ0lfcUE">
+						<div class="video-thumbnail">
+							<video src="/project2.mp4" muted loop playsinline></video>
+							<div class="video-info">
+								<h3>CORELLA - I Didn't Know Your Name</h3>
+								<p>Music Video</p>
+							</div>
+						</div>
+					</div>
+					<div class="video-card small" data-youtube-id="xc75QT13BlM">
+						<div class="video-thumbnail">
+							<video src="/project3.mp4" muted loop playsinline></video>
+							<div class="video-info">
+								<h3>CHOLE FOY - Elephant In The Room</h3>
+								<p>Music Video</p>
+							</div>
+						</div>
+					</div>
+					<div class="video-card medium" data-youtube-id="PKv9d1pWltg">
+						<div class="video-thumbnail">
+							<video src="/project4.mp4" muted loop playsinline></video>
+							<div class="video-info">
+								<h3>VEGA TRAILS - Sleepwalk Tokyo</h3>
+								<p>Music Video</p>
+							</div>
+						</div>
+					</div>
+					<div class="video-card small" data-youtube-id="RwBTEv7n900">
+						<div class="video-thumbnail">
+							<video src="/project5.mp4" muted loop playsinline></video>
+							<div class="video-info">
+								<h3>CHOLE FOY - Blinkers</h3>
+								<p>Music Video</p>
+							</div>
+						</div>
+					</div>
+					<div class="video-card large" data-youtube-id="PzoctG9Qn94">
+						<div class="video-thumbnail">
+							<video src="/project6.mp4" muted loop playsinline></video>
+							<div class="video-info">
+								<h3>Portico Quartet Ensemble - Terrain (Extended)</h3>
+								<p>Music Video</p>
+							</div>
+						</div>
+					</div>
+					<div class="video-card small" data-youtube-id="Z0pR_YJ9D2w">
+						<div class="video-thumbnail">
+							<video src="/project7.mp4" muted loop playsinline></video>
+							<div class="video-info">
+								<h3>Caoilfhionn Rose - Constellation Sessions</h3>
+								<p>Music Video</p>
+							</div>
+						</div>
+					</div>
+					<div class="video-card medium" data-youtube-id="tPLStN1HWNs">
+						<div class="video-thumbnail">
+							<video src="/project8.mp4" muted loop playsinline></video>
+							<div class="video-info">
+								<h3>LOTTERY WINNERS - UFO</h3>
+								<p>Music Video</p>
+							</div>
+						</div>
+					</div>
+					<div class="video-card small" data-youtube-id="Dh8y1iodqrQ">
+						<div class="video-thumbnail">
+							<video src="/project9.mp4" muted loop playsinline></video>
+							<div class="video-info">
+								<h3>LOTTERY WINNERS - SUPERPOWER</h3>
+								<p>Music Video</p>
+							</div>
+						</div>
+					</div>
+					<div class="video-card small" data-youtube-id="wP_GTzOHl4M">
+						<div class="video-thumbnail">
+							<video src="/project10.mp4" muted loop playsinline></video>
+							<div class="video-info">
+								<h3>LOTTERY WINNERS - Ragdoll ft. Chad Kroeger</h3>
+								<p>Music Video</p>
+							</div>
+						</div>
+					</div>
+					<div class="video-card small" data-youtube-id="3Jkcv41G_ic">
+						<div class="video-thumbnail">
+							<video src="/project11.mp4" muted loop playsinline></video>
+							<div class="video-info">
+								<h3>Reytons feat. Gary Neville - Low Life (Live from Aviva Studios, Manchester)</h3>
+								<p>Music Video</p>
+							</div>
+						</div>
+					</div>
+					<div class="video-card small" data-youtube-id="wxv0iVkH3Dc">
+						<div class="video-thumbnail">
+							<video src="/project12.mp4" muted loop playsinline></video>
+							<div class="video-info">
+								<h3>Aerial Salad - Tied to Pieces of Paper </h3>
+								<p>Music Video</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Lightbox -->
+				<div class="lightbox" id="artistLightbox">
+					<button class="lightbox-close" aria-label="Close">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+							<path d="M18 6L6 18M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
+					<div class="lightbox-content">
+						<div class="artist-info">
+							<h2 class="artist-name"></h2>
+						</div>
+						<div class="artist-video">
+							<iframe id="youtubePlayer" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="behind-grain" class="video-section behind-grain" data-theme="dark">
+			<div class="slideshow behind-grain-slideshow">
+				<div class="slide active" style="background-image: url('/team-slide1.jpg')"></div>
+				<div class="slide" style="background-image: url('/team-slide2.jpg')"></div>
+				<div class="slide" style="background-image: url('/team-slide3.jpg')"></div>
+				
+				<button class="slide-nav prev" aria-label="Previous slide">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+						<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</button>
+				<button class="slide-nav next" aria-label="Next slide">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+						<path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</button>
+				
+				<div class="slide-dots">
+					<button class="dot active" aria-label="Go to slide 1"></button>
+					<button class="dot" aria-label="Go to slide 2"></button>
+					<button class="dot" aria-label="Go to slide 3"></button>
+				</div>
+			</div>
+			<div class="overlay"></div>
+			<div class="section-content">
+				<div class="team-grid">
+					<div class="team-member">
+						<div class="member-image">
+							<img src="/Luca.jpg" alt="Luca Rudlin" loading="eager">
+						</div>
+						<div class="member-info">
+							<h3>Luca Rudlin</h3>
+							<p class="role">Director</p>
+							<p class="bio">Visionary director with a keen eye for storytelling and emotional resonance. Specializes in crafting compelling narratives that captivate audiences.</p>
+						</div>
+					</div>
+					<div class="team-member">
+						<div class="member-image">
+							<img src="/Jonny.jpg" alt="Jonny Woodhead" loading="eager">
+						</div>
+						<div class="member-info">
+							<h3>Jonny Woodhead</h3>
+							<p class="role">Audio Director</p>
+							<p class="bio">Sound design virtuoso, creating immersive audio landscapes that elevate visual narratives to new heights.</p>
+						</div>
+					</div>
+					<div class="team-member">
+						<div class="member-image">
+							<img src="/Pete.jpg" alt="Pete Hall" loading="eager">
+						</div>
+						<div class="member-info">
+							<h3>Pete Hall</h3>
+							<p class="role">Creative Director</p>
+							<p class="bio">Master of light and composition, bringing artistic vision to life through innovative camera work and visual storytelling techniques.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="video-section contact" data-theme="dark">
+			<div class="overlay"></div>
+			<div class="section-content contact-section-content">
+				<div class="contact-grid"> 
+					<div class="contact-text">
+						<h2>Let's Create Something Together</h2>
+						<p>Get in touch to discuss your next project. We're always excited to hear new ideas and help bring your vision to life.</p>
+					</div>
+					<div class="form-container"> 
+						<form class="contact-form" action="https://formspree.io/f/xqaqywjb" method="POST">
+							<div class="form-group">
+								<input type="text" name="name" id="name" placeholder="Your Name" required>
+							</div>
+							<div class="form-group">
+								<input type="email" name="email" id="email" placeholder="Your Email" required>
+							</div>
+							<div class="form-group">
+								<select name="service" id="service" required>
+									<option value="">Select Service</option>
+									<option value="commercial">Commercial Production</option>
+									<option value="documentary">Documentary Filmmaking</option>
+									<option value="music">Music Videos</option>
+									<option value="other">Other</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<textarea name="message" id="message" placeholder="Tell us about your project" required></textarea>
+							</div>
+							<button type="submit" class="cta-button">Send Message</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="footer-slideshow slideshow" data-theme="dark">
+			<div class="slide active" style="background-image: url('/footer-slide1.jpg')"></div>
+			<div class="slide" style="background-image: url('/footer-slide2.jpg')"></div>
+			<div class="slide" style="background-image: url('/footer-slide3.jpg')"></div>
+			<div class="slide" style="background-image: url('/footer-slide4.jpg')"></div>
+			<button class="slide-nav prev" aria-label="Previous slide">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+					<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</button>
+			<button class="slide-nav next" aria-label="Next slide">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+					<path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</button>
+			<div class="slide-dots">
+				<button class="dot active" aria-label="Go to slide 1"></button>
+				<button class="dot" aria-label="Go to slide 2"></button>
+				<button class="dot" aria-label="Go to slide 3"></button>
+				<button class="dot" aria-label="Go to slide 4"></button>
+			</div>
+		</div>
+
+		<section class="client-logos-section">
+			<div class="container">
+				<h3 class="section-title">Trusted By</h3>
+				<div class="client-logos-grid">
+					<img src="/client_a.png" alt="Client A Logo" />
+					<img src="/client_b.svg" alt="Client B Logo" class="client-b-logo" />
+					<img src="/client_c.svg" alt="Client C Logo" />
+					<img src="/client_d.svg" alt="Client D Logo" />
+					<img src="/client_e.png" alt="Client E Logo" />
+				</div>
+			</div>
+		</section>
+
+		<Footer data-theme="dark" />
+
+	</main>
+</Layout>
+
+<style>
+	:global(body.hide-nav) {
+		--nav-opacity: 0;
+		--nav-pointer-events: none;
+	}
+
+	:global(body) {
+		--nav-opacity: 1;
+		--nav-pointer-events: all;
+	}
+
+	.nav-bar {
+		opacity: var(--nav-opacity);
+		pointer-events: var(--nav-pointer-events);
+		transition: all 0.3s ease;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 100;
+		padding: 1.6rem 3.2rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		background: transparent;
+		/* Default nav bar text color (applies to logo via inheritance) */
+		color: var(--accent-color);
+		backdrop-filter: none !important;
+		-webkit-backdrop-filter: none !important;
+		transform: translateZ(0);
+	}
+
+	.nav-bar:hover {
+		background: transparent !important; /* Ensure no background on hover */
+		backdrop-filter: none !important;
+		-webkit-backdrop-filter: none !important;
+		box-shadow: none !important; /* Also ensure no shadow */
+	}
+
+	.nav-logo {
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+	}
+
+	.nav-logo :global(svg) {
+		width: 32px;
+		height: 32px;
+	}
+
+	.nav-logo span {
+		font-size: 1.2rem;
+		font-weight: 500;
+		color: white;
+	}
+
+	.nav-links {
+		display: flex;
+		gap: 2.4rem;
+	}
+
+	.nav-links a {
+		color: var(--accent-color);
+		text-decoration: none;
+		font-size: 0.9rem;
+		transition: color 0.3s ease;
+	}
+
+	.nav-links a:hover {
+		color: var(--accent-color);
+	}
+
+	/* Styles for nav bar when over a light background */
+	.nav-bar.nav-on-light-bg {
+		color: white;
+	}
+
+	.nav-bar.nav-on-light-bg .nav-links a {
+		color: white;
+	}
+
+	.nav-bar.nav-on-light-bg :global(.logo) {
+		color: white !important;
+	}
+
+	.nav-bar.nav-on-light-bg .nav-links a:hover {
+		color: white;
+	}
+
+	@media (max-width: 768px) {
+		.nav-bar {
+			padding: 1.2rem 1.6rem;
+		}
+
+		.nav-links {
+			gap: 1.6rem;
+		}
+
+		.nav-links a {
+			font-size: 0.8rem;
+		}
+	}
+
+	main {
+		width: 100%;
+		height: 100vh;
+		overflow-y: auto;
+		overflow-x: hidden;
+		scroll-snap-type: y mandatory;
+		scroll-behavior: smooth;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.video-section {
+		position: relative;
+		min-height: 100vh;
+		width: 100%;
+		overflow: hidden;
+		scroll-snap-align: start;
+		scroll-snap-stop: normal;
+		background: linear-gradient(45deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+	}
+
+	.section-video {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		z-index: 0;
+		opacity: 0;
+		transition: opacity 0.5s ease-in-out;
+	}
+
+	.section-video.loaded {
+		opacity: 1;
+	}
+
+	.overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+		z-index: 1;
+	}
+
+	.section-content {
+		position: relative;
+		z-index: 3;
+		color: white;
+		padding: 1.6rem;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	/* Update text colors for better contrast */
+	.hero h1,
+	.striking h2,
+	.portfolio h2,
+	.behind-grain h2,
+	.contact h2 {
+		color: white;
+	}
+
+	.striking p,
+	.member-info .bio,
+	.contact-text p {
+		color: rgba(255, 255, 255, 0.8);
+	}
+
+	/* Update form elements for better contrast */
+	.form-group input,
+	.form-group select,
+	.form-group textarea {
+		background: rgba(0, 0, 0, 0.3);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		color: white;
+	}
+
+	.form-group input::placeholder,
+	.form-group textarea::placeholder {
+		color: rgba(255, 255, 255, 0.6);
+	}
+
+	/* Update footer styles */
+	.site-footer {
+		background: rgba(0, 0, 0, 0.5);
+		color: white;
+	}
+
+	.footer-bottom {
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	/* Update navigation links */
+	.nav-column a {
+		color: white;
+	}
+
+	.nav-column a:hover {
+		color: var(--accent-color);
+	}
+
+	/* Update scrollbar for better visibility */
+	::-webkit-scrollbar-thumb {
+		background: rgba(255, 62, 0, 0.5);
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: rgba(255, 62, 0, 0.7);
+	}
+
+	/* Hero Section */
+	.hero .section-content {
+		justify-content: flex-end;
+		align-items: flex-start;
+		padding: 0 3.2rem 3.2rem;
+		max-width: 100%;
+		margin: 0 auto;
+	}
+
+	.hero h1 {
+		margin: 0;
+		font-size: 2rem;
+		font-weight: 900;
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		font-family: "Arial Black", Arial, sans-serif;
+		text-transform: none;
+	}
+
+	.hero .logo-text {
+		display: inline-block;
+		position: relative;
+		font-style: italic;
+		letter-spacing: -0.1em;
+		transition: all 0.3s ease;
+	}
+
+	.hero h1:hover .logo-text {
+		animation: grainEffect 0.8s steps(10) infinite;
+	}
+
+	.hero .logo-text:nth-child(2) { animation-delay: 0.1s; }
+	.hero .logo-text:nth-child(3) { animation-delay: 0.2s; }
+	.hero .logo-text:nth-child(4) { animation-delay: 0.3s; }
+	.hero .logo-text:nth-child(5) { animation-delay: 0.4s; }
+	.hero .logo-text:nth-child(6) { animation-delay: 0.5s; }
+
+	@keyframes grainEffect {
+		0% {
+			transform: translate(0, 0);
+			filter: brightness(1) contrast(1.1);
+		}
+		25% {
+			transform: translate(-1px, 1px);
+			filter: brightness(1.1) contrast(1.2);
+		}
+		50% {
+			transform: translate(1px, -1px);
+			filter: brightness(0.9) contrast(1.1);
+		}
+		75% {
+			transform: translate(-1px, -1px);
+			filter: brightness(1.05) contrast(1.15);
+		}
+		100% {
+			transform: translate(0, 0);
+			filter: brightness(1) contrast(1.1);
+		}
+	}
+
+	.scroll-indicator {
+		position: fixed;
+		bottom: 1.6rem;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.4rem;
+		color: rgba(255, 255, 255, 0.25);
+		opacity: 0;
+		visibility: hidden;
+		z-index: 100;
+	}
+
+	.scroll-indicator.visible {
+		animation: fadeIn 0.5s ease-out forwards;
+		visibility: visible;
+	}
+
+	.scroll-text {
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-weight: 300;
+	}
+
+	.scroll-arrow {
+		animation: bounce 2s infinite;
+		width: 26px;
+		height: 26px;
+	}
+
+	@keyframes bounce {
+		0%, 20%, 50%, 80%, 100% {
+			transform: translateY(0);
+		}
+		40% {
+			transform: translateY(-10px);
+		}
+		60% {
+			transform: translateY(-5px);
+		}
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	/* Striking Section */
+	.striking .section-content {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100vh;
+		width: 100%;
+		padding: 0;
+	}
+
+	.striking .content-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 6.4rem;
+		width: 100%;
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 0 3.2rem;
+	}
+
+	.striking .title-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.striking h2 {
+		font-size: 4.8vw;
+		line-height: 1.1;
+		margin: 0;
+		font-weight: 200;
+		font-family: "Arial", sans-serif;
+		letter-spacing: -0.03em;
+		text-transform: none;
+		text-align: left;
+	}
+
+	.striking .text-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		max-width: 500px;
+	}
+
+	.striking p {
+		font-size: 1rem;
+		line-height: 1.6;
+		margin: 0;
+		font-weight: 300;
+		opacity: 0.8;
+	}
+
+	@media (max-width: 1024px) {
+		.striking .content-grid {
+			grid-template-columns: 1fr;
+			gap: 2.4rem;
+			padding: 0 1.6rem;
+			max-width: 600px;
+		}
+
+		.striking h2 {
+			font-size: 3.2rem;
+			text-align: center;
+		}
+
+		.striking .text-container {
+			max-width: 100%;
+			text-align: center;
+		}
+
+		.striking p {
+			font-size: 0.88rem;
+		}
+	}
+
+	/* Portfolio Section */
+	.portfolio .section-content {
+		align-items: center;
+		text-align: center;
+		padding: 0;
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		width: 100%;
+		max-width: 100%;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.video-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(4, 1fr);
+		gap: 0.5rem;
+		width: 100%;
+		height: 100vh;
+		padding: 0;
+	}
+
+	.video-card {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		background: #000;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: transform 0.3s ease;
+		border-radius: 8px;
+		aspect-ratio: 16/9;
+	}
+
+	.video-card:hover {
+		transform: scale(1.02);
+	}
+
+	.video-thumbnail {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 8px;
+		overflow: hidden;
+		aspect-ratio: 16/9;
+	}
+
+	.video-thumbnail video {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		background: #000;
+		border-radius: 8px;
+	}
+
+	.video-info {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		padding: 1.6rem;
+		color: white;
+		opacity: 0;
+		transform: translateY(1rem);
+		transition: all 0.5s ease;
+		background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+		text-align: left;
+	}
+
+	.video-card h3 {
+		font-size: 1.2rem;
+		font-weight: 300;
+		margin-bottom: 0.4rem;
+		line-height: 1;
+	}
+
+	.video-card p {
+		font-size: 0.8rem;
+		font-weight: 300;
+		opacity: 0.8;
+	}
+
+	.video-card:hover .video-info {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	@media (max-width: 768px) {
+		.video-grid {
+			grid-template-columns: 1fr;
+			padding: 4rem 0 0 0;
+		}
+
+		.video-card {
+			grid-column: 1;
+			aspect-ratio: 16/9;
+		}
+	}
+
+	/* Contact Section */
+	.video-section.contact {
+		background-image: url('/contact-background.jpg');
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+
+	.contact .contact-section-content {
+		padding: 6rem 3rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 100vh;
+	}
+
+	.contact-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 4rem;
+		width: 100%;
+		max-width: 1100px;
+		align-items: start;
+		transform: translateY(-10%);
+	}
+
+	.contact-text {
+		width: 100%;
+		text-align: left;
+	}
+
+	.contact-text h2 {
+		font-size: clamp(2.2rem, 4vw, 3.5rem);
+		margin-bottom: 1.5rem;
+		font-weight: 300;
+		line-height: 1.2;
+		text-align: left;
+	}
+
+	.contact-text p {
+		font-size: 1rem;
+		line-height: 1.7;
+		opacity: 0.85;
+		max-width: 100%;
+		margin: 0;
+		text-align: left;
+	}
+
+	.form-container {
+		background: rgba(0, 0, 0, 0.25);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		padding: 2.5rem;
+		border-radius: 8px;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+	}
+
+	.contact-form {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.form-group {
+		margin-bottom: 1.2rem;
+		width: 100%;
+		max-width: 480px;
+	}
+
+	.form-group input,
+	.form-group select,
+	.form-group textarea {
+		width: 100%;
+		padding: 0.96rem;
+		background: rgba(0, 0, 0, 0.3);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 4px;
+		color: white;
+		font-size: 0.88rem;
+		transition: all 0.3s ease;
+		text-align: center;
+	}
+
+	.form-group textarea {
+		height: 120px;
+		resize: vertical;
+		text-align: center;
+	}
+
+	.form-group input:focus,
+	.form-group select:focus,
+	.form-group textarea:focus {
+		outline: none;
+		border-color: var(--accent-color);
+		background: rgba(255, 255, 255, 0.15);
+	}
+
+	.form-group input::placeholder,
+	.form-group textarea::placeholder {
+		color: rgba(255, 255, 255, 0.6);
+		text-align: center;
+	}
+
+	.form-group select {
+		appearance: none;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: right 1rem center;
+		padding-right: 3rem;
+		text-align-last: center;
+	}
+
+	.form-group select option {
+		background: #1a1a1a;
+		color: white;
+		text-align: center;
+	}
+
+	.contact .cta-button {
+		width: 100%;
+		max-width: 480px;
+		padding: 0.96rem;
+		font-size: 0.88rem;
+		background: var(--accent-color);
+		border: 1px solid transparent;
+		color: white;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		text-align: center;
+	}
+
+	.contact .cta-button:hover {
+		background: transparent;
+		border-color: var(--accent-color);
+	}
+
+	@media (max-width: 900px) {
+		.contact-grid {
+			grid-template-columns: 1fr;
+			gap: 3rem;
+			max-width: 600px;
+		}
+		.contact-text h2,
+		.contact-text p {
+			text-align: center;
+		}
+		.contact-text h2 {
+			font-size: clamp(2rem, 5vw, 2.8rem);
+		}
+	}
+
+	@media (max-width: 768px) {
+		.contact .contact-section-content {
+			padding: 4rem 1.5rem;
+		}
+
+		.contact-text h2 {
+			font-size: 1.6rem;
+		}
+
+		.contact-text p {
+			font-size: 0.88rem;
+		}
+
+		.form-group input,
+		.form-group select,
+		.form-group textarea {
+			padding: 0.8rem;
+		}
+	}
+
+	/* Updated Slideshow Styles */
+	.slideshow {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+
+	.slide {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		background-size: cover;
+		background-position: center;
+		transition: opacity 0.8s ease-in-out;
+		will-change: opacity;
+	}
+
+	.slide.active {
+		opacity: 1;
+	}
+
+	.slide-nav {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		background: rgba(0, 0, 0, 0.3);
+		border: none;
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		cursor: pointer;
+		color: white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+		z-index: 2;
+		backdrop-filter: blur(4px);
+	}
+
+	.slide-nav:hover {
+		background: rgba(0, 0, 0, 0.5);
+	}
+
+	.slide-nav.prev {
+		left: 2rem;
+	}
+
+	.slide-nav.next {
+		right: 2rem;
+	}
+
+	.slide-dots {
+		position: absolute;
+		bottom: 2rem;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 0.5rem;
+		z-index: 2;
+	}
+
+	.dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		border: 2px solid white;
+		background: transparent;
+		padding: 0;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+
+	.dot.active {
+		background: white;
+		transform: scale(1.2);
+	}
+
+	/* Lightbox Styles */
+	.lightbox {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.95);
+		z-index: 1000;
+		display: none;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.lightbox.active {
+		display: block;
+		opacity: 1;
+	}
+
+	.lightbox-close {
+		position: fixed;
+		top: 2rem;
+		right: 2rem;
+		background: rgba(255, 255, 255, 0.1);
+		border: none;
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		color: white;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		z-index: 1001;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.lightbox-close:hover {
+		background: rgba(255, 255, 255, 0.2);
+		transform: scale(1.1);
+	}
+
+	.lightbox-content {
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 6rem 2rem;
+		color: white;
+		height: 100%;
+		overflow-y: auto;
+	}
+
+	.artist-info {
+		text-align: left;
+		margin-bottom: 4rem;
+	}
+
+	.artist-name {
+		font-size: 4rem;
+		font-weight: 300;
+		margin-bottom: 1rem;
+	}
+
+	.artist-video {
+		width: 100%;
+		aspect-ratio: 16/9;
+		margin-bottom: 4rem;
+		background: #000;
+		border-radius: 4px;
+		overflow: hidden;
+	}
+
+	.artist-video iframe {
+		width: 100%;
+		height: 100%;
+		border-radius: 4px;
+		overflow: hidden;
+	}
+
+	/* Behind Grain Section */
+	.behind-grain .section-content {
+		padding: 3.2rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		min-height: 100vh;
+	}
+
+	.team-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2.88rem;
+		width: 100%;
+		max-width: 1920px;
+		margin: 0 auto;
+		padding: 0 3.84rem;
+	}
+
+	.team-member {
+		text-align: center;
+		opacity: 1;
+		transform: translateY(0);
+		transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.member-image {
+		margin-bottom: 1.44rem;
+		aspect-ratio: 1;
+		overflow: hidden;
+		position: relative;
+		max-width: 250px;
+		border-radius: 50%;
+		margin-left: auto;
+		margin-right: auto;
+		box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+		transform: scale(1);
+	}
+
+	.member-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 50%;
+		transition: transform 0.5s ease;
+		display: block;
+	}
+
+	.team-member:hover .member-image img {
+		transform: scale(1.1);
+	}
+
+	.member-info h3 {
+		font-size: 1.92rem;
+		font-weight: 300;
+		margin-bottom: 0.384rem;
+		text-align: center;
+	}
+
+	.member-info .role {
+		font-size: 1.152rem;
+		color: var(--accent-color);
+		margin-bottom: 0.96rem;
+		font-weight: 500;
+		text-align: center;
+	}
+
+	.member-info .bio {
+		font-size: 0.96rem;
+		line-height: 1.5;
+		opacity: 0.8;
+		text-align: center;
+		max-width: 288px;
+		margin: 0 auto;
+	}
+
+	@media (max-width: 1200px) {
+		.team-grid {
+			grid-template-columns: repeat(2, 1fr);
+			padding: 0 2.4rem;
+		}
+
+		.member-image {
+			max-width: 211px;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.team-grid {
+			grid-template-columns: 1fr;
+			gap: 2.4rem;
+			padding: 0 1.6rem;
+		}
+
+		.behind-grain .section-content {
+			padding: 2.88rem 1.92rem;
+		}
+
+		.member-image {
+			max-width: 211px;
+		}
+
+		.member-info h3 {
+			font-size: 1.632rem;
+		}
+	}
+
+	/* Updated Slideshow Styles */
+	.behind-grain-slideshow {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+
+	.behind-grain-slideshow .slide {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		background-size: cover;
+		background-position: center;
+		transition: opacity 1s ease-in-out;
+		will-change: opacity;
+	}
+
+	.behind-grain-slideshow .slide.active {
+		opacity: 1;
+	}
+
+	.behind-grain-slideshow .slide-nav {
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.behind-grain-slideshow:hover .slide-nav {
+		opacity: 1;
+	}
+
+	.behind-grain-slideshow .slide-dots {
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.behind-grain-slideshow:hover .slide-dots {
+		opacity: 1;
+	}
+
+	/* Add the footer slideshow styles back */
+	/* Footer Slideshow Styles */
+	.footer-slideshow {
+		position: relative;
+		width: 100%;
+		height: 40vh; /* Adjust height as needed */
+		overflow: hidden;
+		/* margin-bottom: 8rem; Removed, as it's not directly above footer content anymore */
+		background: #000;
+	}
+
+	.footer-slideshow .slide {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		background-size: cover;
+		background-position: center;
+		transition: opacity 0.5s ease-in-out;
+		will-change: opacity;
+		pointer-events: none;
+	}
+
+	.footer-slideshow .slide.active {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	/* If you need nav buttons/dots, copy those styles back too */
+	.footer-slideshow .slide-nav {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		background: rgba(255, 255, 255, 0.1);
+		border: none;
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		cursor: pointer;
+		color: white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+		z-index: 2;
+		backdrop-filter: blur(4px);
+	}
+
+	.footer-slideshow .slide-nav:hover {
+		background: rgba(255, 255, 255, 0.2);
+		transform: translateY(-50%) scale(1.1);
+	}
+
+	.footer-slideshow .slide-nav.prev {
+		left: 2rem;
+	}
+
+	.footer-slideshow .slide-nav.next {
+		right: 2rem;
+	}
+
+	.footer-slideshow .slide-dots {
+		position: absolute;
+		bottom: 2rem;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 0.5rem;
+		z-index: 2;
+	}
+
+	.footer-slideshow .dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		border: 2px solid white;
+		background: transparent;
+		padding: 0;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+
+	.footer-slideshow .dot.active {
+		background: white;
+		transform: scale(1.2);
+	}
+
+	@media (max-width: 768px) {
+		.footer-slideshow {
+			height: 30vh;
+			/* margin-bottom: 6rem; Removed */
+		}
+
+		.footer-slideshow .slide-nav {
+			width: 40px;
+			height: 40px;
+		}
+	}
+
+	/* Client Logos Section Styles */
+	.client-logos-section {
+		background-color: #080808; /* Dark background, adjust as needed */
+		padding: 4rem 2rem;
+		text-align: center;
+		width: 100%; /* Ensure it takes full width */
+		scroll-snap-align: start; /* If you want this section to snap */
+	}
+
+	.client-logos-section .container {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+
+	.client-logos-section .section-title {
+		font-size: 1.2rem; /* Smaller title */
+		color: rgba(255, 255, 255, 0.5);
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		margin-bottom: 3rem;
+		font-weight: 400;
+	}
+
+	.client-logos-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+		gap: 3rem 2rem;
+		align-items: center;
+		justify-items: center;
+	}
+
+	.client-logos-grid img {
+		max-height: 60px; /* Adjust based on your logos */
+		max-width: 100%;
+		object-fit: contain;
+		/* Make logos white and adjust opacity */
+		filter: brightness(0) invert(1) opacity(0.7); 
+		transition: opacity 0.3s ease; /* Keep opacity transition for hover */
+	}
+
+	.client-logos-grid img.client-b-logo {
+		transform: scale(1.2);
+		/* Adjust max-height if scaling creates layout issues, e.g. */
+		/* max-height: calc(60px * 1.1); */
+	}
+
+	.client-logos-grid img:hover {
+		filter: brightness(0) invert(1) opacity(1); /* Full opacity on hover */
+	}
+
+	/* Responsive adjustments for client logos if needed */
+	@media (max-width: 768px) {
+		.client-logos-grid {
+			grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+			gap: 2rem 1.5rem;
+		}
+		.client-logos-section .section-title {
+			margin-bottom: 2rem;
+		}
+		.client-logos-grid img {
+			max-height: 50px;
+		}
+	}
+</style>
+
+<script>
+	// Defer script execution until DOM is loaded
+	document.addEventListener('DOMContentLoaded', () => {
+		// Randomize slideshow initial position
+		const slideshows = document.querySelectorAll('.slideshow');
+		slideshows.forEach(slideshow => {
+			const slides = slideshow.querySelectorAll('.slide');
+			const dots = slideshow.querySelectorAll('.dot');
+			const prevBtn = slideshow.querySelector('.prev');
+			const nextBtn = slideshow.querySelector('.next');
+			
+			// Randomize initial slide
+			const randomIndex = Math.floor(Math.random() * slides.length);
+			slides.forEach((slide, index) => {
+				if (index === randomIndex) {
+					slide.classList.add('active');
+					dots[index]?.classList.add('active');
+				} else {
+					slide.classList.remove('active');
+					dots[index]?.classList.remove('active');
+				}
+			});
+			
+			let currentSlide = randomIndex;
+			let isAnimating = false;
+
+			function goToSlide(index: number) {
+				if (isAnimating) return;
+				isAnimating = true;
+
+				// Remove active class from current slide and dot
+				slides[currentSlide]?.classList.remove('active');
+				dots[currentSlide]?.classList.remove('active');
+
+				// Update current slide index
+				currentSlide = index;
+				if (currentSlide >= slides.length) currentSlide = 0;
+				if (currentSlide < 0) currentSlide = slides.length - 1;
+
+				// Add active class to new slide and dot
+				slides[currentSlide]?.classList.add('active');
+				dots[currentSlide]?.classList.add('active');
+
+				// Reset animation flag after transition
+				setTimeout(() => {
+					isAnimating = false;
+				}, 800); // Match the CSS transition duration
+			}
+
+			// Event listeners with passive option for better performance
+			prevBtn?.addEventListener('click', () => goToSlide(currentSlide - 1), { passive: true });
+			nextBtn?.addEventListener('click', () => goToSlide(currentSlide + 1), { passive: true });
+			dots.forEach((dot, index) => {
+				dot.addEventListener('click', () => goToSlide(index), { passive: true });
+			});
+
+			// Use setInterval with requestAnimationFrame for smoother animations
+			let slideInterval = setInterval(() => {
+				requestAnimationFrame(() => {
+					goToSlide(currentSlide + 1);
+				});
+			}, 5000);
+
+			slideshow.addEventListener('mouseenter', () => {
+				clearInterval(slideInterval);
+			}, { passive: true });
+
+			slideshow.addEventListener('mouseleave', () => {
+				slideInterval = setInterval(() => {
+					requestAnimationFrame(() => {
+						goToSlide(currentSlide + 1);
+					});
+				}, 5000);
+			}, { passive: true });
+		});
+
+		// Lightbox Functionality
+		const lightbox = document.getElementById('artistLightbox') as HTMLElement;
+		const lightboxCloseBtn = lightbox?.querySelector('.lightbox-close') as HTMLButtonElement;
+		const lightboxName = lightbox?.querySelector('.artist-name') as HTMLElement;
+		const lightboxDesc = lightbox?.querySelector('.artist-description') as HTMLElement;
+		const lightboxSessionInfo = lightbox?.querySelector('.session-info') as HTMLElement;
+		const lightboxBehindScenes = lightbox?.querySelector('.behind-scenes') as HTMLElement;
+		const youtubePlayer = document.getElementById('youtubePlayer') as HTMLIFrameElement;
+		const allVideos = document.querySelectorAll('video');
+
+		const videoThumbnails = document.querySelectorAll('.video-thumbnail');
+
+		videoThumbnails.forEach(thumbnail => {
+			thumbnail.addEventListener('click', (e) => {
+				e.stopPropagation();
+				const currentTargetElement = e.currentTarget as HTMLElement;
+				const card = currentTargetElement.closest('.video-card') as HTMLElement | null;
+
+				if (!card || !lightbox || !lightboxName || !youtubePlayer) return;
+
+				// Pause all background/thumbnail videos
+				allVideos.forEach(vid => vid.pause());
+
+				let youtubeId = card.dataset.youtubeId;
+				const titleElement = card.querySelector('.video-info h3') as HTMLElement;
+				const title = titleElement?.textContent || 'Video Title'; 
+
+				if (youtubeId) {
+					// Clean the YouTube ID: take only the part before any '&' character
+					youtubeId = youtubeId.split('&')[0];
+
+					const embedUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
+					youtubePlayer.src = embedUrl;
+					lightboxName.textContent = title;
+					
+					if (lightboxDesc) lightboxDesc.textContent = ''; 
+					const sessionParent = lightboxSessionInfo?.parentElement;
+					if (sessionParent) sessionParent.style.display = 'none';
+					const behindParent = lightboxBehindScenes?.parentElement;
+					if (behindParent) behindParent.style.display = 'none';
+					
+					// Show lightbox
+					lightbox.classList.add('active');
+					document.body.style.overflow = 'hidden';
+				} else {
+					console.error('YouTube ID not found for this card.');
+				}
+			});
+		});
+
+		// Function to close the lightbox and stop video
+		function closeLightbox() {
+			if (!lightbox || !youtubePlayer) return;
+			lightbox.classList.remove('active');
+			youtubePlayer.src = '';
+			document.body.style.overflow = '';
+
+			// Optionally re-show the placeholder sections if hidden
+			const sessionParent = lightboxSessionInfo?.parentElement;
+			if (sessionParent) sessionParent.style.display = '';
+			const behindParent = lightboxBehindScenes?.parentElement;
+			if (behindParent) behindParent.style.display = '';
+			// Decide if you want to resume background videos here
+			// allVideos.forEach(vid => vid.play().catch(e => console.log("Autoplay prevented"))); 
+		}
+
+		// Close lightbox via button
+		lightboxCloseBtn?.addEventListener('click', closeLightbox);
+
+		// Close lightbox via background click
+		lightbox?.addEventListener('click', (e) => {
+			if (e.target === lightbox) {
+				closeLightbox();
+			}
+		});
+
+		// Optimize video loading
+		const videos = document.querySelectorAll('video');
+		videos.forEach(video => {
+			// Add loaded class when video is ready
+			video.addEventListener('loadeddata', () => {
+				video.classList.add('loaded');
+			});
+
+			// Only load video when it's in viewport
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						video.load();
+						video.play().catch(() => {
+							// If video fails to play, ensure overlay is visible
+							const overlay = video.parentElement?.querySelector('.overlay');
+							if (overlay instanceof HTMLElement) {
+								overlay.style.opacity = '1';
+							}
+						});
+					} else {
+						video.pause();
+					}
+				});
+			}, { threshold: 0.1 });
+			observer.observe(video);
+		});
+
+		// Nav Bar Theme Changer based on Section
+		const navBar = document.querySelector('.nav-bar') as HTMLElement;
+		// Select all elements that have a data-theme attribute
+		const themedSections = document.querySelectorAll('[data-theme]'); 
+
+		if (navBar && themedSections.length > 0) {
+			const observerOptions = {
+				root: null, // Use the viewport as the root
+				rootMargin: '-40px 0px -90% 0px', // Adjust top margin based on nav height, bottom margin high to only trigger at top
+				threshold: 0 // Trigger as soon as any part enters the margin area
+			};
+
+			const themeObserver = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					// Check if the entry is intersecting the top part of the viewport defined by rootMargin
+					if (entry.isIntersecting) {
+						const theme = (entry.target as HTMLElement).dataset.theme;
+
+						if (theme === 'light') {
+							navBar.classList.add('nav-on-light-bg');
+							navBar.classList.remove('nav-on-dark-bg'); // Optional: if you add dark styles
+						} else { // Assuming default/dark theme
+							navBar.classList.remove('nav-on-light-bg');
+							navBar.classList.add('nav-on-dark-bg'); // Optional: if you add dark styles
+						}
+					}
+				});
+			}, observerOptions);
+
+			// Observe all themed sections
+			themedSections.forEach(section => {
+				themeObserver.observe(section);
+			});
+		}
+	});
+</script>

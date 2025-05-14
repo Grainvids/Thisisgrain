@@ -1,0 +1,89 @@
+<a href="/" class="logo">
+    <span class="logo-text">G</span><span class="logo-text">r</span><span class="logo-text">a</span><span class="logo-text">i</span><span class="logo-text">n</span>
+</a>
+
+<style>
+    .logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        /* color: white; */ /* Removed - Color will be inherited from parent (.nav-bar) */
+        font-size: 2.5rem;
+        font-weight: 900;
+        font-style: italic;
+        letter-spacing: -0.1em;
+        position: relative;
+        font-family: "Arial Black", Arial, sans-serif;
+    }
+
+    .logo-text {
+        display: inline-block;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .logo:hover .logo-text {
+        animation: grainEffect 0.8s steps(10) infinite;
+    }
+
+    .logo-text:nth-child(1) { animation-delay: 0.1s; }
+    .logo-text:nth-child(2) { animation-delay: 0.2s; }
+    .logo-text:nth-child(3) { animation-delay: 0.3s; }
+    .logo-text:nth-child(4) { animation-delay: 0.4s; }
+    .logo-text:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes grainEffect {
+        0% {
+            transform: translate(0, 0);
+            filter: brightness(1) contrast(1.1);
+        }
+        25% {
+            transform: translate(-1px, 1px);
+            filter: brightness(1.1) contrast(1.2);
+        }
+        50% {
+            transform: translate(1px, -1px);
+            filter: brightness(0.9) contrast(1.1);
+        }
+        75% {
+            transform: translate(-1px, -1px);
+            filter: brightness(1.05) contrast(1.15);
+        }
+        100% {
+            transform: translate(0, 0);
+            filter: brightness(1) contrast(1.1);
+        }
+    }
+
+    /* Footer logo specific styles */
+    :global(.footer-logo) .logo {
+        font-size: 10rem;  /* 500px equivalent */
+    }
+
+    @media (max-width: 1200px) {
+        .logo {
+            font-size: 8rem;
+        }
+        :global(.footer-logo) .logo {
+            font-size: 8rem;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .logo {
+            font-size: 7rem;
+        }
+        :global(.footer-logo) .logo {
+            font-size: 7rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .logo {
+            font-size: 3rem;
+        }
+        :global(.footer-logo) .logo {
+            font-size: 3rem;
+        }
+    }
+</style> 

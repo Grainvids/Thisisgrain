@@ -1,0 +1,397 @@
+---
+import Logo from './Logo.astro';
+
+const navItems = [
+    { href: "#portfolio", label: "Portfolio" },
+    { href: "#services", label: "Services" },
+    { href: "/contact", label: "Contact" }
+];
+
+const socialLinks = [
+    { href: "https://instagram.com", label: "Instagram", icon: "instagram" }
+];
+---
+
+<a href="https://www.instagram.com/grainvids" target="_blank" rel="noopener noreferrer" aria-label="Grain Instagram Profile">
+    <div class="persistent-logo">
+        <Logo />
+    </div>
+</a>
+
+<nav class="nav">
+    <div class="nav-container">
+        <div class="nav-links-centered">
+            <!-- Links removed, will be handled by mobile-menu-content logic -->
+        </div>
+
+        <div class="social-links desktop-social-links">
+            <a href="https://www.instagram.com/grainvids" target="_blank" rel="noopener noreferrer" class="social-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+            </a>
+        </div>
+
+        <button 
+            class="mobile-menu-button" 
+            aria-label="Toggle menu" 
+            aria-controls="mobile-menu-content" 
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="mobile-menu-content" id="mobile-menu-content" aria-hidden="true">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/education" class="nav-link">Education</a>
+            <a href="/contact" class="nav-link">Contact</a>
+            <div class="social-links mobile-social-links">
+                <a href="https://www.instagram.com/grainvids" target="_blank" rel="noopener noreferrer" class="social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="menu-overlay" aria-hidden="true"></div>
+
+<style>
+    .persistent-logo {
+        position: fixed;
+        top: 1.5rem;
+        left: 4rem;
+        z-index: 101;
+        pointer-events: all;
+    }
+
+    .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        width: 100%;
+        opacity: 0;
+        transform: translateY(-100%);
+        transition: all 0.3s ease;
+        pointer-events: none;
+        background: transparent;
+    }
+
+    .nav.visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+
+    .nav-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 1.5rem 4rem;
+        padding-top: 2.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        position: relative;
+    }
+
+    .nav-links-centered {
+        display: flex;
+        gap: 2rem;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .nav-link {
+        color: white;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.9rem;
+    }
+
+    .nav-link:hover {
+        color: var(--accent-color);
+    }
+
+    .social-links {
+        position: static;
+        display: flex;
+        align-items: center;
+    }
+
+    .social-link {
+        color: white;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .social-link:hover {
+        color: var(--accent-color);
+        transform: translateY(-2px);
+    }
+
+    .nav-links .social-links {
+        display: flex;
+        position: static;
+        width: 100%;
+        justify-content: center;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        right: auto;
+        top: auto;
+        transform: none;
+    }
+
+    .mobile-menu-button {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+    }
+
+    .mobile-menu-button span {
+        display: block;
+        width: 25px;
+        height: 2px;
+        background: white;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+
+    @media (max-width: 768px) {
+        .persistent-logo {
+            top: 1rem;
+            left: 2rem;
+        }
+
+        .nav-container {
+            padding: 1rem 2rem;
+            position: relative;
+            justify-content: flex-end;
+        }
+
+        .nav-links-centered {
+            display: none;
+        }
+
+        .desktop-social-links {
+            display: none;
+        }
+
+        .mobile-menu-content {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 1.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu-content.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .mobile-menu-content .mobile-social-links {
+            display: flex;
+            position: static;
+            width: 100%;
+            justify-content: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-menu-content .social-link svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .mobile-menu-button {
+            display: block;
+            z-index: 102;
+            position: relative;
+        }
+
+        .mobile-menu-button.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-button.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-button.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+    }
+
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 99;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        pointer-events: none;
+    }
+
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    /* Position social links absolutely on desktop ONLY */
+    @media (min-width: 769px) { 
+        .nav-container .social-links {
+            /* This targets the .social-links div directly inside .nav-container for desktop */
+            /* Note: My HTML edit moved .social-links into .nav-links. This needs to be addressed in HTML or CSS strategy */
+            /* For now, assuming .social-links is a direct child of .nav-container for desktop */
+            /* If it *must* stay inside .nav-links in HTML, this CSS gets more complex */
+            position: absolute;
+            right: 4rem; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            display: flex; /* Ensure it's visible if it was display:none from mobile */
+        }
+        /* If .social-links is indeed inside .nav-links for HTML structure, then the .nav-links flex properties might interfere */
+        /* A more robust solution if HTML is fixed: */
+        /* .nav-container > .social-links { ... } */
+
+        /* NEW STYLES FOR DESKTOP: .mobile-menu-content becomes the main nav bar */
+        .mobile-menu-content {
+            all: unset; /* Reset mobile styles */
+            display: flex;
+            gap: 2rem;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            /* Ensure it is visible and behaves like nav links */
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-content .nav-link {
+            /* Retain original nav-link styling if unset above */
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.9rem;
+        }
+        .mobile-menu-content .nav-link:hover {
+             color: var(--accent-color);
+        }
+
+        .mobile-menu-content .mobile-social-links {
+            display: none; /* Hide social links from the mobile menu content on desktop */
+        }
+    }
+</style>
+
+<script>
+    const nav = document.querySelector('.nav');
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const mobileMenuContent = document.querySelector('.mobile-menu-content');
+    const menuOverlay = document.querySelector('.menu-overlay');
+    let mouseTimeout: number | undefined;
+
+    // Show nav when mouse is near the top of the page
+    document.addEventListener('mousemove', (e) => {
+        if (e.clientY < 100) { // Show when mouse is within 100px of the top
+            nav?.classList.add('visible');
+            clearTimeout(mouseTimeout);
+        } else {
+            // Hide after a short delay when mouse moves away
+            mouseTimeout = setTimeout(() => {
+                nav?.classList.remove('visible');
+            }, 500);
+        }
+    });
+
+    // Show nav when mouse enters the top area
+    document.addEventListener('mouseenter', (e) => {
+        if (e.clientY < 100) {
+            nav?.classList.add('visible');
+        }
+    });
+
+    // Mobile menu toggle
+    mobileMenuButton?.addEventListener('click', () => {
+        const isActive = mobileMenuButton.classList.toggle('active');
+        mobileMenuContent?.classList.toggle('active');
+        menuOverlay?.classList.toggle('active');
+        mobileMenuButton.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+        mobileMenuContent?.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+        menuOverlay?.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+        document.body.style.overflow = isActive ? 'hidden' : '';
+    });
+
+    // Close mobile menu when clicking a link (inside .mobile-menu-content)
+    mobileMenuContent?.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (mobileMenuButton?.classList.contains('active')) {
+                mobileMenuButton?.classList.remove('active');
+                mobileMenuContent?.classList.remove('active');
+                menuOverlay?.classList.remove('active');
+                mobileMenuButton?.setAttribute('aria-expanded', 'false');
+                mobileMenuContent?.setAttribute('aria-hidden', 'true');
+                menuOverlay?.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+
+    // Close menu when clicking overlay
+    menuOverlay?.addEventListener('click', () => {
+        if (mobileMenuButton?.classList.contains('active')) {
+            mobileMenuButton?.classList.remove('active');
+            mobileMenuContent?.classList.remove('active');
+            menuOverlay?.classList.remove('active');
+            mobileMenuButton?.setAttribute('aria-expanded', 'false');
+            mobileMenuContent?.setAttribute('aria-hidden', 'true');
+            menuOverlay?.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+    });
+</script> 

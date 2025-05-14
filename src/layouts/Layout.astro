@@ -1,0 +1,148 @@
+---
+import Navigation from '../components/Navigation.astro';
+
+interface Props {
+	title?: string;
+}
+
+const { title = "Grain | Professional Video Production" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content="Professional video production company specializing in commercials, documentaries, and music videos." />
+		<meta name="keywords" content="video production, commercial production, documentary filmmaking, music videos, cinematography" />
+		<title>{title}</title>
+		
+		<!-- Preload critical resources -->
+		<link rel="preload" href="/hero.mp4" as="video" type="video/mp4">
+		<link rel="preload" href="/slide1.jpg" as="image">
+		
+		<!-- Preconnect to external domains -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		
+		<!-- Load fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+		
+		<!-- Performance meta tags -->
+		<meta http-equiv="Cache-Control" content="public, max-age=31536000">
+		<meta name="theme-color" content="#0a0a0a">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		
+		<!-- Open Graph tags -->
+		<meta property="og:title" content={title}>
+		<meta property="og:description" content="Professional video production company specializing in commercials, documentaries, and music videos.">
+		<meta property="og:type" content="website">
+		<meta property="og:image" content="/og-image.jpg">
+		<meta property="og:url" content={Astro.url}>
+	</head>
+	<body>
+		<Navigation />
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--primary-color: #ff3e00;
+		--text-color: #e0e0e0;
+		--background-color: #0a0a0a;
+		--secondary-background: #1a1a1a;
+		--accent-color: #ff3e00;
+		--font-primary: 'Inter', system-ui, sans-serif;
+	}
+
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	html {
+		font-family: var(--font-primary);
+		background-color: var(--background-color);
+		color: var(--text-color);
+		line-height: 1.6;
+		scroll-behavior: smooth;
+	}
+
+	body {
+		margin: 0;
+		width: 100%;
+		min-height: 100vh;
+		background-color: var(--background-color);
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-weight: 700;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+	}
+
+	h1 {
+		font-size: clamp(2.5rem, 5vw, 4rem);
+		text-transform: uppercase;
+		letter-spacing: -0.03em;
+	}
+
+	h2 {
+		font-size: clamp(2rem, 4vw, 3rem);
+		text-transform: uppercase;
+		letter-spacing: -0.02em;
+	}
+
+	a {
+		color: var(--accent-color);
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	a:hover {
+		color: #ff5e2a;
+	}
+
+	/* Optimize image loading */
+	img {
+		max-width: 100%;
+		height: auto;
+		content-visibility: auto;
+	}
+
+	/* Optimize video loading */
+	video {
+		max-width: 100%;
+		height: auto;
+		content-visibility: auto;
+	}
+
+	/* Cinematic scrollbar */
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: var(--background-color);
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: var(--accent-color);
+		border-radius: 4px;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: #ff5e2a;
+	}
+
+	/* Selection color */
+	::selection {
+		background: var(--accent-color);
+		color: white;
+	}
+</style>

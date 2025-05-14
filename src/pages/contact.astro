@@ -1,0 +1,266 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Logo from '../components/Logo.astro';
+---
+
+<Layout>
+    <main>
+        <section class="video-section contact" data-theme="dark">
+            <div class="overlay"></div>
+            <div class="section-content contact-section-content">
+                <div class="contact-grid">
+                    <div class="contact-text">
+                        <h2>Let's Create Something Together</h2>
+                        <p>Get in touch to discuss your next project. We're always excited to hear new ideas and help bring your vision to life.</p>
+                    </div>
+                    <div class="form-container">
+                        <form class="contact-form" action="https://formspree.io/f/xqaqywjb" method="POST">
+                            <div class="form-group">
+                                <input type="text" name="name" id="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" id="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <select name="service" id="service" required>
+                                    <option value="">Select Service</option>
+                                    <option value="commercial">Commercial Production</option>
+                                    <option value="documentary">Documentary Filmmaking</option>
+                                    <option value="music">Music Videos</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="message" id="message" placeholder="Tell us about your project" required></textarea>
+                            </div>
+                            <button type="submit" class="cta-button">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>
+
+<style>
+    main {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .video-section {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        flex-grow: 1;
+        display: flex;
+        align-items: stretch;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+        z-index: 1;
+    }
+
+    .section-content {
+        position: relative;
+        z-index: 3;
+        color: white;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .video-section.contact {
+        background-image: url('/contact-background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .contact .contact-section-content {
+        padding: 6rem 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        width: 100%;
+        max-width: 1100px;
+        align-items: start;
+        transform: translateY(-10%);
+    }
+
+    .contact-text {
+        width: 100%;
+        text-align: left;
+    }
+
+    .contact-text h2 {
+        font-size: clamp(2.2rem, 4vw, 3.5rem);
+        margin-bottom: 1.5rem;
+        font-weight: 300;
+        line-height: 1.2;
+        text-align: left;
+    }
+
+    .contact-text p {
+        font-size: 1rem;
+        line-height: 1.7;
+        opacity: 0.85;
+        max-width: 100%;
+        margin: 0;
+        text-align: left;
+    }
+
+    .form-container {
+        background: rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 2.5rem;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+        width: 100%;
+        max-width: 480px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.96rem;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        color: white;
+        font-size: 0.88rem;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .form-group textarea {
+        height: 120px;
+        resize: vertical;
+        text-align: center;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+        text-align: center;
+    }
+
+    .form-group select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        padding-right: 3rem;
+        text-align-last: center;
+    }
+
+    .form-group select option {
+        background: #1a1a1a;
+        color: white;
+        text-align: center;
+    }
+
+    .contact .cta-button,
+    .cta-button {
+        width: 100%;
+        max-width: 480px;
+        padding: 0.96rem;
+        font-size: 0.88rem;
+        background: var(--accent-color);
+        border: 1px solid transparent;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        border-radius: 4px;
+    }
+
+    .contact .cta-button:hover,
+    .cta-button:hover {
+        background: transparent;
+        border-color: var(--accent-color);
+    }
+
+    @media (max-width: 900px) {
+        .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            max-width: 600px;
+            transform: translateY(0);
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+        .contact-text h2,
+        .contact-text p {
+            text-align: center;
+        }
+        .contact-text h2 {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .contact .contact-section-content {
+            padding: 3rem 1.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.8rem;
+        }
+
+        .contact-grid {
+             padding-top: 2rem;
+             padding-bottom: 2rem;
+             gap: 2rem;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<script>
+    // Basic script if needed (e.g., for form submission handling later)
+    // Currently no JS needed just for layout/styling
+</script> 

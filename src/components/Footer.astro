@@ -1,0 +1,169 @@
+--- 
+import Logo from './Logo.astro'; // Assuming Logo component is in the same directory or adjust path
+---
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-logo">
+            <Logo /> 
+            <span>Grain Productions</span>
+        </div>
+        <nav class="footer-nav">
+            <div class="nav-column">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="/#portfolio">Portfolio</a></li>
+                    <li><a href="/#behind-grain">Meet the Team</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav-column">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="https://www.instagram.com/grainvids">Instagram</a></li>
+                </ul>
+            </div>
+            <div class="nav-column">
+                <h4>Get in Touch</h4>
+                <ul>
+                    <li><a href="mailto:hello@thisisgrain.com">hello@thisisgrain.com</a></li>
+                    <li><a href="tel:+447967004106">+44 796 700 4106</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Grain Productions. All rights reserved.</p>
+    </div>
+</footer>
+
+<style>
+/* Footer Styles */
+.site-footer {
+	padding: 4rem 3.2rem 2rem; /* Reduced bottom padding */
+	background-color: #080808; /* Changed to match client logos section */
+	color: rgba(255, 255, 255, 0.7);
+	scroll-snap-align: end;
+	width: 100%;
+}
+
+.footer-content {
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+	gap: 4rem;
+	margin-bottom: 3rem;
+	max-width: 1400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.footer-logo {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 1rem;
+}
+
+/* Assuming Logo component applies its own styles or uses global styles */
+.footer-logo :global(svg) {
+	width: 48px;
+	height: 48px;
+	color: var(--accent-color); /* Use accent color for logo */
+}
+
+.footer-logo span {
+	font-size: 1rem;
+	font-weight: 500;
+	color: white;
+}
+
+.footer-nav {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 2rem;
+}
+
+.nav-column h4 {
+	font-size: 1rem;
+	font-weight: 600;
+	color: white;
+	margin-bottom: 1.5rem;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.nav-column ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.nav-column li {
+	margin-bottom: 0.8rem;
+}
+
+.nav-column a {
+	color: rgba(255, 255, 255, 0.7);
+	text-decoration: none;
+	transition: color 0.3s ease;
+	font-size: 0.9rem;
+}
+
+.nav-column a:hover {
+	color: white;
+}
+
+.nav-column li:not(:has(a)) { /* Style list items that are not links */
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 0.9rem;
+}
+
+
+.footer-bottom {
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	padding-top: 1.5rem;
+	text-align: center;
+	font-size: 0.8rem;
+	color: rgba(255, 255, 255, 0.5);
+	max-width: 1400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Responsive Footer Styles */
+@media (max-width: 992px) {
+	.footer-content {
+		grid-template-columns: 1fr;
+		gap: 3rem;
+		text-align: center;
+	}
+
+	.footer-logo {
+		align-items: center;
+	}
+
+	.footer-nav {
+		grid-template-columns: repeat(2, 1fr); /* Adjust for medium screens */
+		gap: 2rem 1rem;
+	}
+
+	.nav-column {
+		text-align: left; /* Align text left in columns on smaller screens */
+	}
+	.nav-column:nth-child(odd) {
+		padding-right: 1rem;
+	}
+	.nav-column:nth-child(even) {
+		padding-left: 1rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.site-footer {
+		padding: 3rem 1.6rem 1.5rem;
+	}
+
+	.footer-nav {
+		grid-template-columns: 1fr; /* Changed from 1fr 1fr */
+	}
+}
+</style> 

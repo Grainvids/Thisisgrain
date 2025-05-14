@@ -1,0 +1,43 @@
+# Node.js / npm / pnpm / yarn
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Astro
+dist/
+.astro/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Operating system generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.idea
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Optional User-specific files
+.eslintcache
+*.tsbuildinfo
