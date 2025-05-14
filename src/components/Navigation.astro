@@ -72,6 +72,13 @@ const socialLinks = [
         z-index: 101;
         pointer-events: all;
         padding-right: 0.2em;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .persistent-logo.logo-faded {
+        opacity: 0;
+        pointer-events: none;
     }
 
     .nav {
@@ -393,6 +400,34 @@ const socialLinks = [
             mobileMenuContent?.setAttribute('aria-hidden', 'true');
             menuOverlay?.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
+        }
+    });
+
+    // Logo fade on scroll past contact form (homepage only)
+    document.addEventListener('DOMContentLoaded', () => {
+        if (window.location.pathname === '/') {
+            const persistentLogo = document.querySelector('.persistent-logo');
+            const contactSection = document.getElementById('contact-section');
+
+            if (persistentLogo && contactSection) {
+                const handleScroll = () => {
+                    const contactSectionBottom = contactSection.getBoundingClientRect().bottom;
+                    const viewportTop = 0; 
+
+                    if (contactSectionBottom < viewportTop) {
+                        if (!persistentLogo.classList.contains('logo-faded')) {
+                            persistentLogo.classList.add('logo-faded');
+                        }
+                    } else {
+                        if (persistentLogo.classList.contains('logo-faded')) {
+                            persistentLogo.classList.remove('logo-faded');
+                        }
+                    }
+                };
+
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                handleScroll(); 
+            }
         }
     });
 </script> 
