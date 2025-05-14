@@ -41,6 +41,7 @@ import Footer from '../components/Footer.astro';
 				<div class="slide" style="background-image: url('/slide4.jpg')"></div>
 				<div class="slide" style="background-image: url('/slide5.jpg')"></div>
 				
+				<!-- slide-nav buttons removed
 				<button class="slide-nav prev" aria-label="Previous slide">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
 						<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -51,6 +52,7 @@ import Footer from '../components/Footer.astro';
 						<path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 					</svg>
 				</button>
+				-->
 				
 				<div class="slide-dots">
 					<button class="dot active" aria-label="Go to slide 1"></button>
@@ -67,7 +69,7 @@ import Footer from '../components/Footer.astro';
 						<h2><span>Production</span><br><span>that Just</span><br><span>hits Right.</span></h2>
 					</div>
 					<div class="text-container">
-						<p>Grain is a production collective that uniquely combines the talents of three individuals who have been working together independently for the last 15 years. By merging the fields of Directing, Cinematography, and the audio landscape, we offer a distinctive and innovative approach that breaks away from conventional norms and goes against the Grain.</p>
+						<p>Grain is a production collective that uniquely combines the talents of three individuals who have been working together independently for the last 15 years. By merging the fields of Directing, Cinematography, and the audio landscape, we offer a distinctive and innovative approach that breaks away from conventional norms and goes <b>against the Grain</b>.</p>
 					</div>
 				</div>
 			</div>
@@ -297,7 +299,7 @@ import Footer from '../components/Footer.astro';
 						<div class="member-info">
 							<h3>Luca Rudlin</h3>
 							<p class="role">Director</p>
-							<p class="bio">Visionary director with a keen eye for storytelling and emotional resonance. Specializes in crafting compelling narratives that captivate audiences.</p>
+							<p class="bio">Master of light and composition, bringing artistic vision to life through innovative camera work and visual storytelling techniques.</p>
 						</div>
 					</div>
 					<div class="team-member">
@@ -317,7 +319,7 @@ import Footer from '../components/Footer.astro';
 						<div class="member-info">
 							<h3>Pete Hall</h3>
 							<p class="role">Creative Director</p>
-							<p class="bio">Master of light and composition, bringing artistic vision to life through innovative camera work and visual storytelling techniques.</p>
+							<p class="bio">Visionary director with a keen eye for storytelling and emotional resonance. Specializes in crafting compelling narratives that captivate audiences.</p>
 						</div>
 					</div>
 				</div>
@@ -329,7 +331,7 @@ import Footer from '../components/Footer.astro';
 			<div class="section-content contact-section-content">
 				<div class="contact-grid"> 
 					<div class="contact-text">
-						<h2>Let's Create Something Together</h2>
+						<h2 id="contact-heading-trigger">Let's Create Something Together</h2>
 						<p>Get in touch to discuss your next project. We're always excited to hear new ideas and help bring your vision to life.</p>
 					</div>
 					<div class="form-container"> 
@@ -391,6 +393,7 @@ import Footer from '../components/Footer.astro';
 					<img src="/client_c.svg" alt="Client C Logo" />
 					<img src="/client_d.svg" alt="Client D Logo" />
 					<img src="/client_e.png" alt="Client E Logo" />
+					<img src="/Abbey_Road_Studios_Logo.png" alt="Abbey Road Studios Logo" />
 				</div>
 			</div>
 		</section>
@@ -546,18 +549,17 @@ import Footer from '../components/Footer.astro';
 		width: 100%;
 		height: 100%;
 		background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
-		z-index: 1;
 	}
 
 	.section-content {
 		position: relative;
-		z-index: 3;
 		color: white;
 		padding: 1.6rem;
 		height: 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		pointer-events: none;
 	}
 
 	/* Update text colors for better contrast */
@@ -742,6 +744,7 @@ import Footer from '../components/Footer.astro';
 		height: 100vh;
 		width: 100%;
 		padding: 0;
+		/* pointer-events: none; will be inherited from .section-content globally */
 	}
 
 	.striking .content-grid {
@@ -752,6 +755,7 @@ import Footer from '../components/Footer.astro';
 		max-width: 1400px;
 		margin: 0 auto;
 		padding: 0 3.2rem;
+		/* pointer-events: auto; Removed */
 	}
 
 	.striking .title-container {
@@ -769,6 +773,7 @@ import Footer from '../components/Footer.astro';
 		letter-spacing: -0.03em;
 		text-transform: none;
 		text-align: left;
+		/* pointer-events: auto; Removed */
 	}
 
 	.striking .text-container {
@@ -776,6 +781,10 @@ import Footer from '../components/Footer.astro';
 		flex-direction: column;
 		justify-content: center;
 		max-width: 500px;
+		font-weight: 300;
+		opacity: 0.8;
+		text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+		/* pointer-events: auto; Removed */
 	}
 
 	.striking p {
@@ -785,6 +794,7 @@ import Footer from '../components/Footer.astro';
 		font-weight: 300;
 		opacity: 0.8;
 		text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+		/* pointer-events: auto; Removed */
 	}
 
 	@media (max-width: 1024px) {
@@ -1118,7 +1128,6 @@ import Footer from '../components/Footer.astro';
 		left: 0;
 		width: 100%;
 		height: 100%;
-		z-index: 0;
 	}
 
 	.slide {
@@ -1153,7 +1162,6 @@ import Footer from '../components/Footer.astro';
 		align-items: center;
 		justify-content: center;
 		transition: all 0.3s ease;
-		z-index: 2;
 		backdrop-filter: blur(4px);
 	}
 
@@ -1176,7 +1184,6 @@ import Footer from '../components/Footer.astro';
 		transform: translateX(-50%);
 		display: flex;
 		gap: 0.5rem;
-		z-index: 2;
 	}
 
 	.dot {

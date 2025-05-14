@@ -81,6 +81,11 @@ const socialLinks = [
         pointer-events: none;
     }
 
+    /* Ensure persistent logo maintains a fixed size */
+    .persistent-logo :global(.logo) {
+        font-size: 2.5rem !important; 
+    }
+
     .nav {
         position: fixed;
         top: 0;
@@ -403,18 +408,19 @@ const socialLinks = [
         }
     });
 
-    // Logo fade on scroll past contact form (homepage only)
+    // Logo fade on scroll (homepage only)
     document.addEventListener('DOMContentLoaded', () => {
-        if (window.location.pathname === '/') {
+        if (window.location.pathname === '/') { // Only run on homepage
             const persistentLogo = document.querySelector('.persistent-logo');
-            const contactSection = document.getElementById('contact-section');
+            const triggerElement = document.getElementById('contact-heading-trigger');
+            const mainElement = document.querySelector('main'); // Get the main scroller
 
-            if (persistentLogo && contactSection) {
+            if (persistentLogo && triggerElement && mainElement) { // Check for mainElement too
                 const handleScroll = () => {
-                    const contactSectionBottom = contactSection.getBoundingClientRect().bottom;
-                    const viewportTop = 0; 
+                    const triggerElementTop = triggerElement.getBoundingClientRect().top;
+                    const viewportTop = 0;
 
-                    if (contactSectionBottom < viewportTop) {
+                    if (triggerElementTop < viewportTop) { 
                         if (!persistentLogo.classList.contains('logo-faded')) {
                             persistentLogo.classList.add('logo-faded');
                         }
@@ -425,8 +431,13 @@ const socialLinks = [
                     }
                 };
 
-                window.addEventListener('scroll', handleScroll, { passive: true });
-                handleScroll(); 
+                mainElement.addEventListener('scroll', handleScroll, { passive: true }); // Listen to mainElement
+                handleScroll();
+            } else {
+                console.error("Persistent logo, trigger element, or main scroller not found for fade effect.");
+                if (!persistentLogo) console.error("Persistent logo .persistent-logo missing");
+                if (!triggerElement) console.error("Trigger element #contact-heading-trigger missing");
+                if (!mainElement) console.error("Main scrolling element (<main>) missing");
             }
         }
     });
