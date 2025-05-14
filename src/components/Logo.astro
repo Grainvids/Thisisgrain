@@ -11,7 +11,7 @@
         font-size: 2.5rem;
         font-weight: 900;
         font-style: italic;
-        letter-spacing: -0.1em;
+        letter-spacing: -0.08em;
         position: relative;
         font-family: "Arial Black", Arial, sans-serif;
     }
@@ -23,14 +23,17 @@
     }
 
     .logo:hover .logo-text {
-        animation: grainEffect 0.8s steps(10) infinite;
+        /* animation: grainEffect 0.8s steps(10) infinite; */ /* Commented out to test cutoff issue */
     }
 
     .logo-text:nth-child(1) { animation-delay: 0.1s; }
     .logo-text:nth-child(2) { animation-delay: 0.2s; }
     .logo-text:nth-child(3) { animation-delay: 0.3s; }
     .logo-text:nth-child(4) { animation-delay: 0.4s; }
-    .logo-text:nth-child(5) { animation-delay: 0.5s; }
+    .logo-text:nth-child(5) { 
+        animation-delay: 0.5s;
+        padding-right: 0.1em; /* Added padding to the right of 'n' */
+    }
 
     @keyframes grainEffect {
         0% {
