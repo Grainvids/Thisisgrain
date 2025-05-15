@@ -486,9 +486,9 @@ function NewPricingForm() {
 
             return (
               <div key={addon.id} onClick={() => handleAddonToggle(addon.id)} role="checkbox" aria-checked={!!selectedAddons[addon.id]} tabIndex={0} onKeyPress={(e) => e.key === ' ' || e.key === 'Enter' ? handleAddonToggle(addon.id) : null} className={cardClasses}>
-                {addon.id === FULL_WORKS_BUNDLE_ID && (<span className="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">Best Value</span>)}
-                {addon.id === PRODUCTION_BUNDLE_ID && (<span className="absolute top-2 right-2 bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full">Most Popular</span>)}
-                {addon.id === POST_PROD_BUNDLE_ID && (<span className="absolute top-2 right-2 bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full">Most Popular</span>)}
+                {addon.id === FULL_WORKS_BUNDLE_ID && (<span className="absolute top-1 right-2 bg-green-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full">Best Value</span>)}
+                {addon.id === PRODUCTION_BUNDLE_ID && (<span className="absolute top-1 right-2 bg-yellow-400 text-black text-xs font-semibold px-1.5 py-0.5 rounded-full">Most Popular</span>)}
+                {addon.id === POST_PROD_BUNDLE_ID && (<span className="absolute top-1 right-2 bg-yellow-400 text-black text-xs font-semibold px-1.5 py-0.5 rounded-full">Most Popular</span>)}
                 <h3 className={titleClasses} id={`addon-title-${addon.id}`}>{addon.title}</h3>
                 <p className="text-sm font-bold mb-2">{priceDisplay}</p>
                 <p className="text-sm text-black">{addon.description}</p>

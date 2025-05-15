@@ -67,7 +67,7 @@ import Footer from '../components/Footer.astro';
                                 preload="auto"
                                 class="content-video"
                             >
-                                <source src="/education-content.mp4" type="video/mp4">
+                                <source src="/Showreel1.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>
@@ -222,6 +222,7 @@ import Footer from '../components/Footer.astro';
                 <img src="/client_c.svg" alt="Client C Logo" />
                 <img src="/client_d.svg" alt="Client D Logo" />
                 <img src="/client_e.png" alt="Client E Logo" />
+                <img src="/Abbey_Road_Studios_Logo.png" alt="Abbey Road Studios Logo" />
             </div>
         </div>
     </section>
@@ -235,7 +236,8 @@ import Footer from '../components/Footer.astro';
         min-height: 100vh;
         background: #f5f5f5;
         position: relative;
-        /* overflow-x: hidden; */ /* Temporarily comment out to test sticky */
+        overflow-x: hidden; /* Prevent horizontal overflow */
+        overflow-y: visible; /* Ensure main doesn't clip sticky content vertically */
     }
 
     .content-section {
@@ -325,17 +327,32 @@ import Footer from '../components/Footer.astro';
         display: grid;
         grid-template-columns: 250px 1fr;
         gap: 4rem;
+        /* border: 1px solid red; */ /* DEBUG BORDER - Removed */
     }
 
     /* Sidebar Navigation */
     .sidebar-nav {
-        position: sticky;
-        top: 4rem;
+        /* position: sticky; */ /* Replaced by JS */
+        /* top: 4rem; */ /* Replaced by JS */
+        /* align-self: start; */ /* Replaced by JS */
         height: fit-content;
         padding: 2rem;
         background: white;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        /* transition: top 0.3s ease; */ /* Optional: for smooth fixing */
+        z-index: 10; /* Ensure it's above other content when fixed */
+    }
+
+    .sidebar-nav.is-fixed {
+        position: fixed;
+        top: 4rem; /* Adjust as needed, e.g., to account for main nav height */
+        /* width will be set by JS */
+    }
+
+    .sidebar-nav.is-bottomed {
+        position: absolute;
+        /* bottom and left will be set by JS, top will be 'auto' */
     }
 
     .sidebar-nav ul {
@@ -369,11 +386,16 @@ import Footer from '../components/Footer.astro';
     /* Content Area */
     .content-area {
         max-width: 800px;
+        box-sizing: border-box; /* Ensure consistent box model */
+        grid-column-start: 2; /* Explicitly place in the second grid column */
+        /* min-height: 150vh; */ /* Diagnostic: Ensure enough height for sticky to trigger - REMOVED */
+        /* border: 1px solid red; */ /* DEBUG BORDER - Removed */
     }
 
     .content-block {
         margin-bottom: 6rem;
         scroll-margin-top: 2rem;
+        /* border: 1px solid blue; */ /* DEBUG BORDER - Removed */
     }
 
     .content-block h2 {
@@ -385,6 +407,7 @@ import Footer from '../components/Footer.astro';
         margin-bottom: 2rem;
         color: #000;
         text-transform: lowercase;
+        overflow-wrap: break-word;
     }
 
     .content-block p {
@@ -392,6 +415,7 @@ import Footer from '../components/Footer.astro';
         line-height: 1.8;
         color: #333;
         margin-bottom: 2rem;
+        overflow-wrap: break-word;
     }
 
     /* Style for h3 in the overview section */
@@ -760,6 +784,8 @@ import Footer from '../components/Footer.astro';
             top: 0;
             margin-bottom: 2rem;
             padding: 1rem 0; /* Adjust padding for mobile */
+            min-width: 0;
+            display: none; /* Hide sidebar on mobile */
         }
 
         .sidebar-nav ul {
@@ -823,6 +849,27 @@ import Footer from '../components/Footer.astro';
 
         .pricing-grid {
             grid-template-columns: 1fr;
+        }
+
+        .content-area { /* Style for mobile */
+            width: 100%;
+            max-width: 100%; /* Ensure no conflict with desktop max-width */
+            box-sizing: border-box; /* Explicitly set box model */
+            min-width: 0; /* Allow grid item to shrink fully */
+            grid-column-start: 1; /* Ensure it takes the first column in single-column layout */
+            /* overflow-x: auto; */ /* Let content-block handle its own overflow */
+            /* word-break: break-all; */ /* Reverted: was a diagnostic tool */
+        }
+
+        .content-block { /* Style for mobile */
+            width: 100%;
+            box-sizing: border-box; /* Explicitly set box model */
+            overflow-x: auto; /* If a block's content is too wide, the block scrolls */
+        }
+
+        #real-results blockquote { /* Style for mobile */
+            width: 100%;
+            box-sizing: border-box;
         }
     }
 
@@ -985,82 +1032,224 @@ import Footer from '../components/Footer.astro';
         background-color: #ddd;
         margin: 3rem 0;
     }
+
+    /* Added to help prevent text overflow in various elements */
+    .content-block h3,
+    .content-block h4,
+    .content-block li,
+    .content-block blockquote footer,
+    .timeline-content h3 {
+        overflow-wrap: break-word;
+    }
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.querySelectorAll('.sidebar-nav a');
+    // Smooth scroll for sidebar links
+    document.querySelectorAll('.sidebar-nav a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const mainNav = document.querySelector('nav.nav');
+                const mainNavHeight = mainNav ? mainNav.offsetHeight : 0;
+                const scrollOffset = mainNavHeight + 32; // 2rem, consistent with sticky calculation
+
+                const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - scrollOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+
+                document.querySelectorAll('.sidebar-nav a').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+
+    // Active link highlighting on scroll for sidebar
+    const sections = document.querySelectorAll('.content-area section[id]');
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+    const mainNavForActiveLink = document.querySelector('nav.nav'); 
+
+    function changeLinkState() {
+        let index = sections.length;
+        const mainNavHeight = mainNavForActiveLink ? mainNavForActiveLink.offsetHeight : 0;
+        const scrollOffset = mainNavHeight + 32; 
+
+        while(--index >= 0 && window.pageYOffset + scrollOffset < sections[index].offsetTop) {}
         
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                if (!targetId) return;
-                
-                const targetElement = document.querySelector<HTMLElement>(targetId);
-                
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+        sidebarLinks.forEach((link) => link.classList.remove('active'));
+        if (index >= 0 && sidebarLinks[index]) { // check index bounds
+            sidebarLinks[index].classList.add('active');
+        }
+    }
 
-                    // Update active state
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
-                }
-            });
-        });
+    if (sections.length > 0 && sidebarLinks.length > 0) {
+        changeLinkState(); 
+        window.addEventListener('scroll', changeLinkState);
+    }
 
-        // Update active state on scroll
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${id}`) {
-                            link.classList.add('active');
-                        }
-                    });
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.content-block').forEach(block => {
-            observer.observe(block);
-        });
-
-        // Timeline item toggle for mobile/click
-        const timelineItems = document.querySelectorAll('.timeline-item');
-        timelineItems.forEach(item => {
-            // Use the .timeline-content div as the click target
-            const content = item.querySelector('.timeline-content');
-            content?.addEventListener('click', () => {
+    // Timeline item expansion
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    timelineItems.forEach(item => {
+        const content = item.querySelector('.timeline-content');
+        if (content) {
+            content.addEventListener('click', () => {
                 item.classList.toggle('expanded');
             });
-            // Also allow Enter/Space key for accessibility
-            content?.addEventListener('keydown', (e: Event) => {
-                const keyboardEvent = e as KeyboardEvent;
-                if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
-                    keyboardEvent.preventDefault(); // Prevent default space scroll
+            content.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
                     item.classList.toggle('expanded');
                 }
             });
-        });
-
-        // Video loading
-        const contentVideo = document.querySelector('.content-video');
-        if (contentVideo instanceof HTMLVideoElement) {
-            contentVideo.addEventListener('loadeddata', () => {
-                contentVideo.classList.add('loaded');
-            });
         }
     });
+
+    // Video loaded class
+    const contentVideo = document.querySelector('.content-video');
+    if (contentVideo instanceof HTMLVideoElement) {
+        contentVideo.addEventListener('loadeddata', () => {
+            contentVideo.classList.add('loaded');
+        });
+    }
+
+    // Sticky sidebar logic
+    const sidebar = document.querySelector('.sidebar-nav');
+    const contentContainer = document.querySelector('.content-container');
+    const contentArea = document.querySelector('.content-area');
+    const mainNavForSticky = document.querySelector('nav.nav');
+
+    if (sidebar && contentContainer && contentArea && mainNavForSticky) {
+        let sidebarOriginalWidth = 0; 
+        
+        // Use columnGap from contentContainer, default to 0 if not found or not a number
+        const getGridColumnGap = () => {
+            if (!contentContainer) return 0;
+            const gapValue = window.getComputedStyle(contentContainer).columnGap;
+            const parsedGap = parseFloat(gapValue);
+            return isNaN(parsedGap) ? 0 : parsedGap;
+        };
+        // let gridColumnGap = getGridColumnGap(); // Calculated in calculateInitialLayout
+
+        const updateSidebarOriginalWidth = () => {
+            const wasFixed = sidebar.classList.contains('is-fixed');
+            const wasBottomed = sidebar.classList.contains('is-bottomed');
+            
+            sidebar.classList.remove('is-fixed', 'is-bottomed');
+            const prevPosition = sidebar.style.position;
+            const prevWidth = sidebar.style.width;
+            sidebar.style.position = ''; 
+            sidebar.style.width = '';    
+
+            sidebarOriginalWidth = sidebar.offsetWidth;
+
+            sidebar.style.position = prevPosition; // Restore if needed for other logic, though scroll handler will override
+            sidebar.style.width = prevWidth;
+            if (wasFixed) sidebar.classList.add('is-fixed');
+            if (wasBottomed) sidebar.classList.add('is-bottomed');
+        };
+
+        const mainNavHeight = mainNavForSticky.offsetHeight;
+        const fixedTopValue = mainNavHeight + 32; 
+
+        let initialSidebarScrollOffsetTop = 0;
+        let initialSidebarLeftLayout = '0px'; 
+        let initialContentAreaMarginLeft = '0px'; 
+        let initialContentContainerPaddingLeft = '0px';
+        let gridColumnGap = 0;
+
+
+        const calculateInitialLayout = () => {
+            sidebar.classList.remove('is-fixed', 'is-bottomed');
+            sidebar.style.position = ''; sidebar.style.top = ''; sidebar.style.bottom = '';
+            sidebar.style.left = ''; sidebar.style.width = '';
+            // DO NOT RESET contentArea.style.marginLeft here if we want to preserve its CSS defined margin.
+            // We will store its original margin and re-apply that if we ever touch it.
+            // However, the strategy is to NOT touch it for stickiness.
+
+            updateSidebarOriginalWidth(); // Sets sidebarOriginalWidth
+
+            initialContentAreaMarginLeft = window.getComputedStyle(contentArea).marginLeft;
+            initialContentContainerPaddingLeft = window.getComputedStyle(contentContainer).paddingLeft;
+            gridColumnGap = getGridColumnGap(); // Calculate gap here
+
+            const rect = sidebar.getBoundingClientRect();
+            initialSidebarScrollOffsetTop = rect.top + window.scrollY;
+            initialSidebarLeftLayout = rect.left + 'px'; 
+            
+            // console.log(`Initial: top=${initialSidebarScrollOffsetTop}, left=${initialSidebarLeftLayout}, width=${sidebarOriginalWidth}, contentMarginL=${initialContentAreaMarginLeft}, containerPadL=${initialContentContainerPaddingLeft}, gap=${gridColumnGap}`);
+        };
+
+        calculateInitialLayout();
+        window.addEventListener('resize', () => {
+            // Re-calculate layout dependent values on resize
+            // mainNavHeight might change if nav resizes, fixedTopValue depends on it.
+            // For simplicity, re-running full init. A more optimized approach might update specific parts.
+            calculateInitialLayout(); 
+            // Trigger scroll handler logic in case resize changes sticky state
+            handleStickyScroll(); 
+        }); 
+        
+        function handleStickyScroll() {
+            if (!contentArea || !contentContainer) return;
+
+            if (window.innerWidth <= 768) { 
+                sidebar.classList.remove('is-fixed', 'is-bottomed');
+                sidebar.style.position = ''; sidebar.style.top = ''; sidebar.style.bottom = '';
+                sidebar.style.left = ''; sidebar.style.width = '';
+                // Restore original margin if it was ever changed by an older version of script, not needed by this version.
+                // contentArea.style.marginLeft = initialContentAreaMarginLeft; 
+                return;
+            }
+
+            const scrollY = window.scrollY;
+            const contentContainerRect = contentContainer.getBoundingClientRect();
+            const sidebarHeight = sidebar.offsetHeight;
+
+            const stickPoint = initialSidebarScrollOffsetTop - fixedTopValue;
+            const unstickBottomPointDoc = (contentContainerRect.top + scrollY + contentContainer.offsetHeight) - sidebarHeight;
+            
+            if (scrollY > stickPoint && (scrollY + fixedTopValue) < unstickBottomPointDoc) { 
+                if (!sidebar.classList.contains('is-fixed')) {
+                    sidebar.classList.add('is-fixed');
+                    sidebar.classList.remove('is-bottomed');
+                    sidebar.style.position = 'fixed';
+                    sidebar.style.width = sidebarOriginalWidth + 'px';
+                    sidebar.style.left = initialSidebarLeftLayout; 
+                    sidebar.style.top = fixedTopValue + 'px';
+                    sidebar.style.bottom = 'auto';
+                    // CRITICAL: DO NOT MODIFY contentArea.style.marginLeft
+                    // console.log('Sidebar: FIXED');
+                }
+            } else if ((scrollY + fixedTopValue) >= unstickBottomPointDoc) { 
+                if (!sidebar.classList.contains('is-bottomed')) {
+                    sidebar.classList.remove('is-fixed');
+                    sidebar.classList.add('is-bottomed');
+                    sidebar.style.position = 'absolute';
+                    sidebar.style.width = sidebarOriginalWidth + 'px';
+                    sidebar.style.top = (contentContainer.offsetHeight - sidebarHeight - parseFloat(window.getComputedStyle(contentContainer).paddingBottom || '0')) + 'px';
+                    sidebar.style.left = initialContentContainerPaddingLeft; 
+                    sidebar.style.bottom = 'auto';
+                    // CRITICAL: DO NOT MODIFY contentArea.style.marginLeft
+                    // console.log('Sidebar: BOTTOMED');
+                }
+            } else { 
+                if (sidebar.classList.contains('is-fixed') || sidebar.classList.contains('is-bottomed')) {
+                    sidebar.classList.remove('is-fixed', 'is-bottomed');
+                    sidebar.style.position = ''; 
+                    sidebar.style.top = ''; sidebar.style.bottom = '';
+                    sidebar.style.left = ''; sidebar.style.width = '';
+                    // CRITICAL: DO NOT MODIFY contentArea.style.marginLeft
+                    // console.log('Sidebar: NORMAL');
+                }
+            }
+        }
+        window.addEventListener('scroll', handleStickyScroll);
+        handleStickyScroll(); // Initial call
+
+    } // end if (sidebar && contentContainer && contentArea && mainNavForSticky)
 </script> 
