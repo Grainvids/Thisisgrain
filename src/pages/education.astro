@@ -9,17 +9,19 @@ import Footer from '../components/Footer.astro';
     <main>
         <!-- Hero Section -->
         <section class="hero">
-            <div class="hero-background"></div>
+            <video autoplay muted loop playsinline class="hero-background-video" poster="/education-hero.jpg">
+                <source src="/showreeledu.webm" type="video/webm">
+                <source src="/showreeledu.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-overlay"></div>
             <div class="hero-content">
-                <nav class="breadcrumb">
-                    <a href="/">Home</a>
-                    <span class="separator">/</span>
-                    <a href="/services">Services</a>
-                    <span class="separator">/</span>
-                    <span>Education</span>
-                </nav>
-                <h1>Education</h1>
-                <p class="hero-subtitle">Professional video for your music department</p>
+                <a href="#student-impact" id="scroll-down-arrow" aria-label="Scroll to main content">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                </a>
             </div>
         </section>
 
@@ -29,26 +31,97 @@ import Footer from '../components/Footer.astro';
                 <!-- Left Sidebar Navigation -->
                 <nav class="sidebar-nav">
                     <ul>
-                        <li><a href="#overview" class="active">Overview</a></li>
-                        <li><a href="#educator-focus">Educator Focus</a></li>
-                        <li><a href="#student-impact">Student Impact</a></li>
-                        <li><a href="#process">How It Works</a></li>
+                        <li><a href="#student-impact" class="active">Student Impact</a></li>
                         <li><a href="#real-results">Real Results</a></li>
-                        <li><a href="#customisable-scalable">Customisable & Scalable</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#what-we-do">What We Do</a></li>
+                        <li><a href="#educator-focus">Educator Focus</a></li>
+                        <li><a href="#process">How It Works</a></li>
+                        <li><a href="#customisable-pricing">Customisable Pricing</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </nav>
 
                 <!-- Right Content Area -->
                 <div class="content-area">
-                    <section id="overview" class="content-block">
-                        <h2>What We Do</h2>
-                        <h3>Industry-Ready Performance Videos for Your Students</h3>
+                    <!-- NEW SECTION START: Student Impact -->
+                    <section id="student-impact" class="content-block">
+                        <h2>🔥 High impact for students</h2>
+                        <h3 class="subheading-impact">Live performance videos that help you stand out from the crowd.</h3>
+                        <div class="impact-grid"> 
+                            <div class="impact-item"> 
+                                <h3>A video that opens doors</h3>
+                                <ul>
+                                    <li>Management, festival or gig pitches.</li>
+                                    <li>Professional portfolios or final-year showreels</li>
+                                </ul>
+                            </div>
+                            <div class="impact-item">
+                                <h3>Confidence-boosting, on-camera coaching</h3>
+                                <p>We coach students throughout the session — how to perform for camera, how to adapt on the fly, and how to own the space.</p>
+                            </div>
+                            <div class="impact-item">
+                                <h3>Buzz you can feel</h3>
+                                <p>There's a real energy on the day — fast-paced, supportive, and inspiring. Students step up and feel the shift into professional mode.</p>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- NEW SECTION END: Student Impact -->
+
+                    <!-- NEW SECTION: Real Results -->
+                    <section id="real-results" class="content-block">
+                        <h2>📈 Real results</h2>
+                        
+                        <h4>Survey highlights</h4>
+                        <ul>
+                            <li>
+                                <div class="donut-container">
+                                    <svg viewBox="0 0 36 36" class="donut-svg">
+                                        <circle class="donut-track" cx="18" cy="18" r="15.9154943092" stroke-width="3"></circle>
+                                        <circle class="donut-fill" cx="18" cy="18" r="15.9154943092" stroke-width="3" stroke-dasharray="96 100" transform="rotate(-90 18 18)"></circle>
+                                        <text x="18" y="18" class="donut-number">96%</text>
+                                    </svg>
+                                </div>
+                                "The videos helped me promote my music professionally."
+                            </li>
+                            <li>
+                                <div class="donut-container">
+                                    <svg viewBox="0 0 36 36" class="donut-svg">
+                                        <circle class="donut-track" cx="18" cy="18" r="15.9154943092" stroke-width="3"></circle>
+                                        <circle class="donut-fill" cx="18" cy="18" r="15.9154943092" stroke-width="3" stroke-dasharray="87 100" transform="rotate(-90 18 18)"></circle>
+                                        <text x="18" y="18" class="donut-number">87%</text>
+                                    </svg>
+                                </div>
+                                "This experience boosted my confidence in future performance settings."
+                            </li>
+                            <li>
+                                <div class="donut-container">
+                                    <svg viewBox="0 0 36 36" class="donut-svg">
+                                        <circle class="donut-track" cx="18" cy="18" r="15.9154943092" stroke-width="3"></circle>
+                                        <circle class="donut-fill" cx="18" cy="18" r="15.9154943092" stroke-width="3" stroke-dasharray="73 100" transform="rotate(-90 18 18)"></circle>
+                                        <text x="18" y="18" class="donut-number">73%</text>
+                                    </svg>
+                                </div>
+                                "I wouldn't have had access to something like this without my course."
+                            </li>
+                        </ul>
+                        
+                    </section>
+
+                    <div class="overview-media">
+                        <img src="/education photo 3.png" alt="Educator feedback highlight" class="overview-image" />
+                        <div class="quote-overlay">
+                            <p class="quote-text">"Really appreciate your calm approach and ability to be flexible with the speedy turnarounds and diversity of the projects."</p>
+                            <p class="quote-attribution">— Hannah McGuigan, Curriculum Lead, RNCM</p>
+                        </div>
+                    </div>
+
+                    <section id="what-we-do" class="content-block">
+                        <h2>What we do</h2>
+                        <h3>Industry-ready performance videos for your students</h3>
                         <p><strong>A Turnkey Performance Video Experience That Brings the Industry to Your Classroom</strong></p>
                         <p>We know how important it is to prepare students not just for recitals and exams, but for the <b>reality of today's music industry</b>. That's where we come in.</p>
                         <p>We run immersive and fast-paced recording days in carefully selected off-campus venues — ideally music venues in your city with character, great acoustics, and strong cultural ties. We bring a full video and audio production setup and work closely with your students to produce high-quality live performance videos, delivered immediately and ready for the real world.</p>
-                        <h4>Format at a Glance</h4>
+                        <h4>Format at a glance</h4>
                         <ul>
                             <li>🎤 5 acts per day</li>
                             <li>⏱ 1 hour per act</li>
@@ -57,67 +130,36 @@ import Footer from '../components/Footer.astro';
                             <li>🛠 All videos are mixed and edited live — no waiting required</li>
                         </ul>
                         <p>This structure ensures each student act gets focused, professional attention and walks away with a valuable piece of content they can use right away.</p>
-                        
-                        <div class="overview-video">
-                            <video 
-                                autoplay 
-                                muted 
-                                loop 
-                                playsinline 
-                                preload="auto"
-                                class="content-video"
-                            >
-                                <source src="/Showreel1.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
                     </section>
+
+                    <div class="overview-media">
+                        <img src="/education photo 2.png" alt="Student experience highlight" class="overview-image" />
+                        <div class="quote-overlay">
+                            <p class="quote-text">"Everything was run smoothly. The sound when recording was great, very clear… Making the overall experience and recordings enjoyable."</p>
+                            <p class="quote-attribution">— Student</p>
+                        </div>
+                    </div>
 
                     <!-- NEW SECTION START -->
                     <section id="educator-focus" class="content-block">
-                        <h2>📚 Designed With Educators in Mind</h2>
+                        <h2>📚 Designed with educators in mind</h2>
                         
-                        <h3>Bring Academic Theory Into Real-World Application</h3>
+                        <h3>Bring academic theory into real-world application</h3>
                         <p>Students can bring in original material or covers, then see them captured with broadcast-level audio and visuals. Each session includes live review with feedback from a director, cinematographer, and sound engineer — with combined credits on multiple number 1 album campaigns.</p>
                         
-                        <h3>Fits Into Your Teaching Hours and Curriculum</h3>
+                        <h3>Fits into your teaching hours and curriculum</h3>
                         <p>We run during regular hours, and you can use this experience for assessment, module alignment (performance, business, composition, etc.), or enrichment.</p>
                         
-                        <h3>Minimal Workload for You</h3>
+                        <h3>Minimal workload for you</h3>
                         <p>You bring the students — we'll do the rest. We provide a form for students to submit tech specs and setlists, so you don't have to chase the admin. Our small crew makes setup and timing flexible.</p>
                         
-                        <h3>Content You Can Use for Course Promotion</h3>
+                        <h3>Content you can use for course promotion</h3>
                         <p>The final videos don't just benefit students — they can also be a powerful tool for you. With optional add-ons like a showreel compilation or artist interviews, you'll have high-quality footage that can be used to promote your course, showcase student success, and attract future applicants. We can even create a dedicated promotional video highlighting the day as a flagship feature of your program. This content can be used for open days, digital marketing, social media, and recruitment campaigns.</p>
                     </section>
                     <!-- NEW SECTION END -->
 
-                    <!-- NEW SECTION START: Student Impact -->
-                    <section id="student-impact" class="content-block">
-                        <h2>🔥 High Impact for Students</h2>
-                        <div class="impact-grid"> 
-                            <div class="impact-item"> 
-                                <h3>A Video That Opens Doors</h3>
-                                <p>Each student walks away with a live video they can use for:</p>
-                                <ul>
-                                    <li>Management and label pitches</li>
-                                    <li>Festival and gig applications</li>
-                                    <li>Professional portfolios or final-year showreels</li>
-                                </ul>
-                            </div>
-                            <div class="impact-item">
-                                <h3>Confidence-Boosting, On-Camera Coaching</h3>
-                                <p>We coach students throughout the session — how to perform for camera, how to adapt on the fly, and how to own the space.</p>
-                            </div>
-                            <div class="impact-item">
-                                <h3>Buzz You Can Feel</h3>
-                                <p>There's a real energy on the day — fast-paced, supportive, and inspiring. Students step up and feel the shift into professional mode.</p>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- NEW SECTION END: Student Impact -->
-
                     <section id="process" class="content-block">
-                        <h2>⚙️ How It Works</h2>
+                        <h2>⚙️ How it works</h2>
                         <div class="timeline">
                             <div class="timeline-item">
                                 <div class="timeline-number">01</div>
@@ -164,47 +206,23 @@ import Footer from '../components/Footer.astro';
                         </div>
                     </section>
 
-                    <!-- NEW SECTION: Real Results -->
-                    <section id="real-results" class="content-block">
-                        <h2>📈 Real Results</h2>
-                        
-                        <h4>Survey Highlights from Previous Sessions:</h4>
-                        <ul>
-                            <li>96%: "The videos helped me promote my music professionally."</li>
-                            <li>87%: "This experience boosted my confidence in future performance settings."</li>
-                            <li>73%: "I wouldn't have had access to something like this without my course."</li>
-                        </ul>
-                        
-                        <h4>Student & Faculty Feedback:</h4>
-                        <blockquote>
-                            <p>"Everything was run smoothly. The sound when recording was great, very clear… Making the overall experience and recordings enjoyable."</p>
-                            <footer>— RNCM Student</footer>
-                        </blockquote>
-                        <blockquote>
-                            <p>"The guys were super easy to work with — very accommodating, friendly and incredibly quick between setups."</p>
-                            <footer>— RNCM Student</footer>
-                        </blockquote>
-                        <blockquote>
-                            <p>"Really appreciate your calm approach and ability to be flexible with the speedy turnarounds and diversity of the projects."</p>
-                            <footer>— Hannah McGuigan</footer>
-                        </blockquote>
-                        
-                        <hr class="custom-divider">
-                    </section>
+                    <div class="overview-media">
+                        <img src="/education photo 3.png" alt="Educator feedback highlight" class="overview-image" />
+                        <div class="quote-overlay">
+                            <p class="quote-text">"Really appreciate your calm approach and ability to be flexible with the speedy turnarounds and diversity of the projects."</p>
+                            <p class="quote-attribution">— Hannah McGuigan, Curriculum Lead, RNCM</p>
+                        </div>
+                    </div>
 
-                    <!-- NEW SECTION: Customisable & Scalable -->
-                    <section id="customisable-scalable" class="content-block">
-                        <h2>🎛 Customisable pricing</h2>
+                    <!-- NEW SECTION: Customisable & Scalable merged with Pricing -->
+                    <section id="customisable-pricing" class="content-block">
+                        <h2>🎛 Customisable Pricing</h2>
                         <p>Let's give your students something unforgettable — a real taste of what it means to be a professional artist in today's music world.</p>
-                    </section>
-
-                    <section id="pricing" class="content-block">
-                        <h2>Pricing</h2>
                         <NewPricingForm client:load />
                     </section>
 
                     <section id="contact" class="content-block">
-                        <h2>Get in Touch</h2>
+                        <h2>Get in touch</h2>
                         <p>Ready to discuss your project? Contact us to learn more about our services and how we can help your music department.</p>
                         <a href="/contact" class="cta-button">Contact Us</a>
                     </section>
@@ -215,7 +233,7 @@ import Footer from '../components/Footer.astro';
 
     <section class="client-logos-section">
         <div class="container">
-            <h3 class="section-title">Trusted By</h3>
+            <h3 class="section-title">Trusted by</h3>
             <div class="client-logos-grid">
                 <img src="/client_a.png" alt="Client A Logo" />
                 <img src="/client_b.svg" alt="Client B Logo" class="client-b-logo" />
@@ -236,7 +254,7 @@ import Footer from '../components/Footer.astro';
         min-height: 100vh;
         background: #f5f5f5;
         position: relative;
-        overflow-x: hidden; /* Prevent horizontal overflow */
+        overflow-x: visible; /* Changed from hidden to visible */
         overflow-y: visible; /* Ensure main doesn't clip sticky content vertically */
     }
 
@@ -248,25 +266,34 @@ import Footer from '../components/Footer.astro';
 
     .hero {
         position: relative;
-        height: 64vh;
-        min-height: 480px;
+        height: 100vh;
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         color: white;
         overflow: hidden;
         z-index: 1;
+        padding-bottom: 4rem;
     }
 
-    .hero-background {
+    .hero-background-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+    }
+
+    .hero-overlay {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('/education-hero.jpg');
-        background-size: cover;
-        background-position: center;
-        filter: brightness(0.7);
+        background-color: transparent;
+        z-index: 0;
     }
 
     .hero-content {
@@ -276,6 +303,7 @@ import Footer from '../components/Footer.astro';
         margin: 0 auto;
         padding: 0 2rem;
         width: 100%;
+        text-align: center;
     }
 
     .breadcrumb {
@@ -306,7 +334,7 @@ import Footer from '../components/Footer.astro';
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 1rem;
         line-height: 1.2;
-        text-transform: lowercase;
+        text-transform: none;
         color: var(--accent-color);
     }
 
@@ -327,32 +355,25 @@ import Footer from '../components/Footer.astro';
         display: grid;
         grid-template-columns: 250px 1fr;
         gap: 4rem;
-        /* border: 1px solid red; */ /* DEBUG BORDER - Removed */
     }
 
     /* Sidebar Navigation */
     .sidebar-nav {
-        /* position: sticky; */ /* Replaced by JS */
-        /* top: 4rem; */ /* Replaced by JS */
-        /* align-self: start; */ /* Replaced by JS */
         height: fit-content;
         padding: 2rem;
         background: white;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        /* transition: top 0.3s ease; */ /* Optional: for smooth fixing */
-        z-index: 10; /* Ensure it's above other content when fixed */
+        z-index: 10;
     }
 
     .sidebar-nav.is-fixed {
         position: fixed;
-        top: 4rem; /* Adjust as needed, e.g., to account for main nav height */
-        /* width will be set by JS */
+        top: 4rem;
     }
 
     .sidebar-nav.is-bottomed {
         position: absolute;
-        /* bottom and left will be set by JS, top will be 'auto' */
     }
 
     .sidebar-nav ul {
@@ -386,16 +407,13 @@ import Footer from '../components/Footer.astro';
     /* Content Area */
     .content-area {
         max-width: 800px;
-        box-sizing: border-box; /* Ensure consistent box model */
-        grid-column-start: 2; /* Explicitly place in the second grid column */
-        /* min-height: 150vh; */ /* Diagnostic: Ensure enough height for sticky to trigger - REMOVED */
-        /* border: 1px solid red; */ /* DEBUG BORDER - Removed */
+        box-sizing: border-box;
+        grid-column-start: 2;
     }
 
     .content-block {
-        margin-bottom: 6rem;
+        margin-bottom: 1.5rem; /* Updated bottom margin for all sections */
         scroll-margin-top: 2rem;
-        /* border: 1px solid blue; */ /* DEBUG BORDER - Removed */
     }
 
     .content-block h2 {
@@ -406,8 +424,19 @@ import Footer from '../components/Footer.astro';
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 2rem;
         color: #000;
-        text-transform: lowercase;
+        text-transform: none;
         overflow-wrap: break-word;
+    }
+
+    .subheading-impact {
+        font-size: 1.2rem;
+        font-weight: normal;
+        color: #555;
+        margin-top: -1rem;
+        margin-bottom: 2.5rem;
+        text-align: left;
+        font-style: italic;
+        letter-spacing: -0.02em;
     }
 
     .content-block p {
@@ -419,7 +448,7 @@ import Footer from '../components/Footer.astro';
     }
 
     /* Style for h3 in the overview section */
-    #overview h3 {
+    #what-we-do h3 {
         color: var(--accent-color);
         font-size: 1.28rem;
         font-weight: bold;
@@ -431,7 +460,7 @@ import Footer from '../components/Footer.astro';
     }
 
     /* Style for h4 in the overview section */
-    #overview h4 {
+    #what-we-do h4 {
         color: var(--accent-color);
         font-size: 1.28rem;
         font-weight: bold;
@@ -440,52 +469,58 @@ import Footer from '../components/Footer.astro';
         letter-spacing: normal;
         text-transform: none;
         margin-bottom: 1rem;
-        margin-top: 2rem; /* Add some space above list heading */
+        margin-top: 2rem;
     }
 
     /* Style for the new list in the overview section */
-    #overview ul {
-        list-style: none; /* Assuming you want to keep emojis and not default bullets */
-        padding-left: 0; /* Remove default padding if no bullets */
+    #what-we-do ul {
+        list-style: none;
+        padding-left: 0;
         margin-bottom: 2rem;
     }
 
-    #overview ul li {
-        color: #333; /* Match paragraph color for list items */
-        font-size: 0.88rem; /* Match paragraph font size */
-        line-height: 1.8; /* Match paragraph line height */
-        margin-bottom: 0.5rem; /* Space between list items */
+    #what-we-do ul li {
+        color: #333;
+        font-size: 0.88rem;
+        line-height: 1.8;
+        margin-bottom: 0.5rem;
     }
 
     /* Style for h3 in the educator-focus section */
     #educator-focus h3 {
         color: var(--accent-color);
-        font-size: 1.28rem;   /* Adjusted size for a less prominent heading */
-        font-weight: bold;     /* Standard bold */
-        font-family: inherit;  /* Inherit body font family */
-        font-style: normal;    /* Not italic */
-        letter-spacing: normal;/* Default letter spacing */
-        text-transform: none;    /* Use HTML's capitalization */
-        margin-bottom: 1rem;   /* Adjusted bottom margin */
+        font-size: 1.28rem;
+        font-weight: bold;
+        font-family: inherit;
+        font-style: normal;
+        letter-spacing: normal;
+        text-transform: none;
+        margin-bottom: 1rem;
     }
 
     /* Student Impact Grid */
     .impact-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
+        grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
-        margin-top: 2rem; /* Add some space below the main section H2 */
+        margin-top: 2rem;
     }
 
     .impact-item {
         padding: 2rem;
         background: white; 
         border-radius: 4px;
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-top: 3px solid var(--accent-color);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .impact-item:hover {
-        transform: translateY(-5px);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
     #student-impact .impact-item h3 {
@@ -493,10 +528,10 @@ import Footer from '../components/Footer.astro';
         font-size: 1.2rem; 
         font-weight: 900;
         font-style: italic;
-        letter-spacing: -0.1em;
+        letter-spacing: -0.05em;
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 1rem;
-        text-transform: lowercase;
+        text-transform: none;
     }
 
     #student-impact .impact-item p {
@@ -505,21 +540,21 @@ import Footer from '../components/Footer.astro';
         color: #666;
         margin-bottom: 1rem; 
     }
-    #student-impact .impact-item p:last-child:not(:only-child) { /* If p is last but not only, keep margin */
+    #student-impact .impact-item p:last-child:not(:only-child) {
          margin-bottom: 1rem;
     }
     #student-impact .impact-item p:only-child {
-        margin-bottom: 0; /* No margin if it's the only element */
+        margin-bottom: 0;
     }
     #student-impact .impact-item p + ul {
-        margin-top: -0.5rem; /* Reduce space if p is directly followed by ul */
+        margin-top: -0.5rem;
     }
 
 
     #student-impact .impact-item ul {
         list-style: disc; 
         padding-left: 1.5rem; 
-        margin-top: 0.5rem; /* Default top margin for ul */
+        margin-top: 0.5rem;
         color: #666; 
     }
 
@@ -592,7 +627,7 @@ import Footer from '../components/Footer.astro';
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 0.5rem;
         color: #000;
-        text-transform: lowercase;
+        text-transform: none;
         position: relative;
         padding-right: 2rem;
     }
@@ -679,7 +714,7 @@ import Footer from '../components/Footer.astro';
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 1rem;
         color: #000;
-        text-transform: lowercase;
+        text-transform: none;
     }
 
     .price {
@@ -726,12 +761,33 @@ import Footer from '../components/Footer.astro';
 
     /* Responsive Design */
     @media (max-width: 1024px) {
+        /* main rule removed from here as it's now handled by the default main style */
+
         .content-container {
             grid-template-columns: 200px 1fr;
             gap: 2rem;
+            overflow-x: visible; /* Ensure content-container allows its children to overflow */
         }
 
-        .impact-grid { /* Tablet: 2 columns */
+        .content-area {
+            max-width: 100%; 
+            overflow-x: visible; /* Ensure content-area itself can overflow if children are wider */
+        }
+
+        .content-block { /* Styles for .content-block at tablet size */
+            overflow-x: visible; /* Allow content blocks to overflow */
+            /* If .content-block has a max-width, consider setting it to 100% or none here too if needed */
+        }
+
+        .overview-media {
+            width: calc(100% + 4rem); /* Account for 2rem padding on each side of .content-container */
+            margin-left: -2rem;   /* Pull left to viewport edge */
+            margin-right: -2rem;  /* Pull right to viewport edge */
+            max-width: none;      /* Remove any inherited max-width that might constrain it */
+            /* Removed position:relative, left, right, -50vw margins */
+        }
+
+        .impact-grid {
             grid-template-columns: repeat(2, 1fr);
         }
 
@@ -775,7 +831,16 @@ import Footer from '../components/Footer.astro';
             grid-template-columns: 1fr;
         }
 
-        .impact-grid { /* Mobile: 1 column */
+        .content-block { /* Styles for .content-block specifically for mobile */
+            width: 100%;
+            box-sizing: border-box;
+            overflow-x: visible; /* Ensure it's visible, overriding any 'auto' */
+        }
+
+        /* .overview-media will inherit from the 1024px breakpoint styles, 
+           which should now work correctly given parent overflow settings. */
+
+        .impact-grid {
             grid-template-columns: 1fr;
         }
 
@@ -783,9 +848,9 @@ import Footer from '../components/Footer.astro';
             position: relative;
             top: 0;
             margin-bottom: 2rem;
-            padding: 1rem 0; /* Adjust padding for mobile */
+            padding: 1rem 0;
             min-width: 0;
-            display: none; /* Hide sidebar on mobile */
+            display: none;
         }
 
         .sidebar-nav ul {
@@ -802,7 +867,6 @@ import Footer from '../components/Footer.astro';
 
         .hero {
             height: 48vh;
-            min-height: 320px;
         }
 
         .hero h1 {
@@ -851,61 +915,61 @@ import Footer from '../components/Footer.astro';
             grid-template-columns: 1fr;
         }
 
-        .content-area { /* Style for mobile */
+        .content-area {
             width: 100%;
-            max-width: 100%; /* Ensure no conflict with desktop max-width */
-            box-sizing: border-box; /* Explicitly set box model */
-            min-width: 0; /* Allow grid item to shrink fully */
-            grid-column-start: 1; /* Ensure it takes the first column in single-column layout */
-            /* overflow-x: auto; */ /* Let content-block handle its own overflow */
-            /* word-break: break-all; */ /* Reverted: was a diagnostic tool */
+            max-width: 100%;
+            box-sizing: border-box;
+            min-width: 0;
+            grid-column-start: 1;
         }
 
-        .content-block { /* Style for mobile */
+        .content-block {
             width: 100%;
-            box-sizing: border-box; /* Explicitly set box model */
-            overflow-x: auto; /* If a block's content is too wide, the block scrolls */
+            box-sizing: border-box;
+            overflow-x: auto;
         }
 
-        #real-results blockquote { /* Style for mobile */
+        #real-results blockquote {
             width: 100%;
             box-sizing: border-box;
         }
+
+        .quote-overlay {
+            padding: 0.25rem 1rem 0.1rem 1rem; /* Adjusted side padding for mobile */
+        }
+
+        .quote-overlay .quote-text {
+            font-size: 0.85rem !important; /* Smaller font for mobile, with !important */
+        }
+
+        .quote-overlay .quote-attribution {
+            font-size: 0.75rem !important; /* Smaller font for mobile, with !important */
+        }
     }
 
-    .overview-video {
+    .overview-media {
         width: 100%;
-        height: 0;
-        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-        position: relative;
         margin: 3rem 0;
-        background: #000;
         overflow: hidden;
+        background: #000;
+        position: relative;
     }
 
-    .content-video {
-        position: absolute;
-        top: 0;
-        left: 0;
+    .overview-image {
+        display: block;
         width: 100%;
-        height: 100%;
+        height: auto;
         object-fit: cover;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-    }
-
-    .content-video.loaded {
-        opacity: 1;
     }
 
     /* Client Logos Section Styles */
     .client-logos-section {
-        background-color: #080808; /* Match the background color from index.astro */
+        background-color: #080808;
         padding: 4rem 2rem;
         text-align: center;
-        width: 100%; /* Ensure it takes full width */
-        position: relative; /* Added to ensure z-index works if needed later */
-        z-index: 1; /* Ensures it's above the grainy background */
+        width: 100%;
+        position: relative;
+        z-index: 1;
     }
 
     .client-logos-section .container {
@@ -914,9 +978,9 @@ import Footer from '../components/Footer.astro';
     }
 
     .client-logos-section .section-title {
-        font-size: 0.96rem; /* Smaller title */
+        font-size: 0.96rem;
         color: rgba(255, 255, 255, 0.5);
-        text-transform: uppercase;
+        text-transform: none;
         letter-spacing: 0.1em;
         margin-bottom: 3rem;
         font-weight: 400;
@@ -931,25 +995,21 @@ import Footer from '../components/Footer.astro';
     }
 
     .client-logos-grid img {
-        max-height: 60px; /* Adjust based on your logos */
+        max-height: 60px;
         max-width: 100%;
         object-fit: contain;
-        /* Make logos white and adjust opacity */
-        filter: brightness(0) invert(1) opacity(0.7); 
-        transition: filter 0.3s ease; /* Changed transition property */
+        filter: brightness(0) invert(1) opacity(0.7);
+        transition: filter 0.3s ease;
     }
 
     .client-logos-grid img.client-b-logo {
         transform: scale(1.2);
-        /* Adjust max-height if scaling creates layout issues, e.g. */
-        /* max-height: calc(60px * 1.1); */
     }
 
     .client-logos-grid img:hover {
-        filter: brightness(0) invert(1) opacity(1); /* Full opacity on hover */
+        filter: brightness(0) invert(1) opacity(1);
     }
 
-    /* Responsive adjustments for client logos if needed */
     @media (max-width: 768px) {
         .client-logos-grid {
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -975,43 +1035,77 @@ import Footer from '../components/Footer.astro';
         margin-bottom: 1rem;
     }
 
-    #real-results h4:nth-of-type(2) { /* Targets "Student & Faculty Feedback:" */
+    #real-results h4:nth-of-type(2) {
         margin-top: 2rem;
     }
 
     #real-results ul {
         list-style: none; 
         padding-left: 0; 
-        margin-bottom: 2rem; /* Matches #overview ul */
+        margin-bottom: 2rem;
     }
 
     #real-results ul li {
         color: #333;
         font-size: 0.88rem;
         line-height: 1.8;
-        margin-bottom: 0.5rem;
-        padding-left: 0; /* Assuming emojis are directly in text */
+        margin-bottom: 1rem; /* Increased margin for larger icons */
+        padding-left: 0;
+        display: flex; /* Use flexbox for alignment */
+        align-items: center; /* Align items vertically */
+    }
+
+    .donut-container {
+        width: 40px; /* Adjust size of the donut chart */
+        height: 40px;
+        margin-right: 0.75em; /* Space between donut and text */
+        flex-shrink: 0; /* Prevent container from shrinking */
+    }
+
+    .donut-svg {
+        width: 100%;
+        height: 100%;
+        display: block; /* Remove extra space under SVG */
+    }
+
+    .donut-track {
+        fill: transparent;
+        stroke: #e6e6e6; /* Light grey for the track */
+    }
+
+    .donut-fill {
+        fill: transparent;
+        stroke: red; /* Changed from #000 to red */
+        stroke-linecap: butt; /* Changed from round to butt for precision */
+    }
+
+    .donut-number {
+        font-size: 11px; /* Adjust size for clarity in the donut */
+        font-weight: bold;
+        fill: #000; /* Black for the number */
+        text-anchor: middle;
+        dominant-baseline: central; /* For better vertical centering */
     }
 
     #real-results blockquote {
         background: white;
         border-left: 5px solid var(--accent-color);
         padding: 1.5rem;
-        margin: 0 0 1.5rem 0; /* No left/right margin, only bottom */
+        margin: 0 0 1.5rem 0;
         box-shadow: 0 2px 8px rgba(0,0,0,0.07);
         border-radius: 4px;
     }
 
     #real-results blockquote p {
         font-style: italic;
-        margin-bottom: 0.75rem; /* Space before footer */
-        color: #333; /* Ensure paragraph text color is consistent */
-        font-size: 0.88rem; /* Match other paragraph text */
+        margin-bottom: 0.75rem;
+        color: #333;
+        font-size: 0.88rem;
         line-height: 1.8;
     }
     
     #real-results blockquote p:last-child {
-        margin-bottom: 0; /* Remove margin if it's the only p and no footer */
+        margin-bottom: 0;
     }
 
     #real-results blockquote footer {
@@ -1019,7 +1113,7 @@ import Footer from '../components/Footer.astro';
         color: #555;
         text-align: right;
         margin-top: 0.75rem;
-        font-style: normal; /* Ensure footer is not italic */
+        font-style: normal;
     }
 
     #real-results blockquote footer::before {
@@ -1041,6 +1135,58 @@ import Footer from '../components/Footer.astro';
     .timeline-content h3 {
         overflow-wrap: break-word;
     }
+
+    #scroll-down-arrow {
+        display: inline-block;
+        color: white;
+        opacity: 0.7;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    #scroll-down-arrow:hover {
+        opacity: 1;
+        transform: translateY(5px);
+    }
+
+    #scroll-down-arrow svg {
+        /* SVG size is set in its attributes, can be overridden here if needed */
+        /* width: 48px; */ 
+        /* height: 48px; */
+    }
+
+    /* Enhanced styles for Student Impact section */
+    #student-impact.content-block { /* Target specifically the student-impact content-block */
+        padding: 1.5rem 2rem; /* Reduced top/bottom padding */
+        border-radius: 8px; /* Rounded corners */
+    }
+
+    .quote-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 0.25rem 1.5rem 0.1rem 1.5rem;
+        box-sizing: border-box;
+        background-color: transparent; 
+        color: #EAEAEA; /* Changed from #FFFFFF to a very light grey */
+        text-align: center;
+    }
+
+    .quote-overlay .quote-text {
+        font-size: 1rem; 
+        font-style: italic;
+        margin-bottom: 0.25rem;
+        color: #EAEAEA; /* Changed from #FFFFFF to a very light grey */
+        text-shadow: 0px 0px 4px rgba(0,0,0,0.6), 0px 0px 1px rgba(0,0,0,0.6); /* Softer shadow */
+    }
+
+    .quote-overlay .quote-attribution {
+        font-size: 0.85rem;
+        font-weight: bold;
+        margin-bottom: 0; 
+        color: #EAEAEA; /* Changed from #FFFFFF to a very light grey */
+        text-shadow: 0px 0px 4px rgba(0,0,0,0.6), 0px 0px 1px rgba(0,0,0,0.6); /* Softer shadow */
+    }
 </style>
 
 <script>
@@ -1053,7 +1199,7 @@ import Footer from '../components/Footer.astro';
             if (targetElement) {
                 const mainNav = document.querySelector('nav.nav');
                 const mainNavHeight = mainNav ? mainNav.offsetHeight : 0;
-                const scrollOffset = mainNavHeight + 32; // 2rem, consistent with sticky calculation
+                const scrollOffset = mainNavHeight + 32;
 
                 const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
                 const offsetPosition = elementPosition - scrollOffset;
@@ -1082,7 +1228,7 @@ import Footer from '../components/Footer.astro';
         while(--index >= 0 && window.pageYOffset + scrollOffset < sections[index].offsetTop) {}
         
         sidebarLinks.forEach((link) => link.classList.remove('active'));
-        if (index >= 0 && sidebarLinks[index]) { // check index bounds
+        if (index >= 0 && sidebarLinks[index]) {
             sidebarLinks[index].classList.add('active');
         }
     }
@@ -1133,7 +1279,6 @@ import Footer from '../components/Footer.astro';
             const parsedGap = parseFloat(gapValue);
             return isNaN(parsedGap) ? 0 : parsedGap;
         };
-        // let gridColumnGap = getGridColumnGap(); // Calculated in calculateInitialLayout
 
         const updateSidebarOriginalWidth = () => {
             const wasFixed = sidebar.classList.contains('is-fixed');
@@ -1147,7 +1292,7 @@ import Footer from '../components/Footer.astro';
 
             sidebarOriginalWidth = sidebar.offsetWidth;
 
-            sidebar.style.position = prevPosition; // Restore if needed for other logic, though scroll handler will override
+            sidebar.style.position = prevPosition;
             sidebar.style.width = prevWidth;
             if (wasFixed) sidebar.classList.add('is-fixed');
             if (wasBottomed) sidebar.classList.add('is-bottomed');
@@ -1167,30 +1312,22 @@ import Footer from '../components/Footer.astro';
             sidebar.classList.remove('is-fixed', 'is-bottomed');
             sidebar.style.position = ''; sidebar.style.top = ''; sidebar.style.bottom = '';
             sidebar.style.left = ''; sidebar.style.width = '';
-            // DO NOT RESET contentArea.style.marginLeft here if we want to preserve its CSS defined margin.
-            // We will store its original margin and re-apply that if we ever touch it.
-            // However, the strategy is to NOT touch it for stickiness.
 
-            updateSidebarOriginalWidth(); // Sets sidebarOriginalWidth
+            updateSidebarOriginalWidth();
 
             initialContentAreaMarginLeft = window.getComputedStyle(contentArea).marginLeft;
             initialContentContainerPaddingLeft = window.getComputedStyle(contentContainer).paddingLeft;
-            gridColumnGap = getGridColumnGap(); // Calculate gap here
+            gridColumnGap = getGridColumnGap();
 
             const rect = sidebar.getBoundingClientRect();
             initialSidebarScrollOffsetTop = rect.top + window.scrollY;
             initialSidebarLeftLayout = rect.left + 'px'; 
             
-            // console.log(`Initial: top=${initialSidebarScrollOffsetTop}, left=${initialSidebarLeftLayout}, width=${sidebarOriginalWidth}, contentMarginL=${initialContentAreaMarginLeft}, containerPadL=${initialContentContainerPaddingLeft}, gap=${gridColumnGap}`);
         };
 
         calculateInitialLayout();
         window.addEventListener('resize', () => {
-            // Re-calculate layout dependent values on resize
-            // mainNavHeight might change if nav resizes, fixedTopValue depends on it.
-            // For simplicity, re-running full init. A more optimized approach might update specific parts.
             calculateInitialLayout(); 
-            // Trigger scroll handler logic in case resize changes sticky state
             handleStickyScroll(); 
         }); 
         
@@ -1201,8 +1338,6 @@ import Footer from '../components/Footer.astro';
                 sidebar.classList.remove('is-fixed', 'is-bottomed');
                 sidebar.style.position = ''; sidebar.style.top = ''; sidebar.style.bottom = '';
                 sidebar.style.left = ''; sidebar.style.width = '';
-                // Restore original margin if it was ever changed by an older version of script, not needed by this version.
-                // contentArea.style.marginLeft = initialContentAreaMarginLeft; 
                 return;
             }
 
@@ -1222,8 +1357,6 @@ import Footer from '../components/Footer.astro';
                     sidebar.style.left = initialSidebarLeftLayout; 
                     sidebar.style.top = fixedTopValue + 'px';
                     sidebar.style.bottom = 'auto';
-                    // CRITICAL: DO NOT MODIFY contentArea.style.marginLeft
-                    // console.log('Sidebar: FIXED');
                 }
             } else if ((scrollY + fixedTopValue) >= unstickBottomPointDoc) { 
                 if (!sidebar.classList.contains('is-bottomed')) {
@@ -1234,8 +1367,6 @@ import Footer from '../components/Footer.astro';
                     sidebar.style.top = (contentContainer.offsetHeight - sidebarHeight - parseFloat(window.getComputedStyle(contentContainer).paddingBottom || '0')) + 'px';
                     sidebar.style.left = initialContentContainerPaddingLeft; 
                     sidebar.style.bottom = 'auto';
-                    // CRITICAL: DO NOT MODIFY contentArea.style.marginLeft
-                    // console.log('Sidebar: BOTTOMED');
                 }
             } else { 
                 if (sidebar.classList.contains('is-fixed') || sidebar.classList.contains('is-bottomed')) {
@@ -1243,13 +1374,11 @@ import Footer from '../components/Footer.astro';
                     sidebar.style.position = ''; 
                     sidebar.style.top = ''; sidebar.style.bottom = '';
                     sidebar.style.left = ''; sidebar.style.width = '';
-                    // CRITICAL: DO NOT MODIFY contentArea.style.marginLeft
-                    // console.log('Sidebar: NORMAL');
                 }
             }
         }
         window.addEventListener('scroll', handleStickyScroll);
-        handleStickyScroll(); // Initial call
+        handleStickyScroll();
 
-    } // end if (sidebar && contentContainer && contentArea && mainNavForSticky)
+    }
 </script> 
