@@ -3,10 +3,11 @@ import Layout from '../layouts/Layout.astro';
 import Logo from '../components/Logo.astro';
 import NewPricingForm from '../components/NewPricingForm.jsx';
 import Footer from '../components/Footer.astro';
+import ClientLogos from '../components/ClientLogos.astro';
 ---
 
-<Layout>
-    <main>
+<Layout title="Education">
+    <main class="snap-container">
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-background"></div>
@@ -148,13 +149,7 @@ import Footer from '../components/Footer.astro';
     <section class="client-logos-section">
         <div class="container">
             <h3 class="section-title">Trusted By</h3>
-            <div class="client-logos-grid">
-                <img src="/client_a.png" alt="Client A Logo" />
-                <img src="/client_b.svg" alt="Client B Logo" class="client-b-logo" />
-                <img src="/client_c.svg" alt="Client C Logo" />
-                <img src="/client_d.svg" alt="Client D Logo" />
-                <img src="/client_e.png" alt="Client E Logo" />
-            </div>
+            <ClientLogos />
         </div>
     </section>
 
@@ -208,8 +203,7 @@ import Footer from '../components/Footer.astro';
     }
 
     .breadcrumb {
-        margin-bottom: 2rem;
-        font-size: 0.9rem;
+        display: none; /* Hide the breadcrumb navigation */
     }
 
     .breadcrumb a {
@@ -231,7 +225,7 @@ import Footer from '../components/Footer.astro';
         font-size: 4rem;
         font-weight: 900;
         font-style: italic;
-        letter-spacing: -0.1em;
+        letter-spacing: -0.05em;
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 1rem;
         line-height: 1.2;
@@ -312,7 +306,7 @@ import Footer from '../components/Footer.astro';
         font-size: 2.5rem;
         font-weight: 900;
         font-style: italic;
-        letter-spacing: -0.1em;
+        letter-spacing: -0.05em;
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 2rem;
         color: #000;
@@ -348,7 +342,7 @@ import Footer from '../components/Footer.astro';
         font-size: 1.5rem;
         font-weight: 900;
         font-style: italic;
-        letter-spacing: -0.1em;
+        letter-spacing: -0.05em;
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 1rem;
         color: #000;
@@ -421,7 +415,7 @@ import Footer from '../components/Footer.astro';
         font-size: 1.3rem;
         font-weight: 900;
         font-style: italic;
-        letter-spacing: -0.1em;
+        letter-spacing: -0.05em;
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 0.5rem;
         color: #000;
