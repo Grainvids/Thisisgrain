@@ -10,7 +10,20 @@ import ClientLogos from '../components/ClientLogos.astro';
     <main class="snap-container">
         <!-- Hero Section -->
         <section class="hero">
-            <div class="hero-background"></div>
+            <div class="hero-background">
+                <video 
+                    autoplay 
+                    muted 
+                    loop 
+                    playsinline 
+                    preload="auto"
+                    class="hero-video-bg"
+                    style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;z-index:0;"
+                >
+                    <source src="/showreeledu.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
             <div class="hero-content">
                 <nav class="breadcrumb">
                     <a href="/">Home</a>
@@ -133,6 +146,9 @@ import ClientLogos from '../components/ClientLogos.astro';
 
                     <section id="pricing" class="content-block">
                         <h2>Pricing</h2>
+                        <p class="pricing-description">
+                            Select the number of shooting days below and any add ons you require, and we'll estimate the number of acts we will record along with an estimate quote.
+                        </p>
                         <NewPricingForm client:load />
                     </section>
 

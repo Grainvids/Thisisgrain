@@ -41,17 +41,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 				<div class="slide" style="background-image: url('/slide4.jpg')"></div>
 				<div class="slide" style="background-image: url('/slide5.jpg')"></div>
 				
-				<button class="slide-nav prev" aria-label="Previous slide">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-						<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-				</button>
-				<button class="slide-nav next" aria-label="Next slide">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-						<path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-				</button>
-				
 				<div class="slide-dots">
 					<button class="dot active" aria-label="Go to slide 1"></button>
 					<button class="dot" aria-label="Go to slide 2"></button>
@@ -222,17 +211,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 				<div class="slide" style="background-image: url('/team-slide2.jpg')"></div>
 				<div class="slide" style="background-image: url('/team-slide3.jpg')"></div>
 				
-				<button class="slide-nav prev" aria-label="Previous slide">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-						<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-				</button>
-				<button class="slide-nav next" aria-label="Next slide">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-						<path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-				</button>
-				
 				<div class="slide-dots">
 					<button class="dot active" aria-label="Go to slide 1"></button>
 					<button class="dot" aria-label="Go to slide 2"></button>
@@ -316,16 +294,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 			<div class="slide" style="background-image: url('/footer-slide2.jpg')"></div>
 			<div class="slide" style="background-image: url('/footer-slide3.jpg')"></div>
 			<div class="slide" style="background-image: url('/footer-slide4.jpg')"></div>
-			<button class="slide-nav prev" aria-label="Previous slide">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-					<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-			</button>
-			<button class="slide-nav next" aria-label="Next slide">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-					<path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-			</button>
 			<div class="slide-dots">
 				<button class="dot active" aria-label="Go to slide 1"></button>
 				<button class="dot" aria-label="Go to slide 2"></button>
@@ -1083,37 +1051,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 		opacity: 1;
 	}
 
-	.slide-nav {
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-		background: rgba(0, 0, 0, 0.3);
-		border: none;
-		width: 48px;
-		height: 48px;
-		border-radius: 50%;
-		cursor: pointer;
-		color: white;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition: all 0.3s ease;
-		z-index: 2;
-		backdrop-filter: blur(4px);
-	}
-
-	.slide-nav:hover {
-		background: rgba(0, 0, 0, 0.5);
-	}
-
-	.slide-nav.prev {
-		left: 2rem;
-	}
-
-	.slide-nav.next {
-		right: 2rem;
-	}
-
 	.slide-dots {
 		position: absolute;
 		bottom: 2rem;
@@ -1353,15 +1290,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 		opacity: 1;
 	}
 
-	.behind-grain-slideshow .slide-nav {
-		opacity: 0;
-		transition: opacity 0.3s ease;
-	}
-
-	.behind-grain-slideshow:hover .slide-nav {
-		opacity: 1;
-	}
-
 	.behind-grain-slideshow .slide-dots {
 		opacity: 0;
 		transition: opacity 0.3s ease;
@@ -1402,39 +1330,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 		pointer-events: auto;
 	}
 
-	/* If you need nav buttons/dots, copy those styles back too */
-	.footer-slideshow .slide-nav {
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-		background: rgba(255, 255, 255, 0.1);
-		border: none;
-		width: 48px;
-		height: 48px;
-		border-radius: 50%;
-		cursor: pointer;
-		color: white;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition: all 0.3s ease;
-		z-index: 2;
-		backdrop-filter: blur(4px);
-	}
-
-	.footer-slideshow .slide-nav:hover {
-		background: rgba(255, 255, 255, 0.2);
-		transform: translateY(-50%) scale(1.1);
-	}
-
-	.footer-slideshow .slide-nav.prev {
-		left: 2rem;
-	}
-
-	.footer-slideshow .slide-nav.next {
-		right: 2rem;
-	}
-
 	.footer-slideshow .slide-dots {
 		position: absolute;
 		bottom: 2rem;
@@ -1466,7 +1361,7 @@ import ClientLogos from '../components/ClientLogos.astro';
 			height: 30vh;
 		}
 
-		.footer-slideshow .slide-nav {
+		.footer-slideshow .slide-dots {
 			width: 40px;
 			height: 40px;
 		}
@@ -1545,8 +1440,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 		slideshows.forEach(slideshow => {
 			const slides = slideshow.querySelectorAll('.slide');
 			const dots = slideshow.querySelectorAll('.dot');
-			const prevBtn = slideshow.querySelector('.prev');
-			const nextBtn = slideshow.querySelector('.next');
 			
 			// Randomize initial slide
 			const randomIndex = Math.floor(Math.random() * slides.length);
@@ -1587,8 +1480,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 			}
 
 			// Event listeners with passive option for better performance
-			prevBtn?.addEventListener('click', () => goToSlide(currentSlide - 1), { passive: true });
-			nextBtn?.addEventListener('click', () => goToSlide(currentSlide + 1), { passive: true });
 			dots.forEach((dot, index) => {
 				dot.addEventListener('click', () => goToSlide(index), { passive: true });
 			});

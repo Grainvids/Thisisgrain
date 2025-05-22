@@ -324,22 +324,6 @@ function NewPricingForm() {
         />
       </div>
 
-      {/* Total Price Display - TOP */}
-      <div className="pt-4 space-y-1 text-center sm:text-right">
-        <div className="text-3xl font-bold uppercase tracking-wide text-black">
-          Total (excl. VAT): {formatCurrency(calculatedSubtotal)}
-        </div>
-        <div className="text-sm text-black">
-          + VAT (20%): {formatCurrency(calculatedVatAmount)}
-        </div>
-        <div className="text-lg font-semibold text-orange-600 pt-1">
-          Grand Total: {formatCurrency(calculatedGrandTotal)}
-        </div>
-      </div>
-
-      {/* Divider */}
-      <hr className="border-gray-200"/>
-
       {/* Shoot Days Input */}
       <div className="space-y-2">
         <label htmlFor="shootDays" className="block text-sm font-medium text-black">
@@ -362,7 +346,6 @@ function NewPricingForm() {
       {/* Selection Summary */}
       <div className="pt-4 space-y-3">
         <h3 className="text-lg font-semibold text-black mb-2">Selection Summary:</h3>
-        
         <p className="text-sm text-black">
           <span className="font-medium">Shoot Days:</span> {shootDays}
         </p>
@@ -383,7 +366,6 @@ function NewPricingForm() {
                 <p className="text-sm text-gray-500 italic">No add-ons selected.</p>
             )}
         </div>
-
         <div className="pt-4 text-right">
           <button 
             type="button" 
@@ -496,6 +478,19 @@ function NewPricingForm() {
               </div>
             );
           })}
+        </div>
+      </div>
+
+      {/* Pricing Summary - Only this block at the bottom */}
+      <div className="pt-4 space-y-1 text-center sm:text-right">
+        <div className="text-3xl font-bold uppercase tracking-wide text-black">
+          Total (excl. VAT): {formatCurrency(calculatedSubtotal)}
+        </div>
+        <div className="text-sm text-black">
+          + VAT (20%): {formatCurrency(calculatedVatAmount)}
+        </div>
+        <div className="text-lg font-semibold text-orange-600 pt-1">
+          Grand Total: {formatCurrency(calculatedGrandTotal)}
         </div>
       </div>
 
