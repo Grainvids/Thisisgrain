@@ -4,25 +4,12 @@ import html2canvas from 'html2canvas';
 import QuotePDFDocument from './QuotePDFDocument';
 
 const addonsData = [
-  // Tier 1: Full Works Bundle itself
+  // Tier 1: Full Works Bundle
   { id: 'full_works_bundle', title: 'The Full Works Bundle', price: 1250, description: 'Includes all of our available add ons to take your production to the next level' },
   
-  // Tier 2: Direct components of Full Works Bundle (Location Scout, then other bundles)
-  { id: 'location_scout', title: 'Location Scout', price: 250, description: `Let us ensure the perfect setting for your shoot by finding ideal local filming locations`, isFixedPrice: true },
-  
+  // Tier 2: Main Bundles
   { id: 'production_bundle', title: 'Production Bundle', price: 600, description: `Photographer, artist interviews, and extra camera operator.` },
-  // Tier 3: Components of Production Bundle
-  { id: 'photographer', title: 'Photographer', price: 350, description: `High-quality behind-the-scenes content for social and promotion.` },
-  { id: 'artist_interviews', title: 'Artist interviews', price: 350, description: `Adds context and narrative to your performances.` },
-  { id: 'extra_camera', title: 'Extra Camera Operator', price: 250, description: `Captures more dynamic angles, better coverage.` },
-
   { id: 'post_prod_bundle', title: 'Post Production Bundle', price: 750, description: `Includes stems, mastering, 4K editing, grading, and a showreel.` },
-  // Tier 3: Components of Post Prod Bundle
-  { id: 'mastering', title: 'Mastering', price: 200, description: `Unlock the full potential of your sound with precision audio mastering.` },
-  { id: 'stems', title: 'Stems', price: 150, description: `Recording and remixing stems from a video performance lets you refine every element, allowing you the opportunity to tweak every little detail.` },
-  { id: '4k_editing', title: '4K Post-prod editing', price: 350, description: `Reframe, refine, and elevate your content to a cinematic level.` },
-  { id: 'colour_grade', title: 'Colour grade', price: 350, description: `Rich, cinematic colour grading to transform your footage.` },
-  { id: 'showreel', title: 'Showreel Compilation', price: 300, description: `Showcase your talent and production quality for promotion and recruitment.` },
 ];
 
 const baseRate = 1800;
@@ -32,11 +19,8 @@ const vatRate = 0.20;
 const FULL_WORKS_BUNDLE_ID = 'full_works_bundle';
 const PRODUCTION_BUNDLE_ID = 'production_bundle';
 const POST_PROD_BUNDLE_ID = 'post_prod_bundle';
-const LOCATION_SCOUT_ID = 'location_scout';
 
-const PRODUCTION_BUNDLE_COMPONENT_IDS = ['photographer', 'artist_interviews', 'extra_camera'];
-const POST_PROD_BUNDLE_COMPONENT_IDS = ['mastering', '4k_editing', 'showreel', 'colour_grade', 'stems'];
-const FULL_WORKS_BUNDLE_COMPONENT_IDS = [PRODUCTION_BUNDLE_ID, POST_PROD_BUNDLE_ID, LOCATION_SCOUT_ID];
+const FULL_WORKS_BUNDLE_COMPONENT_IDS = [PRODUCTION_BUNDLE_ID, POST_PROD_BUNDLE_ID];
 
 function formatCurrency(amount) {
   const numAmount = Number(amount);
@@ -66,51 +50,25 @@ function NewPricingForm() {
       const isBecomingSelected = !prev[toggledAddonId];
       next[toggledAddonId] = isBecomingSelected;
 
+      // Handle Full Works Bundle selection
       if (toggledAddonId === FULL_WORKS_BUNDLE_ID) {
-        FULL_WORKS_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = isBecomingSelected);
-      }
-      if (next[PRODUCTION_BUNDLE_ID] !== prev[PRODUCTION_BUNDLE_ID] || (toggledAddonId === FULL_WORKS_BUNDLE_ID && isBecomingSelected) || (toggledAddonId === PRODUCTION_BUNDLE_ID)){
-        PRODUCTION_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = next[PRODUCTION_BUNDLE_ID]);
-      }
-      if (next[POST_PROD_BUNDLE_ID] !== prev[POST_PROD_BUNDLE_ID] || (toggledAddonId === FULL_WORKS_BUNDLE_ID && isBecomingSelected) || (toggledAddonId === POST_PROD_BUNDLE_ID)){
-        POST_PROD_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = next[POST_PROD_BUNDLE_ID]);
-      }
-
-      const allProdCompsSelected = PRODUCTION_BUNDLE_COMPONENT_IDS.every(id => next[id]);
-      if (next[PRODUCTION_BUNDLE_ID] !== allProdCompsSelected && (PRODUCTION_BUNDLE_COMPONENT_IDS.includes(toggledAddonId) || toggledAddonId === PRODUCTION_BUNDLE_ID)){
-         next[PRODUCTION_BUNDLE_ID] = allProdCompsSelected;
-         if(next[PRODUCTION_BUNDLE_ID]) PRODUCTION_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = true);
-         else if (toggledAddonId === PRODUCTION_BUNDLE_ID && !isBecomingSelected) PRODUCTION_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = false);
-      }
-
-      const allPostProdCompsSelected = POST_PROD_BUNDLE_COMPONENT_IDS.every(id => next[id]);
-      if (next[POST_PROD_BUNDLE_ID] !== allPostProdCompsSelected && (POST_PROD_BUNDLE_COMPONENT_IDS.includes(toggledAddonId) || toggledAddonId === POST_PROD_BUNDLE_ID)){
-        next[POST_PROD_BUNDLE_ID] = allPostProdCompsSelected;
-        if(next[POST_PROD_BUNDLE_ID]) POST_PROD_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = true);
-        else if (toggledAddonId === POST_PROD_BUNDLE_ID && !isBecomingSelected) POST_PROD_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = false);
-      }
-      
-      const allFwbCompsSelected = FULL_WORKS_BUNDLE_COMPONENT_IDS.every(id => next[id]);
-      if (next[FULL_WORKS_BUNDLE_ID] !== allFwbCompsSelected && (FULL_WORKS_BUNDLE_COMPONENT_IDS.includes(toggledAddonId) || PRODUCTION_BUNDLE_COMPONENT_IDS.includes(toggledAddonId) || POST_PROD_BUNDLE_COMPONENT_IDS.includes(toggledAddonId) || toggledAddonId === FULL_WORKS_BUNDLE_ID)) {
-          next[FULL_WORKS_BUNDLE_ID] = allFwbCompsSelected;
-      }
-
-      if (next[FULL_WORKS_BUNDLE_ID] !== prev[FULL_WORKS_BUNDLE_ID]) {
-        const fwbState = next[FULL_WORKS_BUNDLE_ID];
-        FULL_WORKS_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = fwbState);
-        if (fwbState) {
-            next[PRODUCTION_BUNDLE_ID] = true;
-            PRODUCTION_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = true);
-            next[POST_PROD_BUNDLE_ID] = true;
-            POST_PROD_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = true);
+        // When Full Works is selected, select both other bundles
+        if (isBecomingSelected) {
+          next[PRODUCTION_BUNDLE_ID] = true;
+          next[POST_PROD_BUNDLE_ID] = true;
         } else {
-            FULL_WORKS_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = false);
-            PRODUCTION_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = false);
-            POST_PROD_BUNDLE_COMPONENT_IDS.forEach(id => next[id] = false);
+          // When Full Works is deselected, deselect both other bundles
+          next[PRODUCTION_BUNDLE_ID] = false;
+          next[POST_PROD_BUNDLE_ID] = false;
         }
-      }
-      if (prev[FULL_WORKS_BUNDLE_ID] && (!next[PRODUCTION_BUNDLE_ID] || !next[POST_PROD_BUNDLE_ID] || !next[LOCATION_SCOUT_ID])) {
-        next[FULL_WORKS_BUNDLE_ID] = false;
+      } else {
+        // If either Production or Post Production bundle is toggled
+        // Check if both are selected to determine Full Works Bundle state
+        const bothBundlesSelected = 
+          (toggledAddonId === PRODUCTION_BUNDLE_ID && next[POST_PROD_BUNDLE_ID]) ||
+          (toggledAddonId === POST_PROD_BUNDLE_ID && next[PRODUCTION_BUNDLE_ID]);
+        
+        next[FULL_WORKS_BUNDLE_ID] = bothBundlesSelected;
       }
 
       return next;
@@ -124,27 +82,16 @@ function NewPricingForm() {
     if (selectedAddons[FULL_WORKS_BUNDLE_ID]) {
       const fwbAddon = addonsData.find(a => a.id === FULL_WORKS_BUNDLE_ID);
       if (fwbAddon) {
-        currentAddonsTotal = fwbAddon.isFixedPrice ? fwbAddon.price : fwbAddon.price * days;
+        currentAddonsTotal = fwbAddon.price * days;
       }
     } else {
       let tempSelectedForCalc = {...selectedAddons };
       
-      if (tempSelectedForCalc[PRODUCTION_BUNDLE_ID]) {
-        PRODUCTION_BUNDLE_COMPONENT_IDS.forEach(compId => {
-          if (tempSelectedForCalc[compId]) tempSelectedForCalc[compId] = false; 
-        });
-      }
-      if (tempSelectedForCalc[POST_PROD_BUNDLE_ID]) {
-        POST_PROD_BUNDLE_COMPONENT_IDS.forEach(compId => {
-          if (tempSelectedForCalc[compId]) tempSelectedForCalc[compId] = false;
-        });
-      }
-
       for (const addonId in tempSelectedForCalc) {
         if (tempSelectedForCalc[addonId]) {
           const addon = addonsData.find(a => a.id === addonId);
           if (addon) {
-            currentAddonsTotal += addon.isFixedPrice ? addon.price : addon.price * days;
+            currentAddonsTotal += addon.price * days;
           }
         }
       }
@@ -163,27 +110,16 @@ function NewPricingForm() {
     if (selectedAddons[FULL_WORKS_BUNDLE_ID]) {
       const fwbAddon = addonsData.find(a => a.id === FULL_WORKS_BUNDLE_ID);
       if (fwbAddon) {
-        addonsTotalValue = fwbAddon.isFixedPrice ? fwbAddon.price : fwbAddon.price * days;
+        addonsTotalValue = fwbAddon.price * days;
       }
     } else {
       let tempSelectedForCalc = {...selectedAddons };
       
-      if (tempSelectedForCalc[PRODUCTION_BUNDLE_ID]) {
-        PRODUCTION_BUNDLE_COMPONENT_IDS.forEach(compId => {
-          if (tempSelectedForCalc[compId]) tempSelectedForCalc[compId] = false; 
-        });
-      }
-      if (tempSelectedForCalc[POST_PROD_BUNDLE_ID]) {
-        POST_PROD_BUNDLE_COMPONENT_IDS.forEach(compId => {
-          if (tempSelectedForCalc[compId]) tempSelectedForCalc[compId] = false;
-        });
-      }
-
       for (const addonId in tempSelectedForCalc) {
         if (tempSelectedForCalc[addonId]) {
           const addon = addonsData.find(a => a.id === addonId);
           if (addon) {
-            addonsTotalValue += addon.isFixedPrice ? addon.price : addon.price * days;
+            addonsTotalValue += addon.price * days;
           }
         }
       }
@@ -325,10 +261,13 @@ function NewPricingForm() {
       </div>
 
       {/* Shoot Days Input */}
-      <div className="space-y-2">
-        <label htmlFor="shootDays" className="block text-sm font-medium text-black">
-          Number of Shoot Days: <span className="font-bold text-orange-600">{shootDays}</span>
-        </label>
+      <div className="space-y-4 p-6">
+        <div className="flex items-center justify-between">
+          <label htmlFor="shootDays" className="text-lg font-semibold text-black">
+            Number of Shoot Days
+          </label>
+          <span className="text-2xl font-bold text-orange-600">{shootDays}</span>
+        </div>
         <input
           type="range"
           id="shootDays"
@@ -338,9 +277,12 @@ function NewPricingForm() {
           step="1"
           value={shootDays}
           onChange={handleShootDaysChange}
-          className="w-full h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+          className="w-full h-6 rounded-lg appearance-none cursor-pointer accent-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
           aria-describedby="shoot-days-description"
         />
+        <p className="text-sm text-gray-600 mt-2">
+          Select the number of days you need for your shoot. Each day includes 5 slots.
+        </p>
       </div>
 
       {/* Selection Summary */}
@@ -386,10 +328,8 @@ function NewPricingForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {addonsData.map((addon) => {
             const isFwbSelected = selectedAddons[FULL_WORKS_BUNDLE_ID];
-            const isProdBundleSelected = selectedAddons[PRODUCTION_BUNDLE_ID];
-            const isPostProdBundleSelected = selectedAddons[POST_PROD_BUNDLE_ID];
 
-            const isEmphasizedItem = addon.id === FULL_WORKS_BUNDLE_ID || addon.id === PRODUCTION_BUNDLE_ID || addon.id === POST_PROD_BUNDLE_ID;
+            const isEmphasizedItem = addon.id === FULL_WORKS_BUNDLE_ID;
             
             let baseBgClass = 'bg-white';
             if (addon.id === FULL_WORKS_BUNDLE_ID) baseBgClass = 'bg-orange-50';
@@ -429,48 +369,18 @@ function NewPricingForm() {
             if (isFwbSelected) {
                 if (addon.id === FULL_WORKS_BUNDLE_ID) {
                     priceDisplay = getDiscountedPriceJsx(addon, FULL_WORKS_BUNDLE_COMPONENT_IDS);
-                } else if (FULL_WORKS_BUNDLE_COMPONENT_IDS.includes(addon.id) || PRODUCTION_BUNDLE_COMPONENT_IDS.includes(addon.id) || POST_PROD_BUNDLE_COMPONENT_IDS.includes(addon.id)) {
+                } else if (FULL_WORKS_BUNDLE_COMPONENT_IDS.includes(addon.id)) {
                     priceDisplay = <span className="text-green-600 italic">Included in Full Works Bundle</span>;
                 } else {
                     priceDisplay = defaultPriceJsx;
                 }
-            } else if (isProdBundleSelected) {
-                if (addon.id === PRODUCTION_BUNDLE_ID) {
-                    priceDisplay = getDiscountedPriceJsx(addon, PRODUCTION_BUNDLE_COMPONENT_IDS);
-                } else if (PRODUCTION_BUNDLE_COMPONENT_IDS.includes(addon.id)) {
-                    priceDisplay = <span className="text-green-600 italic">Included in Production Bundle</span>;
-                } else if (addon.id === POST_PROD_BUNDLE_ID) { 
-                    priceDisplay = getDiscountedPriceJsx(addon, POST_PROD_BUNDLE_COMPONENT_IDS);
-                } else {
-                    priceDisplay = defaultPriceJsx;
-                }
-            } else if (isPostProdBundleSelected) {
-                if (addon.id === POST_PROD_BUNDLE_ID) {
-                    priceDisplay = getDiscountedPriceJsx(addon, POST_PROD_BUNDLE_COMPONENT_IDS);
-                } else if (POST_PROD_BUNDLE_COMPONENT_IDS.includes(addon.id)) {
-                    priceDisplay = <span className="text-green-600 italic">Included in Post-Prod Bundle</span>;
-                } else if (addon.id === PRODUCTION_BUNDLE_ID) { 
-                    priceDisplay = getDiscountedPriceJsx(addon, PRODUCTION_BUNDLE_COMPONENT_IDS);
-                } else {
-                    priceDisplay = defaultPriceJsx;
-                }
             } else {
-                if (addon.id === FULL_WORKS_BUNDLE_ID) {
-                    priceDisplay = getDiscountedPriceJsx(addon, FULL_WORKS_BUNDLE_COMPONENT_IDS);
-                } else if (addon.id === PRODUCTION_BUNDLE_ID) {
-                    priceDisplay = getDiscountedPriceJsx(addon, PRODUCTION_BUNDLE_COMPONENT_IDS);
-                } else if (addon.id === POST_PROD_BUNDLE_ID) {
-                    priceDisplay = getDiscountedPriceJsx(addon, POST_PROD_BUNDLE_COMPONENT_IDS);
-                } else {
-                    priceDisplay = defaultPriceJsx;
-                }
+                priceDisplay = defaultPriceJsx;
             }
 
             return (
               <div key={addon.id} onClick={() => handleAddonToggle(addon.id)} role="checkbox" aria-checked={!!selectedAddons[addon.id]} tabIndex={0} onKeyPress={(e) => e.key === ' ' || e.key === 'Enter' ? handleAddonToggle(addon.id) : null} className={cardClasses}>
                 {addon.id === FULL_WORKS_BUNDLE_ID && (<span className="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">Best Value</span>)}
-                {addon.id === PRODUCTION_BUNDLE_ID && (<span className="absolute top-2 right-2 bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full">Most Popular</span>)}
-                {addon.id === POST_PROD_BUNDLE_ID && (<span className="absolute top-2 right-2 bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full">Most Popular</span>)}
                 <h3 className={titleClasses} id={`addon-title-${addon.id}`}>{addon.title}</h3>
                 <p className="text-sm font-bold mb-2">{priceDisplay}</p>
                 <p className="text-sm text-black">{addon.description}</p>
