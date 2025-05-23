@@ -54,48 +54,145 @@ import ClientLogos from '../components/ClientLogos.astro';
                 <!-- Right Content Area -->
                 <div class="content-area">
                     <section id="overview" class="content-block">
-                        <h2>What We Do</h2>
-                        <p>We film live music performances for students. High-quality video and audio, shot by experienced music video directors. Ideal for student portfolios, promo material, and real-world on-camera experience.</p>
-                        <p>The day is split into 5 hourly sections.</p>
-                        <p>We cut and mix live, working with your students to create content they can watch back instantly.</p>
+                        <h2>What we do</h2>
+                        <p>We know how important it is to <b>prepare students</b> not just for recitals and exams — but for the <b>reality of today's music industry.</b> That's where <b>we come in.</b></p>
+                        <p>We film <b>live music performances</b> for students. High-quality video and audio, shot by experienced music video directors. Ideal for student portfolios, promo material, and <b>real-world on-camera experience.</b></p>
+                        <p>With a wealth of experience spanning multiple <b>number 1 album campaigns</b>, we mentor and coach your students on performing for video. There's a <b>real energy</b> on the day — fast-paced, supportive, and inspiring. <b>Students step up</b> and feel the shift into <b>professional mode.</b></p>
                         
                         <div class="overview-video">
-                            <video 
-                                autoplay 
-                                muted 
-                                loop 
-                                playsinline 
-                                preload="auto"
-                                class="content-video"
-                            >
-                                <source src="/education-content.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                            <div class="video-carousel">
+                                <div class="carousel-container">
+                                    <div class="carousel-slide active">
+                                        <video 
+                                            autoplay 
+                                            muted 
+                                            loop 
+                                            playsinline 
+                                            preload="auto"
+                                            class="content-video"
+                                        >
+                                            <source src="/education-content.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        <div class="video-info">
+                                            <h3>Chloe Foy</h3>
+                                            <p>Elephant In The Room</p>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <video 
+                                            autoplay 
+                                            muted 
+                                            loop 
+                                            playsinline 
+                                            preload="auto"
+                                            class="content-video"
+                                        >
+                                            <source src="/education-content2.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        <div class="video-info">
+                                            <h3>Nyah Grace</h3>
+                                            <p>Only Mine</p>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <video 
+                                            autoplay 
+                                            muted 
+                                            loop 
+                                            playsinline 
+                                            preload="auto"
+                                            class="content-video"
+                                        >
+                                            <source src="/education-content3.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        <div class="video-info">
+                                            <h3>Pablo Miller</h3>
+                                            <p>Broken</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="carousel-control prev" aria-label="Previous video">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <button class="carousel-control next" aria-label="Next video">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <div class="carousel-dots">
+                                    <button class="dot active" aria-label="Go to video 1"></button>
+                                    <button class="dot" aria-label="Go to video 2"></button>
+                                    <button class="dot" aria-label="Go to video 3"></button>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
-                    <section id="benefits" class="content-block">
+                    <section id="Benefits" class="content-block">
                         <h2>Benefits</h2>
                         <div class="benefits-grid">
                             <div class="benefit-item">
                                 <h3>Build Performance Confidence</h3>
-                                <p>Playing for camera pushes students to focus, listen and perform under pressure. It's a different kind of stage presence.</p>
+                                <p>Playing for camera pushes students to <b>focus, listen and perform</b> under pressure. It's a different kind of stage presence.</p>
                             </div>
                             <div class="benefit-item">
                                 <h3>Real-world Experience</h3>
-                                <p>Music video shoots are part of professional music careers. Give your students a taste of how it works.</p>
+                                <p>Music video shoots are part of <b>professional music careers.</b> Give your students a taste of how it works.</p>
                             </div>
                             <div class="benefit-item">
                                 <h3>Better Applications</h3>
-                                <p>Audition tapes, portfolio content, showreels—great video helps students stand out when applying to conservatoires, universities, or jobs.</p>
+                                <p>Audition tapes, portfolio content, showreels—great video <b>helps students stand out</b> when applying for shows, labels, or management</p>
                             </div>
                             <div class="benefit-item">
                                 <h3>Content for Your School</h3>
-                                <p>Use the footage to promote your music department on your website, social media or open days.</p>
+                                <p>Use the footage to <b>promote your music department</b> on your website, social media or open days.</p>
+                            </div>
+                        </div>
+                        <!-- Statistics Row -->
+                        <div class="benefits-stats-row">
+                            <div class="benefit-stat">
+                                <div class="stat-donut">
+                                    <svg width="80" height="80" viewBox="0 0 80 80">
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="#eee" stroke-width="9" />
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="var(--accent-color, #FF3E00)" stroke-width="9" stroke-dasharray="201.06" stroke-dashoffset="8.04" style="transform: rotate(-90deg); transform-origin: 50% 50%;" />
+                                        <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="1.1rem" font-family="Arial Black, Arial, sans-serif" fill="#222">96%</text>
+                                    </svg>
+                                </div>
+                                <div class="stat-text">“The videos helped me promote my music professionally.”</div>
+                            </div>
+                            <div class="benefit-stat">
+                                <div class="stat-donut">
+                                    <svg width="80" height="80" viewBox="0 0 80 80">
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="#eee" stroke-width="9" />
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="var(--accent-color, #FF3E00)" stroke-width="9" stroke-dasharray="201.06" stroke-dashoffset="26.14" style="transform: rotate(-90deg); transform-origin: 50% 50%;" />
+                                        <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="1.1rem" font-family="Arial Black, Arial, sans-serif" fill="#222">87%</text>
+                                    </svg>
+                                </div>
+                                <div class="stat-text">“This experience boosted my confidence in future performance settings.”</div>
+                            </div>
+                            <div class="benefit-stat">
+                                <div class="stat-donut">
+                                    <svg width="80" height="80" viewBox="0 0 80 80">
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="#eee" stroke-width="9" />
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="var(--accent-color, #FF3E00)" stroke-width="9" stroke-dasharray="201.06" stroke-dashoffset="54.29" style="transform: rotate(-90deg); transform-origin: 50% 50%;" />
+                                        <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="1.1rem" font-family="Arial Black, Arial, sans-serif" fill="#222">73%</text>
+                                    </svg>
+                                </div>
+                                <div class="stat-text">“I wouldn't have had access to something like this without my course.”</div>
                             </div>
                         </div>
                     </section>
-
+                    <div class="testimonial-image-section">
+                        <img src="/edu-content2.jpg" alt="RNCM Student" class="testimonial-image" />
+                        <div class="testimonial-overlay">
+                            <p>"The guys were super easy to work with — very accommodating, friendly and incredibly quick between setups."<br><span class="testimonial-attribution">— RNCM Student</span></p>
+                        </div>
+                    </div>
                     <section id="process" class="content-block">
                         <h2>Workflow</h2>
                         <div class="timeline">
@@ -144,16 +241,24 @@ import ClientLogos from '../components/ClientLogos.astro';
                         </div>
                     </section>
 
+                    <!-- Testimonial Image Section 2 -->
+                    <div class="testimonial-image-section">
+                        <img src="/edu-image1.jpg" alt="Hannah McGuigan, RNCM - Curriculum Lead" class="testimonial-image" />
+                        <div class="testimonial-overlay">
+                            <p>“Really appreciate your calm approach and ability to be flexible with the speedy turnarounds and diversity of the projects.”<br><span class="testimonial-attribution">— Hannah McGuigan - Curriculum Lead</span></p>
+                        </div>
+                    </div>
+
                     <section id="pricing" class="content-block">
                         <h2>Pricing</h2>
                         <p class="pricing-description">
-                            Select the number of shooting days below and any add ons you require, and we'll estimate the number of acts we will record along with an estimate quote.
+                            Select the number of shooting days below and any add ons you require, and we'll estimate the number of acts we will record along with a quote.
                         </p>
                         <NewPricingForm client:load />
                     </section>
 
                     <section id="contact" class="content-block">
-                        <h2>Get in Touch</h2>
+                        <h2>Get in touch</h2>
                         <p>Ready to discuss your project? Contact us to learn more about our services and how we can help your music department.</p>
                         <a href="/contact" class="cta-button">Contact Us</a>
                     </section>
@@ -168,6 +273,24 @@ import ClientLogos from '../components/ClientLogos.astro';
             <ClientLogos />
         </div>
     </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="educationLightbox">
+        <button class="lightbox-close" aria-label="Close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M18 6L6 18M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <div class="lightbox-content">
+            <div class="artist-info">
+                <h2 class="artist-name"></h2>
+                <p class="artist-subtitle"></p>
+            </div>
+            <div class="artist-video">
+                <iframe id="youtubePlayer" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
 
     <Footer />
 </Layout>
@@ -325,8 +448,8 @@ import ClientLogos from '../components/ClientLogos.astro';
         letter-spacing: -0.05em;
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 2rem;
-        color: #000;
-        text-transform: lowercase;
+        color: #FF3E00;
+        text-transform: none;
     }
 
     .content-block p {
@@ -362,7 +485,6 @@ import ClientLogos from '../components/ClientLogos.astro';
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 1rem;
         color: #000;
-        text-transform: lowercase;
     }
 
     .benefit-item p {
@@ -370,6 +492,62 @@ import ClientLogos from '../components/ClientLogos.astro';
         line-height: 1.6;
         color: #666;
         margin: 0;
+    }
+
+    /* Statistics Row */
+    .benefits-stats-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+        margin: 2.5rem 0 0 0;
+        padding: 2rem 0 0 0;
+        border-top: 1px solid #eee;
+        align-items: flex-start;
+    }
+    .benefit-stat {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        padding: 1.5rem 1.2rem;
+        margin: 0;
+        text-align: center;
+    }
+    .stat-donut {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        height: 80px;
+        min-width: 80px;
+    }
+    .stat-number {
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: var(--accent-color, #FF3E00);
+        margin-bottom: 0.5rem;
+        font-family: "Arial Black", Arial, sans-serif;
+        text-align: center;
+    }
+    .stat-text {
+        font-size: 1rem;
+        color: #333;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: center;
+    }
+    @media (max-width: 900px) {
+        .benefits-stats-row {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .benefit-stat {
+            align-items: flex-start;
+        }
     }
 
     /* Timeline */
@@ -435,7 +613,6 @@ import ClientLogos from '../components/ClientLogos.astro';
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 0.5rem;
         color: #000;
-        text-transform: lowercase;
         position: relative;
         padding-right: 2rem;
     }
@@ -522,7 +699,6 @@ import ClientLogos from '../components/ClientLogos.astro';
         font-family: "Arial Black", Arial, sans-serif;
         margin-bottom: 1rem;
         color: #000;
-        text-transform: lowercase;
     }
 
     .price {
@@ -695,19 +871,174 @@ import ClientLogos from '../components/ClientLogos.astro';
         overflow: hidden;
     }
 
-    .content-video {
+    .video-carousel {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
     }
 
-    .content-video.loaded {
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .carousel-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        cursor: pointer;  /* Added to indicate clickable */
+        pointer-events: none;
+    }
+
+    .carousel-slide.active {
         opacity: 1;
+        pointer-events: auto;
+    }
+
+    .content-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .video-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 1.6rem;
+        color: white;
+        opacity: 0;
+        transform: translateY(1rem);
+        transition: all 0.5s ease;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        text-align: left;
+        z-index: 1;
+    }
+
+    .carousel-slide.active .video-info {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .video-info h3 {
+        font-size: 1.2rem;
+        font-weight: 300;
+        margin-bottom: 0.4rem;
+        line-height: 1;
+    }
+
+    .video-info p {
+        font-size: 0.8rem;
+        font-weight: 300;
+        opacity: 0.9;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    @media (max-width: 768px) {
+        .video-info {
+            padding: 1.2rem;
+        }
+
+        .video-info h3 {
+            font-size: 1rem;
+        }
+
+        .video-info p {
+            font-size: 0.7rem;
+        }
+    }
+
+    .carousel-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: all 0.3s ease;
+        z-index: 2;
+    }
+
+    .carousel-control svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .carousel-control:hover {
+        background: rgba(0, 0, 0, 0.8);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-control.prev {
+        left: 20px;
+    }
+
+    .carousel-control.next {
+        right: 20px;
+    }
+
+    .carousel-dots {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 12px;
+        z-index: 2;
+    }
+
+    .carousel-dots .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .carousel-dots .dot.active {
+        background: white;
+        transform: scale(1.2);
+    }
+
+    @media (max-width: 768px) {
+        .carousel-control {
+            width: 32px;
+            height: 32px;
+        }
+
+        .carousel-control.prev {
+            left: 10px;
+        }
+
+        .carousel-control.next {
+            right: 10px;
+        }
+
+        .carousel-dots {
+            bottom: 15px;
+        }
+
+        .carousel-dots .dot {
+            width: 6px;
+            height: 6px;
+        }
     }
 
     /* Client Logos Section Styles */
@@ -772,6 +1103,158 @@ import ClientLogos from '../components/ClientLogos.astro';
         }
         .client-logos-grid img {
             max-height: 50px;
+        }
+    }
+
+    body,
+    h1, h2, h3, h4, h5, h6 {
+        text-transform: none !important;
+    }
+
+    /* Lightbox Styles */
+    .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .lightbox.active {
+        display: block;
+        opacity: 1;
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        z-index: 1001;
+    }
+
+    .lightbox-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+    }
+
+    .lightbox-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 6rem 2rem;
+        color: white;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .artist-info {
+        text-align: left;
+        margin-bottom: 4rem;
+    }
+
+    .artist-name {
+        font-size: 2.5rem;
+        font-weight: 300;
+        margin-bottom: 0.5rem;
+        color: white;
+    }
+
+    .artist-subtitle {
+        font-size: 1.2rem;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .artist-video {
+        width: 100%;
+        aspect-ratio: 16/9;
+        margin-bottom: 4rem;
+        background: #000;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .artist-video iframe {
+        width: 100%;
+        height: 100%;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+        .artist-name {
+            font-size: 1.8rem;
+        }
+        
+        .artist-subtitle {
+            font-size: 1rem;
+        }
+        
+        .lightbox-content {
+            padding: 4rem 1rem;
+        }
+    }
+
+    .testimonial-image-section {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin: 3rem auto 4rem auto;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    }
+    .testimonial-image {
+        width: 100%;
+        display: block;
+        object-fit: cover;
+    }
+    .testimonial-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 80%, transparent 100%);
+        color: #fff;
+        padding: 2rem 2rem 0.5rem 2rem;
+        font-size: 0.85rem;
+        font-weight: 400;
+        letter-spacing: 0.01em;
+        z-index: 2;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+    .testimonial-overlay p {
+        opacity: 0.7;
+    }
+    .testimonial-attribution {
+        display: block;
+        margin-top: 1rem;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 300;
+        opacity: 0.85;
+    }
+    @media (max-width: 768px) {
+        .testimonial-image-section {
+            max-width: 100%;
+            margin: 2rem 0 2.5rem 0;
+        }
+        .testimonial-overlay {
+            padding: 1.2rem 1rem 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+        .testimonial-attribution {
+            font-size: 0.9rem;
         }
     }
 </style>
@@ -844,12 +1327,156 @@ import ClientLogos from '../components/ClientLogos.astro';
             });
         });
 
-        // Video loading
-        const contentVideo = document.querySelector('.content-video');
-        if (contentVideo instanceof HTMLVideoElement) {
-            contentVideo.addEventListener('loadeddata', () => {
-                contentVideo.classList.add('loaded');
+        // Video Carousel Functionality
+        const carousel = document.querySelector('.video-carousel');
+        if (carousel) {
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const dots = carousel.querySelectorAll('.dot');
+            const prevBtn = carousel.querySelector('.prev');
+            const nextBtn = carousel.querySelector('.next');
+            let currentSlide = 0;
+            let isAnimating = false;
+
+            // Lightbox functionality
+            const lightbox = document.getElementById('educationLightbox');
+            const lightboxCloseBtn = lightbox?.querySelector('.lightbox-close');
+            const lightboxName = lightbox?.querySelector('.artist-name');
+            const lightboxSubtitle = lightbox?.querySelector('.artist-subtitle');
+            const youtubePlayer = document.getElementById('youtubePlayer');
+
+            // Add click handlers to slides
+            slides.forEach((slide, index) => {
+                slide.addEventListener('click', () => {
+                    if (!slide.classList.contains('active')) return; // Only allow active slide to trigger lightbox
+                    console.log('Slide clicked:', index);
+                    // Get the video info directly from the current slide
+                    const videoInfo = slide.querySelector('.video-info');
+                    const title = videoInfo?.querySelector('h3')?.textContent || '';
+                    const subtitle = videoInfo?.querySelector('p')?.textContent || '';
+                    console.log('Title:', title);
+                    console.log('Subtitle:', subtitle);
+                    if (lightbox && lightboxName && lightboxSubtitle && youtubePlayer) {
+                        // Pause all carousel videos
+                        slides.forEach(s => {
+                            const video = s.querySelector('video');
+                            if (video) video.pause();
+                        });
+                        // Set lightbox content
+                        lightboxName.textContent = title;
+                        lightboxSubtitle.textContent = subtitle;
+                        // Set YouTube ID based on the clicked slide
+                        let youtubeId = '';
+                        if (title === 'Chloe Foy') {
+                            youtubeId = 'xc75QT13BlM';
+                        } else if (title === 'Nyah Grace') {
+                            youtubeId = 'cwAeW8UnL1s';
+                        } else if (title === 'Pablo Miller') {
+                            youtubeId = 'qtf7wV2Wcfo';
+                        }
+                        console.log('YouTube ID:', youtubeId);
+                        if (youtubeId) {
+                            youtubePlayer.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
+                        }
+                        // Show lightbox
+                        lightbox.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
             });
+
+            // Close lightbox
+            function closeLightbox() {
+                if (lightbox && youtubePlayer) {
+                    lightbox.classList.remove('active');
+                    youtubePlayer.src = '';
+                    document.body.style.overflow = '';
+
+                    // Resume carousel videos
+                    const activeVideo = slides[currentSlide].querySelector('video');
+                    if (activeVideo) {
+                        activeVideo.play().catch(() => {
+                            console.log('Autoplay prevented');
+                        });
+                    }
+                }
+            }
+
+            lightboxCloseBtn?.addEventListener('click', closeLightbox);
+            lightbox?.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            function goToSlide(index) {
+                if (isAnimating) return;
+                isAnimating = true;
+
+                // Pause all videos
+                slides.forEach(slide => {
+                    const video = slide.querySelector('video');
+                    if (video) video.pause();
+                });
+
+                // Remove active class from current slide and dot
+                slides[currentSlide].classList.remove('active');
+                dots[currentSlide].classList.remove('active');
+
+                // Update current slide index
+                currentSlide = index;
+                if (currentSlide >= slides.length) currentSlide = 0;
+                if (currentSlide < 0) currentSlide = slides.length - 1;
+
+                // Add active class to new slide and dot
+                slides[currentSlide].classList.add('active');
+                dots[currentSlide].classList.add('active');
+
+                // Play the new video
+                const newVideo = slides[currentSlide].querySelector('video');
+                if (newVideo) {
+                    newVideo.currentTime = 0;
+                    newVideo.play().catch(() => {
+                        console.log('Autoplay prevented');
+                    });
+                }
+
+                // Reset animation flag after transition
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 500);
+            }
+
+            // Event listeners
+            prevBtn?.addEventListener('click', () => goToSlide(currentSlide - 1));
+            nextBtn?.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => goToSlide(index));
+            });
+
+            // Auto-advance slides every 10 seconds
+            let slideInterval = setInterval(() => {
+                goToSlide(currentSlide + 1);
+            }, 10000);
+
+            // Pause auto-advance on hover
+            carousel.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+            });
+
+            carousel.addEventListener('mouseleave', () => {
+                slideInterval = setInterval(() => {
+                    goToSlide(currentSlide + 1);
+                }, 10000);
+            });
+
+            // Initialize first video
+            const firstVideo = slides[0].querySelector('video');
+            if (firstVideo) {
+                firstVideo.play().catch(() => {
+                    console.log('Autoplay prevented');
+                });
+            }
         }
     });
 </script> 
