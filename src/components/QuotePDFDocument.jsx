@@ -26,7 +26,7 @@ const QuotePDFDocument = React.forwardRef(({
       {/* Header with Grain Branding */}
       <div className="flex items-center justify-between mb-12">
         <div>
-          <h1 className="text-5xl italic font-black tracking-tighter" style={{ fontFamily: 'Arial Black, Arial, sans-serif', color: '#F97316' }}> {/* Orange: F97316 */}
+          <h1 className="text-5xl italic font-black tracking-tighter" style={{ fontFamily: 'Arial Black, Arial, sans-serif', color: '#F97316', letterSpacing: '-0.05em', textTransform: 'none' }}> {/* Orange: F97316 */}
             Grain
           </h1>
         </div>

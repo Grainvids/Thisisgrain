@@ -159,31 +159,31 @@ import ClientLogos from '../components/ClientLogos.astro';
                                 <div class="stat-donut">
                                     <svg width="80" height="80" viewBox="0 0 80 80">
                                         <circle cx="40" cy="40" r="32" fill="none" stroke="#eee" stroke-width="9" />
-                                        <circle cx="40" cy="40" r="32" fill="none" stroke="var(--accent-color, #FF3E00)" stroke-width="9" stroke-dasharray="201.06" stroke-dashoffset="8.04" style="transform: rotate(-90deg); transform-origin: 50% 50%;" />
+                                        <circle class="progress" cx="40" cy="40" r="32" fill="none" stroke="var(--accent-color, #FF3E00)" stroke-width="9" style="--target-offset: 8.04;" />
                                         <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="1.1rem" font-family="Arial Black, Arial, sans-serif" fill="#222">96%</text>
                                     </svg>
                                 </div>
-                                <div class="stat-text">“The videos helped me promote my music professionally.”</div>
+                                <div class="stat-text">"The videos helped me promote my music professionally."</div>
                             </div>
                             <div class="benefit-stat">
                                 <div class="stat-donut">
                                     <svg width="80" height="80" viewBox="0 0 80 80">
                                         <circle cx="40" cy="40" r="32" fill="none" stroke="#eee" stroke-width="9" />
-                                        <circle cx="40" cy="40" r="32" fill="none" stroke="var(--accent-color, #FF3E00)" stroke-width="9" stroke-dasharray="201.06" stroke-dashoffset="26.14" style="transform: rotate(-90deg); transform-origin: 50% 50%;" />
+                                        <circle class="progress" cx="40" cy="40" r="32" fill="none" stroke="var(--accent-color, #FF3E00)" stroke-width="9" style="--target-offset: 26.14;" />
                                         <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="1.1rem" font-family="Arial Black, Arial, sans-serif" fill="#222">87%</text>
                                     </svg>
                                 </div>
-                                <div class="stat-text">“This experience boosted my confidence in future performance settings.”</div>
+                                <div class="stat-text">"This experience boosted my confidence in future performance settings."</div>
                             </div>
                             <div class="benefit-stat">
                                 <div class="stat-donut">
                                     <svg width="80" height="80" viewBox="0 0 80 80">
                                         <circle cx="40" cy="40" r="32" fill="none" stroke="#eee" stroke-width="9" />
-                                        <circle cx="40" cy="40" r="32" fill="none" stroke="var(--accent-color, #FF3E00)" stroke-width="9" stroke-dasharray="201.06" stroke-dashoffset="54.29" style="transform: rotate(-90deg); transform-origin: 50% 50%;" />
+                                        <circle class="progress" cx="40" cy="40" r="32" fill="none" stroke="var(--accent-color, #FF3E00)" stroke-width="9" style="--target-offset: 54.29;" />
                                         <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="1.1rem" font-family="Arial Black, Arial, sans-serif" fill="#222">73%</text>
                                     </svg>
                                 </div>
-                                <div class="stat-text">“I wouldn't have had access to something like this without my course.”</div>
+                                <div class="stat-text">"I wouldn't have had access to something like this without my course."</div>
                             </div>
                         </div>
                     </section>
@@ -525,6 +525,23 @@ import ClientLogos from '../components/ClientLogos.astro';
         height: 80px;
         min-width: 80px;
     }
+
+    .stat-donut circle {
+        transform-origin: center;
+        transform: rotate(-90deg);
+    }
+
+    .stat-donut circle.progress {
+        stroke-dasharray: 201.06;
+        stroke-dashoffset: 201.06;
+        transition: stroke-dashoffset 1s ease-out;
+        transition-delay: var(--animation-delay, 0s);
+    }
+
+    .stat-donut.animate circle.progress {
+        stroke-dashoffset: var(--target-offset);
+    }
+
     .stat-number {
         font-size: 2.2rem;
         font-weight: 900;
@@ -1479,5 +1496,28 @@ import ClientLogos from '../components/ClientLogos.astro';
                 });
             }
         }
+
+        // Donut chart animation
+        const donutObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const donut = entry.target;
+                    // Add animation class
+                    donut.classList.add('animate');
+                    // Set animation delay based on index
+                    const index = Array.from(document.querySelectorAll('.stat-donut')).indexOf(donut);
+                    donut.style.setProperty('--animation-delay', `${index * 0.5}s`);
+                    donutObserver.unobserve(donut); // Stop observing once animated
+                }
+            });
+        }, {
+            threshold: 0.5,
+            rootMargin: '0px'
+        });
+
+        // Observe all donut charts
+        document.querySelectorAll('.stat-donut').forEach(donut => {
+            donutObserver.observe(donut);
+        });
     });
 </script> 

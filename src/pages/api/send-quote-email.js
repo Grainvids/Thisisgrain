@@ -47,12 +47,12 @@ export async function POST({ request }) {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="color: #F97316; font-size: 32px; font-weight: 900; font-style: italic; margin: 0;">Grain</h1>
+            <h1 style="color: #F97316; font-size: 32px; font-weight: 900; font-style: italic; letter-spacing: -0.05em; font-family: 'Arial Black', Arial, sans-serif; margin: 0;">Grain</h1>
           </div>
           
           <p style="font-size: 16px; line-height: 1.6; color: #333;">Dear ${data.quoteDetails.name || 'Customer'},</p>
           
-          <p style="font-size: 16px; line-height: 1.6; color: #333;">Thank you for your interest in Grain Productions! We're excited to work with you on your project.</p>
+          <p style="font-size: 16px; line-height: 1.6; color: #333;">Thank you for your interest in Grain! We're excited to work with you on your project.</p>
           
           <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h2 style="color: #333; font-size: 20px; margin-top: 0;">Your Quote Summary:</h2>
@@ -69,12 +69,12 @@ export async function POST({ request }) {
           
           <p style="font-size: 16px; line-height: 1.6; color: #333;">Please find your detailed quote attached to this email. This quote is valid for 30 days from the date of issue.</p>
           
-          <p style="font-size: 16px; line-height: 1.6; color: #333;">If you have any questions or would like to discuss your project further, please don't hesitate to reply to this email or contact us directly.</p>
+          <p style="font-size: 16px; line-height: 1.6; color: #333;">If you have any questions or would like to discuss your project further, please don't hesitate to reply to this email or contact us directly. One of our team will be in touch shortly.</p>
           
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #dee2e6;">
-            <p style="margin: 0; color: #666;">Best regards,</p>
-            <p style="margin: 5px 0 0 0; color: #666;">The Grain Productions Team</p>
-            <p style="margin: 5px 0 0 0; color: #666;">hello@thisisgrain.com | +44 796 700 4106</p>
+            <p style="margin: 0; font-size: 16px; line-height: 1.4; color: #333;">Best regards,</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px; line-height: 1.4; color: #333;">The Grain Team</p>
+            <p style="margin: 5px 0 0 0; font-size: 16px; line-height: 1.4; color: #333;">hello@thisisgrain.com | +44 796 700 4106</p>
           </div>
         </div>
       `,
