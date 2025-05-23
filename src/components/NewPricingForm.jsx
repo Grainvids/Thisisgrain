@@ -36,6 +36,9 @@ function NewPricingForm() {
   const [quoteEmail, setQuoteEmail] = useState('');
   const [quoteInstitution, setQuoteInstitution] = useState('');
   const [quotePhoneNumber, setQuotePhoneNumber] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
   const pdfRef = useRef();
 
@@ -156,6 +159,12 @@ function NewPricingForm() {
 
   const handleQuoteSubmit = async (e) => {
     e.preventDefault();
+    
+    if (isSubmitting) return; // Prevent multiple submissions
+    
+    setIsSubmitting(true);
+    setSubmitError(null);
+    console.log('Form submission started');
 
     if (!pdfRef.current) {
       console.error("PDF content ref is not available.");
@@ -165,10 +174,11 @@ function NewPricingForm() {
 
     let pdfDataUri;
     try {
+      console.log('Generating PDF...');
       const canvas = await html2canvas(pdfRef.current, {
         scale: 2, 
         useCORS: true,
-        logging: false, // Disable html2canvas logging for cleaner console
+        logging: true, // Enable logging temporarily for debugging
       });
       
       const imgData = canvas.toDataURL('image/png');
@@ -187,16 +197,17 @@ function NewPricingForm() {
       const imgY = 0;
 
       pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-      // pdf.save(`Grain_Quote_${quoteName.replace(/\s+/g, '_') || 'Details'}.pdf`); // Keep for testing or remove later
-      pdfDataUri = pdf.output('datauristring'); // Get PDF as data URI
+      pdfDataUri = pdf.output('datauristring');
+      console.log('PDF generated successfully');
 
     } catch (error) {
       console.error("Error generating PDF for email:", error);
       alert("There was an error creating the PDF. Please check the console.");
-      return; // Stop if PDF generation failed
+      return;
     }
 
     if (!pdfDataUri) {
+      console.error("PDF data URI is empty");
       alert("Failed to generate PDF data. Cannot send email.");
       return;
     }
@@ -216,26 +227,57 @@ function NewPricingForm() {
       grandTotal: calculatedGrandTotal,
     };
 
+    console.log('Sending quote details:', quoteDetails);
+
     try {
+      console.log('Making API request to /api/send-quote-email');
       const response = await fetch('/api/send-quote-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ quoteDetails, pdfDataUri }),
+        body: JSON.stringify({
+          quoteDetails: {
+            name: quoteName,
+            email: quoteEmail,
+            institution: quoteInstitution,
+            phoneNumber: quotePhoneNumber,
+            shootDays: shootDays,
+            selectedAddons: currentSelectedAddons.map(a => ({ title: a.title, price: a.price, isFixedPrice: !!a.isFixedPrice})),
+            grandTotal: calculatedGrandTotal
+          },
+          pdfDataUri: pdfDataUri
+        })
       });
 
+      console.log('API response status:', response.status);
       const result = await response.json();
+      console.log('API response:', result);
 
-      if (response.ok) {
-        alert(result.message || 'Quote submitted successfully! An email with the PDF will be sent shortly.');
-        handleCloseQuoteModal();
-      } else {
-        throw new Error(result.error || 'Failed to send quote email. Please try again.');
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send quote email');
       }
+
+      setSubmitSuccess(true);
+      // Reset form after successful submission
+      setQuoteName('');
+      setQuoteEmail('');
+      setQuoteInstitution('');
+      setQuotePhoneNumber('');
+      setSelectedAddons({});
+      setShootDays(1);
+      
+      // Close the modal after a short delay to show the success message
+      setTimeout(() => {
+        handleCloseQuoteModal();
+        setSubmitSuccess(false);
+      }, 2000);
+      
     } catch (error) {
-      console.error('Error sending quote email:', error);
-      alert(`Error: ${error.message}`);
+      console.error('Error sending quote:', error);
+      setSubmitError(error.message || 'Failed to send quote. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -307,15 +349,6 @@ function NewPricingForm() {
             ) : (
                 <p className="text-sm text-gray-500 italic">No add-ons selected.</p>
             )}
-        </div>
-        <div className="pt-4 text-right">
-          <button 
-            type="button" 
-            onClick={handleOpenQuoteModal}
-            className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium py-1 px-3 rounded transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 w-full sm:w-auto"
-          >
-            Email me this quote
-          </button>
         </div>
       </div>
 
@@ -391,7 +424,7 @@ function NewPricingForm() {
         </div>
       </div>
 
-      {/* Pricing Summary - Only this block at the bottom */}
+      {/* Pricing Summary */}
       <div className="pt-4 space-y-1 text-center sm:text-right">
         <div className="text-3xl font-bold uppercase tracking-wide text-black">
           Total (excl. VAT): {formatCurrency(calculatedSubtotal)}
@@ -401,6 +434,15 @@ function NewPricingForm() {
         </div>
         <div className="text-lg font-semibold text-orange-600 pt-1">
           Grand Total: {formatCurrency(calculatedGrandTotal)}
+        </div>
+        <div className="pt-4">
+          <button 
+            type="button" 
+            onClick={handleOpenQuoteModal}
+            className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium py-2 px-4 rounded transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 w-full sm:w-auto"
+          >
+            Email me this quote
+          </button>
         </div>
       </div>
 
@@ -436,25 +478,25 @@ function NewPricingForm() {
                 />
               </div>
               <div>
-                <label htmlFor="quoteInstitution" className="block text-sm font-medium text-gray-700">Institution (Optional)</label>
+                <label htmlFor="quoteInstitution" className="block text-sm font-medium text-black">Institution (Optional)</label>
                 <input
                   type="text"
                   name="quoteInstitution"
                   id="quoteInstitution"
                   value={quoteInstitution}
                   onChange={(e) => setQuoteInstitution(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm text-black"
                 />
               </div>
               <div>
-                <label htmlFor="quotePhoneNumber" className="block text-sm font-medium text-gray-700">Phone Number (Optional)</label>
+                <label htmlFor="quotePhoneNumber" className="block text-sm font-medium text-black">Phone Number (Optional)</label>
                 <input
                   type="tel"
                   name="quotePhoneNumber"
                   id="quotePhoneNumber"
                   value={quotePhoneNumber}
                   onChange={(e) => setQuotePhoneNumber(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm text-black"
                 />
               </div>
               <div className="flex justify-end space-x-3 pt-2">
@@ -466,12 +508,39 @@ function NewPricingForm() {
                   Cancel
                 </button>
                 <button 
-                  type="submit" 
-                  className="px-4 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`px-4 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ${
+                    isSubmitting ? 'cursor-not-allowed bg-gray-400' : ''
+                  }`}
                 >
-                  Send Quote
+                  {isSubmitting ? (
+                    <div className="flex items-center space-x-2">
+                      <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      <span>Sending Quote...</span>
+                    </div>
+                  ) : 'Send Quote'}
                 </button>
               </div>
+
+              {submitSuccess && (
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <p className="text-green-700">
+                    Quote sent successfully! We'll be in touch soon.
+                  </p>
+                </div>
+              )}
+
+              {submitError && (
+                <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-red-700">
+                    {submitError}
+                  </p>
+                </div>
+              )}
             </form>
           </div>
         </div>
