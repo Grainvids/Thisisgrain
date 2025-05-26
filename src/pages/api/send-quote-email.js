@@ -1,31 +1,36 @@
-export const prerender = false; // Ensures this is treated as a server-rendered API route
-
+// Ensures this is treated as a server-rendered API route
 import nodemailer from 'nodemailer';
 
 // Access environment variables
-// These should be set in your .env file (and on your deployment platform)
-const smtpHost = import.meta.env.EMAIL_SMTP_HOST;
-const smtpPort = parseInt(import.meta.env.EMAIL_SMTP_PORT || '587', 10);
-const smtpUser = import.meta.env.EMAIL_SMTP_USER;
-const smtpPass = import.meta.env.EMAIL_SMTP_PASSWORD;
-const senderEmail = import.meta.env.EMAIL_SENDER_ADDRESS || 'hello@thisisgrain.com';
+const smtpHost = process.env.EMAIL_SMTP_HOST;
+const smtpPort = parseInt(process.env.EMAIL_SMTP_PORT || '587', 10);
+const smtpUser = process.env.EMAIL_SMTP_USER;
+const smtpPass = process.env.EMAIL_SMTP_PASSWORD;
+const senderEmail = process.env.EMAIL_SENDER_ADDRESS || 'hello@thisisgrain.com';
 
-export async function POST({ request }) {
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   if (!smtpHost || !smtpUser || !smtpPass) {
     console.error('Email service is not configured. Missing SMTP environment variables.');
-    return new Response(JSON.stringify({ error: 'Email service not configured on the server.' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return res.status(500).json({ error: 'Email service not configured on the server.' });
   }
 
   try {
-    const data = await request.json(); // Expecting quoteDetails and pdfDataUri
+    const data = req.body; // Expecting quoteDetails and pdfDataUri
+
+    // Check if the PDF data is too large (limit to 6MB)
+    const pdfData = data.pdfDataUri.split('base64,')[1];
+    if (pdfData.length > 6 * 1024 * 1024) {
+      return res.status(413).json({ error: 'PDF data is too large. Please try again with a smaller quote.' });
+    }
 
     const transporter = nodemailer.createTransport({
       host: smtpHost,
       port: smtpPort,
-      secure: false, // true for 465, false for other ports
+      secure: smtpPort === 465, // true for 465, false for other ports
       auth: {
         user: smtpUser,
         pass: smtpPass,
@@ -81,7 +86,7 @@ export async function POST({ request }) {
       attachments: [
         {
           filename: `Grain_Quote_${data.quoteDetails.name?.replace(/\s+/g, '_') || 'Details'}.pdf`,
-          content: data.pdfDataUri.split('base64,')[1],
+          content: pdfData,
           encoding: 'base64',
           contentType: 'application/pdf'
         }
@@ -92,23 +97,14 @@ export async function POST({ request }) {
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully to:', data.quoteDetails.email);
 
-    return new Response(JSON.stringify({ message: 'Quote email sent successfully!' }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return res.status(200).json({ message: 'Quote email sent successfully!' });
 
   } catch (error) {
     console.error('Error in send-quote-email API:', error);
     // Provide a more specific error message if it's an auth issue
     if (error.code === 'EAUTH' || error.responseCode === 535) {
-        return new Response(JSON.stringify({ error: 'Failed to send email: Authentication error. Please check server credentials.' }), {
-            status: 500,
-            headers: { 'Content-Type': 'application/json' },
-          });
+      return res.status(500).json({ error: 'Failed to send email: Authentication error. Please check server credentials.' });
     }
-    return new Response(JSON.stringify({ error: 'Failed to process quote email request.' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return res.status(500).json({ error: 'Failed to process quote email request.' });
   }
 } 

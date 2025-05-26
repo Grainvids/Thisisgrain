@@ -176,16 +176,20 @@ function NewPricingForm() {
     try {
       console.log('Generating PDF...');
       const canvas = await html2canvas(pdfRef.current, {
-        scale: 2, 
+        scale: 1.5,
         useCORS: true,
-        logging: true, // Enable logging temporarily for debugging
+        logging: false,
+        imageTimeout: 0,
+        allowTaint: true,
+        backgroundColor: '#ffffff'
       });
       
-      const imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/jpeg', 0.7);
       const pdf = new jsPDF({
         orientation: 'p',
         unit: 'mm',
-        format: 'a4'
+        format: 'a4',
+        compress: true
       });
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -196,7 +200,7 @@ function NewPricingForm() {
       const imgX = (pdfWidth - imgWidth * ratio) / 2;
       const imgY = 0;
 
-      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      pdf.addImage(imgData, 'JPEG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
       pdfDataUri = pdf.output('datauristring');
       console.log('PDF generated successfully');
 
@@ -435,13 +439,67 @@ function NewPricingForm() {
         <div className="text-lg font-semibold text-orange-600 pt-1">
           Grand Total: {formatCurrency(calculatedGrandTotal)}
         </div>
-        <div className="pt-4">
+        <div className="pt-4 flex flex-col sm:flex-row gap-2 justify-end">
           <button 
             type="button" 
             onClick={handleOpenQuoteModal}
             className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium py-2 px-4 rounded transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 w-full sm:w-auto"
           >
             Email me this quote
+          </button>
+          <button 
+            type="button" 
+            onClick={async () => {
+              if (!pdfRef.current) {
+                console.error("PDF content ref is not available.");
+                alert("Could not generate PDF. Please try again.");
+                return;
+              }
+
+              try {
+                console.log('Generating test PDF...');
+                const canvas = await html2canvas(pdfRef.current, {
+                  scale: 1.5,
+                  useCORS: true,
+                  logging: false,
+                  imageTimeout: 0,
+                  allowTaint: true,
+                  backgroundColor: '#ffffff'
+                });
+                
+                const imgData = canvas.toDataURL('image/jpeg', 0.7);
+                const pdf = new jsPDF({
+                  orientation: 'p',
+                  unit: 'mm',
+                  format: 'a4',
+                  compress: true
+                });
+
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = canvas.width;
+                const imgHeight = canvas.height;
+                const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+                const imgX = (pdfWidth - imgWidth * ratio) / 2;
+                const imgY = 0;
+
+                pdf.addImage(imgData, 'JPEG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+                
+                // Generate filename with current date
+                const date = new Date().toISOString().split('T')[0];
+                const filename = `Grain_Quote_Test_${date}.pdf`;
+                
+                // Save the PDF
+                pdf.save(filename);
+                console.log('Test PDF generated and downloaded successfully');
+              } catch (error) {
+                console.error('Error generating test PDF:', error);
+                alert('Failed to generate test PDF. Please check the console for details.');
+              }
+            }}
+            className="bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 w-full sm:w-auto"
+          >
+            Download Test PDF
           </button>
         </div>
       </div>
