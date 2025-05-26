@@ -176,38 +176,16 @@ function NewPricingForm() {
     try {
       console.log('Generating PDF...');
       const canvas = await html2canvas(pdfRef.current, {
-        scale: 2, // Higher scale for better quality
+        scale: 2, 
         useCORS: true,
-        logging: false,
-        imageTimeout: 0,
-        removeContainer: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        windowWidth: 794, // A4 width in pixels at 96 DPI
-        windowHeight: 1123, // A4 height in pixels at 96 DPI
-        onclone: (clonedDoc) => {
-          // Ensure all fonts are loaded
-          const style = clonedDoc.createElement('style');
-          style.textContent = `
-            @font-face {
-              font-family: 'Arial';
-              src: local('Arial');
-            }
-            @font-face {
-              font-family: 'Arial Black';
-              src: local('Arial Black');
-            }
-          `;
-          clonedDoc.head.appendChild(style);
-        }
+        logging: true, // Enable logging temporarily for debugging
       });
       
-      const imgData = canvas.toDataURL('image/png', 1.0); // Use PNG for better quality
+      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF({
         orientation: 'p',
         unit: 'mm',
-        format: 'a4',
-        compress: true
+        format: 'a4'
       });
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -219,9 +197,7 @@ function NewPricingForm() {
       const imgY = 0;
 
       pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-      
-      // Ensure we're using the correct PDF data URI format
-      pdfDataUri = 'data:application/pdf;base64,' + pdf.output('base64');
+      pdfDataUri = pdf.output('datauristring');
       console.log('PDF generated successfully');
 
     } catch (error) {
@@ -498,8 +474,6 @@ function NewPricingForm() {
                   value={quoteEmail} 
                   onChange={(e) => setQuoteEmail(e.target.value)} 
                   required 
-                  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                  title="Please enter a valid email address (e.g., name@domain.com)"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm text-black"
                 />
               </div>
@@ -522,8 +496,6 @@ function NewPricingForm() {
                   id="quotePhoneNumber"
                   value={quotePhoneNumber}
                   onChange={(e) => setQuotePhoneNumber(e.target.value)}
-                  pattern="[0-9\s+()-]*"
-                  title="Please enter a valid phone number"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm text-black"
                 />
               </div>

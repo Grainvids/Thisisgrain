@@ -4,15 +4,15 @@ import nodemailer from 'nodemailer';
 
 // Access environment variables
 // These should be set in your .env file (and on your deployment platform)
+const smtpHost = import.meta.env.EMAIL_SMTP_HOST;
+const smtpPort = parseInt(import.meta.env.EMAIL_SMTP_PORT || '587', 10);
 const smtpUser = import.meta.env.EMAIL_SMTP_USER;
 const smtpPass = import.meta.env.EMAIL_SMTP_PASSWORD;
 const senderEmail = import.meta.env.EMAIL_SENDER_ADDRESS || 'hello@thisisgrain.com';
 
 export async function POST({ request }) {
-  console.log('API endpoint called');
-  
-  if (!smtpUser || !smtpPass) {
-    console.error('Email service is not configured. Missing SMTP credentials.');
+  if (!smtpHost || !smtpUser || !smtpPass) {
+    console.error('Email service is not configured. Missing SMTP environment variables.');
     return new Response(JSON.stringify({ error: 'Email service not configured on the server.' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
@@ -20,82 +20,24 @@ export async function POST({ request }) {
   }
 
   try {
-    const data = await request.json();
-    console.log('Request data received:', {
-      hasQuoteDetails: !!data.quoteDetails,
-      hasPdfData: !!data.pdfDataUri,
-      email: data.quoteDetails?.email
-    });
+    const data = await request.json(); // Expecting quoteDetails and pdfDataUri
 
-    if (!data.quoteDetails || !data.pdfDataUri) {
-      throw new Error('Missing required data: quoteDetails or pdfDataUri');
-    }
-
-    if (!data.quoteDetails.email) {
-      throw new Error('Email address is required');
-    }
-
-    // Validate PDF data
-    if (!data.pdfDataUri.startsWith('data:application/pdf;base64,')) {
-      throw new Error('Invalid PDF data format');
-    }
-
-    // Create transporter with SSL
-    console.log('Creating SMTP transporter...');
     const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true, // use SSL
+      host: smtpHost,
+      port: smtpPort,
+      secure: false, // true for 465, false for other ports
       auth: {
         user: smtpUser,
         pass: smtpPass,
       },
       tls: {
-        rejectUnauthorized: false,
-        minVersion: 'TLSv1.2'
-      },
-      debug: true,
-      logger: true
-    });
-
-    // Log SMTP configuration (excluding sensitive data)
-    console.log('SMTP Configuration:', {
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      user: smtpUser,
-      hasPassword: !!smtpPass
-    });
-
-    // Verify connection configuration with retry
-    console.log('Verifying SMTP connection...');
-    let retryCount = 0;
-    const maxRetries = 3;
-    
-    while (retryCount < maxRetries) {
-      try {
-        console.log(`SMTP verification attempt ${retryCount + 1}...`);
-        await transporter.verify();
-        console.log('SMTP connection verified successfully');
-        break;
-      } catch (error) {
-        retryCount++;
-        console.error(`SMTP verification attempt ${retryCount} failed:`, {
-          message: error.message,
-          code: error.code,
-          command: error.command,
-          responseCode: error.responseCode,
-          response: error.response,
-          stack: error.stack
-        });
-        
-        if (retryCount === maxRetries) {
-          throw new Error(`Failed to verify SMTP connection after ${maxRetries} attempts: ${error.message}`);
-        }
-        // Wait for 2 seconds before retrying
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        rejectUnauthorized: false // Only use this in development
       }
-    }
+    });
+
+    // Verify connection configuration
+    await transporter.verify();
+    console.log('SMTP connection verified successfully');
 
     const mailOptions = {
       from: `"Grain Productions" <${senderEmail}>`,
@@ -146,40 +88,9 @@ export async function POST({ request }) {
       ]
     };
 
-    console.log('Attempting to send email...');
-    // Send the email with retry
-    let sendRetryCount = 0;
-    const maxSendRetries = 3;
-    
-    while (sendRetryCount < maxSendRetries) {
-      try {
-        console.log(`Email send attempt ${sendRetryCount + 1}...`);
-        const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent successfully:', {
-          messageId: info.messageId,
-          response: info.response,
-          accepted: info.accepted,
-          rejected: info.rejected
-        });
-        break;
-      } catch (error) {
-        sendRetryCount++;
-        console.error(`Email send attempt ${sendRetryCount} failed:`, {
-          message: error.message,
-          code: error.code,
-          command: error.command,
-          responseCode: error.responseCode,
-          response: error.response,
-          stack: error.stack
-        });
-        
-        if (sendRetryCount === maxSendRetries) {
-          throw new Error(`Failed to send email after ${maxSendRetries} attempts: ${error.message}`);
-        }
-        // Wait for 2 seconds before retrying
-        await new Promise(resolve => setTimeout(resolve, 2000));
-      }
-    }
+    // Send the email
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully to:', data.quoteDetails.email);
 
     return new Response(JSON.stringify({ message: 'Quote email sent successfully!' }), {
       status: 200,
@@ -188,53 +99,14 @@ export async function POST({ request }) {
 
   } catch (error) {
     console.error('Error in send-quote-email API:', error);
-    
-    // Log the full error details
-    console.error('Full error details:', {
-      name: error.name,
-      message: error.message,
-      code: error.code,
-      command: error.command,
-      responseCode: error.responseCode,
-      response: error.response,
-      stack: error.stack
-    });
-
-    // Provide more specific error messages based on the error type
+    // Provide a more specific error message if it's an auth issue
     if (error.code === 'EAUTH' || error.responseCode === 535) {
-      return new Response(JSON.stringify({ 
-        error: 'Failed to send email: Authentication error. Please check server credentials.',
-        details: error.message
-      }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
+        return new Response(JSON.stringify({ error: 'Failed to send email: Authentication error. Please check server credentials.' }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' },
+          });
     }
-
-    if (error.message.includes('Missing required data')) {
-      return new Response(JSON.stringify({ 
-        error: 'Invalid request data',
-        details: error.message
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-
-    if (error.message.includes('Connection closed') || error.message.includes('Failed to verify SMTP connection')) {
-      return new Response(JSON.stringify({ 
-        error: 'Failed to connect to email server. Please try again.',
-        details: error.message
-      }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-
-    return new Response(JSON.stringify({ 
-      error: 'Failed to process quote email request.',
-      details: error.message
-    }), {
+    return new Response(JSON.stringify({ error: 'Failed to process quote email request.' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
