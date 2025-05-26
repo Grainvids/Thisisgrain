@@ -45,20 +45,44 @@ export async function POST({ request }) {
     const transporter = nodemailer.createTransport({
       host: smtpHost,
       port: smtpPort,
-      secure: false, // true for 465, false for other ports
+      secure: smtpPort === 465, // true for 465, false for other ports
       auth: {
         user: smtpUser,
         pass: smtpPass,
       },
       tls: {
-        rejectUnauthorized: false // Only use this in development
-      }
+        rejectUnauthorized: false, // Only use this in development
+        minVersion: 'TLSv1.2'
+      },
+      pool: true, // Use pooled connections
+      maxConnections: 1,
+      maxMessages: 3,
+      socketTimeout: 10000, // 10 seconds
+      connectionTimeout: 10000, // 10 seconds
+      greetingTimeout: 10000, // 10 seconds
+      debug: true // Enable debug logging
     });
 
-    // Verify connection configuration
+    // Verify connection configuration with retry
     console.log('Verifying SMTP connection...');
-    await transporter.verify();
-    console.log('SMTP connection verified successfully');
+    let retryCount = 0;
+    const maxRetries = 3;
+    
+    while (retryCount < maxRetries) {
+      try {
+        await transporter.verify();
+        console.log('SMTP connection verified successfully');
+        break;
+      } catch (error) {
+        retryCount++;
+        console.error(`SMTP verification attempt ${retryCount} failed:`, error);
+        if (retryCount === maxRetries) {
+          throw new Error(`Failed to verify SMTP connection after ${maxRetries} attempts: ${error.message}`);
+        }
+        // Wait for 1 second before retrying
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    }
 
     const mailOptions = {
       from: `"Grain Productions" <${senderEmail}>`,
@@ -110,9 +134,25 @@ export async function POST({ request }) {
     };
 
     console.log('Attempting to send email...');
-    // Send the email
-    await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully to:', data.quoteDetails.email);
+    // Send the email with retry
+    let sendRetryCount = 0;
+    const maxSendRetries = 3;
+    
+    while (sendRetryCount < maxSendRetries) {
+      try {
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully to:', data.quoteDetails.email);
+        break;
+      } catch (error) {
+        sendRetryCount++;
+        console.error(`Email send attempt ${sendRetryCount} failed:`, error);
+        if (sendRetryCount === maxSendRetries) {
+          throw new Error(`Failed to send email after ${maxSendRetries} attempts: ${error.message}`);
+        }
+        // Wait for 1 second before retrying
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    }
 
     return new Response(JSON.stringify({ message: 'Quote email sent successfully!' }), {
       status: 200,
@@ -147,6 +187,16 @@ export async function POST({ request }) {
         details: error.message
       }), {
         status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (error.message.includes('Connection closed') || error.message.includes('Failed to verify SMTP connection')) {
+      return new Response(JSON.stringify({ 
+        error: 'Failed to connect to email server. Please try again.',
+        details: error.message
+      }), {
+        status: 500,
         headers: { 'Content-Type': 'application/json' },
       });
     }
