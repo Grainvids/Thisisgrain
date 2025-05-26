@@ -256,13 +256,20 @@ function NewPricingForm() {
 
       console.log('API response status:', response.status);
       
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to send quote email');
+      // Check if the response is JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const errorText = await response.text();
+        console.error('Server returned non-JSON response:', errorText);
+        throw new Error('Server error: Invalid response format');
       }
 
       const result = await response.json();
       console.log('API response:', result);
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send quote email');
+      }
 
       setSubmitSuccess(true);
       // Reset form after successful submission

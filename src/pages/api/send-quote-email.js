@@ -9,12 +9,25 @@ const smtpPass = import.meta.env.EMAIL_SMTP_PASSWORD;
 const senderEmail = import.meta.env.EMAIL_SENDER_ADDRESS || 'hello@thisisgrain.com';
 
 export async function POST({ request }) {
+  // Set CORS headers
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type'
+  };
+
+  // Handle preflight requests
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { headers });
+  }
+
   if (!smtpHost || !smtpUser || !smtpPass) {
     console.error('Email service is not configured. Missing SMTP environment variables.');
-    return new Response(JSON.stringify({ error: 'Email service not configured on the server.' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ error: 'Email service not configured on the server.' }), 
+      { status: 500, headers }
+    );
   }
 
   try {
@@ -23,10 +36,10 @@ export async function POST({ request }) {
     // Check if the PDF data is too large (limit to 6MB)
     const pdfData = data.pdfDataUri.split('base64,')[1];
     if (pdfData.length > 6 * 1024 * 1024) {
-      return new Response(JSON.stringify({ error: 'PDF data is too large. Please try again with a smaller quote.' }), {
-        status: 413,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ error: 'PDF data is too large. Please try again with a smaller quote.' }), 
+        { status: 413, headers }
+      );
     }
 
     const transporter = nodemailer.createTransport({
@@ -99,23 +112,23 @@ export async function POST({ request }) {
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully to:', data.quoteDetails.email);
 
-    return new Response(JSON.stringify({ message: 'Quote email sent successfully!' }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ message: 'Quote email sent successfully!' }), 
+      { status: 200, headers }
+    );
 
   } catch (error) {
     console.error('Error in send-quote-email API:', error);
     // Provide a more specific error message if it's an auth issue
     if (error.code === 'EAUTH' || error.responseCode === 535) {
-      return new Response(JSON.stringify({ error: 'Failed to send email: Authentication error. Please check server credentials.' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ error: 'Failed to send email: Authentication error. Please check server credentials.' }), 
+        { status: 500, headers }
+      );
     }
-    return new Response(JSON.stringify({ error: 'Failed to process quote email request.' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ error: 'Failed to process quote email request.' }), 
+      { status: 500, headers }
+    );
   }
 } 
