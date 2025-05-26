@@ -184,7 +184,7 @@ function NewPricingForm() {
         backgroundColor: '#ffffff'
       });
       
-      const imgData = canvas.toDataURL('image/jpeg', 0.7);
+      const imgData = canvas.toDataURL('image/jpeg', 1.0);
       const pdf = new jsPDF({
         orientation: 'p',
         unit: 'mm',
