@@ -176,16 +176,21 @@ function NewPricingForm() {
     try {
       console.log('Generating PDF...');
       const canvas = await html2canvas(pdfRef.current, {
-        scale: 2, 
+        scale: 1,
         useCORS: true,
-        logging: true, // Enable logging temporarily for debugging
+        logging: false,
+        imageTimeout: 0,
+        removeContainer: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff'
       });
       
-      const imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/jpeg', 0.7);
       const pdf = new jsPDF({
         orientation: 'p',
         unit: 'mm',
-        format: 'a4'
+        format: 'a4',
+        compress: true
       });
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -196,7 +201,7 @@ function NewPricingForm() {
       const imgX = (pdfWidth - imgWidth * ratio) / 2;
       const imgY = 0;
 
-      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      pdf.addImage(imgData, 'JPEG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
       pdfDataUri = pdf.output('datauristring');
       console.log('PDF generated successfully');
 
