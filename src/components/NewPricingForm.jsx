@@ -8,8 +8,8 @@ const addonsData = [
   { id: 'full_works_bundle', title: 'The Full Works Bundle', price: 1250, description: 'Includes all of our available add ons to take your production to the next level' },
   
   // Tier 2: Main Bundles
-  { id: 'production_bundle', title: 'Production Bundle', price: 600, description: `Photographer, artist interviews, and extra camera operator.` },
-  { id: 'post_prod_bundle', title: 'Post Production Bundle', price: 750, description: `Includes stems, mastering, 4K editing, grading, and a showreel.` },
+  { id: 'production_bundle', title: 'Production Bundle', price: 600, description: `Socials content, Photography, artist interviews + extra camera operator.` },
+  { id: 'post_prod_bundle', title: 'Post Production Bundle', price: 750, description: `Includes stems, re-mixing, re-mastering, 4K editing, grading + showreel.` },
 ];
 
 const baseRate = 1800;
