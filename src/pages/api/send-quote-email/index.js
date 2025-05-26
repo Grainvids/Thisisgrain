@@ -66,7 +66,7 @@ export async function POST({ request }) {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="color: #F97316; font-size: 32px; font-weight: 900; font-style: italic; letter-spacing: -0.05em; font-family: 'Arial Black', Arial, sans-serif; margin: 0;">Grain</h1>
+            <img src="https://grain-ffy6fzzw5-grains-projects-7844ce3b.vercel.app/grainlogo.png" alt="Grain" style="max-width: 200px; height: auto;" />
           </div>
           
           <p style="font-size: 16px; line-height: 1.6; color: #333;">Dear ${data.quoteDetails.name || 'Customer'},</p>
