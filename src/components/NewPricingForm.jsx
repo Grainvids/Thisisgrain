@@ -175,17 +175,6 @@ function NewPricingForm() {
     let pdfDataUri;
     try {
       console.log('Generating PDF...');
-      const canvas = await html2canvas(pdfRef.current, {
-        scale: 1,
-        useCORS: true,
-        logging: false,
-        imageTimeout: 0,
-        removeContainer: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff'
-      });
-      
-      const imgData = canvas.toDataURL('image/jpeg', 0.7);
       const pdf = new jsPDF({
         orientation: 'p',
         unit: 'mm',
@@ -193,15 +182,48 @@ function NewPricingForm() {
         compress: true
       });
 
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 0;
+      // Set font
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(12);
 
-      pdf.addImage(imgData, 'JPEG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      // Add content
+      pdf.text('Grain Productions', 20, 20);
+      pdf.text('Quote Details', 20, 30);
+      pdf.text(`Name: ${quoteName}`, 20, 40);
+      pdf.text(`Email: ${quoteEmail}`, 20, 50);
+      if (quoteInstitution) {
+        pdf.text(`Institution: ${quoteInstitution}`, 20, 60);
+      }
+      if (quotePhoneNumber) {
+        pdf.text(`Phone: ${quotePhoneNumber}`, 20, 70);
+      }
+
+      // Add quote details
+      pdf.text('Quote Summary:', 20, 90);
+      pdf.text(`Shoot Days: ${shootDays}`, 20, 100);
+      pdf.text(`Number of Slots: ${numberOfSlots}`, 20, 110);
+
+      // Add selected add-ons
+      if (currentSelectedAddons.length > 0) {
+        pdf.text('Selected Add-ons:', 20, 130);
+        currentSelectedAddons.forEach((addon, index) => {
+          pdf.text(`• ${addon.title}`, 25, 140 + (index * 10));
+        });
+      }
+
+      // Add pricing details
+      const pricingY = 160 + (currentSelectedAddons.length * 10);
+      pdf.text('Pricing Details:', 20, pricingY);
+      pdf.text(`Base Rate and Production Fee: ${formatCurrency(baseRateAndProductionFee)}`, 20, pricingY + 10);
+      pdf.text(`Add-ons Total: ${formatCurrency(currentAddonsTotalValue)}`, 20, pricingY + 20);
+      pdf.text(`Subtotal: ${formatCurrency(calculatedSubtotal)}`, 20, pricingY + 30);
+      pdf.text(`VAT (20%): ${formatCurrency(calculatedVatAmount)}`, 20, pricingY + 40);
+      pdf.text(`Grand Total: ${formatCurrency(calculatedGrandTotal)}`, 20, pricingY + 50);
+
+      // Add footer
+      const footerY = pdf.internal.pageSize.getHeight() - 20;
+      pdf.text('This quote is valid for 30 days from the date of issue.', 20, footerY);
+      pdf.text('Grain Productions | hello@thisisgrain.com | +44 796 700 4106', 20, footerY + 10);
       
       // Ensure we're using the correct PDF data URI format
       pdfDataUri = 'data:application/pdf;base64,' + pdf.output('base64');
