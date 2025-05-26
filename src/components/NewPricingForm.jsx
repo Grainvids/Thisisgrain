@@ -176,16 +176,33 @@ function NewPricingForm() {
     try {
       console.log('Generating PDF...');
       const canvas = await html2canvas(pdfRef.current, {
-        scale: 2, // Increased scale for better quality
+        scale: 2, // Higher scale for better quality
         useCORS: true,
         logging: false,
         imageTimeout: 0,
         removeContainer: true,
         allowTaint: true,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        windowWidth: 794, // A4 width in pixels at 96 DPI
+        windowHeight: 1123, // A4 height in pixels at 96 DPI
+        onclone: (clonedDoc) => {
+          // Ensure all fonts are loaded
+          const style = clonedDoc.createElement('style');
+          style.textContent = `
+            @font-face {
+              font-family: 'Arial';
+              src: local('Arial');
+            }
+            @font-face {
+              font-family: 'Arial Black';
+              src: local('Arial Black');
+            }
+          `;
+          clonedDoc.head.appendChild(style);
+        }
       });
       
-      const imgData = canvas.toDataURL('image/jpeg', 1.0); // Full quality
+      const imgData = canvas.toDataURL('image/png', 1.0); // Use PNG for better quality
       const pdf = new jsPDF({
         orientation: 'p',
         unit: 'mm',
@@ -201,10 +218,10 @@ function NewPricingForm() {
       const imgX = (pdfWidth - imgWidth * ratio) / 2;
       const imgY = 0;
 
-      pdf.addImage(imgData, 'JPEG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
       
-      // Use datauristring instead of base64
-      pdfDataUri = pdf.output('datauristring');
+      // Ensure we're using the correct PDF data URI format
+      pdfDataUri = 'data:application/pdf;base64,' + pdf.output('base64');
       console.log('PDF generated successfully');
 
     } catch (error) {
