@@ -234,8 +234,8 @@ function NewPricingForm() {
     console.log('Sending quote details:', quoteDetails);
 
     try {
-      console.log('Making API request to /api/send-quote-email');
-      const response = await fetch('/api/send-quote-email', {
+      console.log('Making API request to /api/send-quote-email/index');
+      const response = await fetch('/api/send-quote-email/index', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
