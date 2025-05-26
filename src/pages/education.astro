@@ -189,10 +189,16 @@ import ClientLogos from '../components/ClientLogos.astro';
                     </section>
                     <div class="testimonial-image-section">
                         <img src="/edu-content2.jpg" alt="RNCM Student" class="testimonial-image" />
-                        <div class="testimonial-overlay">
-                            <p>"The guys were super easy to work with — very accommodating, friendly and incredibly quick between setups."<br><span class="testimonial-attribution">— RNCM Student</span></p>
-                        </div>
                     </div>
+
+                    <!-- New Quote Box Section -->
+                    <div class="quote-box">
+                        <blockquote>
+                            <p>"The guys were super easy to work with — very accommodating, friendly and incredibly quick between setups."</p>
+                            <footer>— RNCM Student</footer>
+                        </blockquote>
+                    </div>
+
                     <section id="process" class="content-block">
                         <h2>Workflow</h2>
                         <div class="timeline">
@@ -244,9 +250,14 @@ import ClientLogos from '../components/ClientLogos.astro';
                     <!-- Testimonial Image Section 2 -->
                     <div class="testimonial-image-section">
                         <img src="/edu-image1.jpg" alt="Hannah McGuigan, RNCM - Curriculum Lead" class="testimonial-image" />
-                        <div class="testimonial-overlay">
-                            <p>"Really appreciate your calm approach and ability to be flexible with the speedy turnarounds and diversity of the projects."<br><span class="testimonial-attribution">— Hannah McGuigan - Curriculum Lead</span></p>
-                        </div>
+                    </div>
+
+                    <!-- New Quote Box Section -->
+                    <div class="quote-box">
+                        <blockquote>
+                            <p>"Really appreciate your calm approach and ability to be flexible with the speedy turnarounds and diversity of the projects."</p>
+                            <footer>— Hannah McGuigan - Curriculum Lead, RNCM</footer>
+                        </blockquote>
                     </div>
 
                     <section id="pricing" class="content-block">
@@ -326,7 +337,7 @@ import ClientLogos from '../components/ClientLogos.astro';
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('/education-hero.jpg');
+        background-image: url('/education-here.png');
         background-size: cover;
         background-position: center;
         filter: brightness(0.7);
@@ -470,7 +481,15 @@ import ClientLogos from '../components/ClientLogos.astro';
         padding: 2rem;
         background: white;
         border-radius: 4px;
-        transition: transform 0.3s ease;
+        transition: all 0.5s ease;
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+        will-change: transform, opacity;
+    }
+
+    .benefit-item.animate {
+        opacity: 1;
+        transform: scale(1) translateY(0);
     }
 
     .benefit-item:hover {
@@ -516,7 +535,13 @@ import ClientLogos from '../components/ClientLogos.astro';
         padding: 1.5rem 1.2rem;
         margin: 0;
         text-align: center;
+        transition: transform 0.3s ease;
     }
+
+    .benefit-stat:hover {
+        transform: scale(1.02);
+    }
+
     .stat-donut {
         display: flex;
         align-items: center;
@@ -563,7 +588,19 @@ import ClientLogos from '../components/ClientLogos.astro';
             gap: 1.5rem;
         }
         .benefit-stat {
-            align-items: flex-start;
+            flex-direction: row;
+            align-items: center;
+            text-align: left;
+            gap: 1.5rem;
+            padding: 1.2rem;
+        }
+        .stat-donut {
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+        .stat-text {
+            text-align: left;
+            flex: 1;
         }
     }
 
@@ -805,12 +842,16 @@ import ClientLogos from '../components/ClientLogos.astro';
     @media (max-width: 768px) {
         .content-container {
             grid-template-columns: 1fr;
-            max-width: none;
-            padding: 0 2rem;
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
         }
         .content-area {
-            max-width: none;
+            max-width: 100%;
             padding: 0;
+            margin: 0;
+            overflow-x: hidden;
         }
         .sidebar-nav {
             display: none;
@@ -828,6 +869,10 @@ import ClientLogos from '../components/ClientLogos.astro';
             font-size: 1.2rem;
         }
 
+        .content-block {
+            padding: 0 2rem;
+        }
+
         .content-block h2 {
             font-size: 2rem;
         }
@@ -836,34 +881,55 @@ import ClientLogos from '../components/ClientLogos.astro';
             grid-template-columns: 1fr;
         }
 
-        .timeline {
-            padding: 1rem 0;
+        .overview-video {
+            margin: 3rem 0 4rem 0;
+            width: 100vw;
+            max-width: none;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: visible;
+            padding-bottom: 75%; /* 4:3 Aspect Ratio for mobile */
         }
 
-        .timeline::before {
-            left: 30px;
+        .video-carousel {
+            width: 100vw;
         }
 
-        .timeline-item {
-            padding-left: 70px;
+        .video-info {
+            padding: 1.6rem;
         }
 
-        .timeline-number {
-            width: 40px;
-            height: 40px;
+        .video-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .video-info p {
             font-size: 1rem;
+            margin: 0;
         }
 
-        .timeline-content {
-            padding: 1.5rem;
+        .testimonial-image-section {
+            margin: 3rem 2rem;
+            width: calc(100% - 4rem);
+            max-width: none;
+            position: relative;
+            left: 0;
+            transform: none;
         }
 
-        .timeline-content h3 {
-            font-size: 1.3rem;
+        .testimonial-image {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
-        .pricing-grid {
-            grid-template-columns: 1fr;
+        .quote-box {
+            margin: 2rem 2rem;
+            padding: 2rem;
+            max-width: none;
+            width: calc(100% - 4rem);
         }
     }
 
@@ -875,6 +941,7 @@ import ClientLogos from '../components/ClientLogos.astro';
         margin: 3rem 0;
         background: #000;
         overflow: hidden;
+        border-radius: 8px;
     }
 
     .video-carousel {
@@ -883,12 +950,16 @@ import ClientLogos from '../components/ClientLogos.astro';
         left: 0;
         width: 100%;
         height: 100%;
+        border-radius: 8px;
+        overflow: hidden;
     }
 
     .carousel-container {
         position: relative;
         width: 100%;
         height: 100%;
+        border-radius: 8px;
+        overflow: hidden;
     }
 
     .carousel-slide {
@@ -898,9 +969,11 @@ import ClientLogos from '../components/ClientLogos.astro';
         width: 100%;
         height: 100%;
         opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-        cursor: pointer;  /* Added to indicate clickable */
+        transition: opacity 0.5s ease-in-out, transform 0.3s ease;
+        cursor: pointer;
         pointer-events: none;
+        border-radius: 8px;
+        overflow: hidden;
     }
 
     .carousel-slide.active {
@@ -908,10 +981,16 @@ import ClientLogos from '../components/ClientLogos.astro';
         pointer-events: auto;
     }
 
+    .carousel-slide.active:hover {
+        transform: scale(1.02);
+    }
+
     .content-video {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: transform 0.3s ease;
+        border-radius: 8px;
     }
 
     .video-info {
@@ -919,7 +998,7 @@ import ClientLogos from '../components/ClientLogos.astro';
         bottom: 0;
         left: 0;
         width: 100%;
-        padding: 1.6rem;
+        padding: 1.6rem 1.6rem 0 1.6rem;
         color: white;
         opacity: 0;
         transform: translateY(1rem);
@@ -949,16 +1028,96 @@ import ClientLogos from '../components/ClientLogos.astro';
     }
 
     @media (max-width: 768px) {
+        .content-container {
+            grid-template-columns: 1fr;
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .content-area {
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .sidebar-nav {
+            display: none;
+        }
+        .hero {
+            height: 48vh;
+            min-height: 320px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+        }
+
+        .content-block {
+            padding: 0 2rem;
+        }
+
+        .content-block h2 {
+            font-size: 2rem;
+        }
+
+        .benefits-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .overview-video {
+            margin: 3rem 0 4rem 0;
+            width: 100vw;
+            max-width: none;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: visible;
+            padding-bottom: 75%; /* 4:3 Aspect Ratio for mobile */
+        }
+
+        .video-carousel {
+            width: 100vw;
+        }
+
         .video-info {
-            padding: 1.2rem;
+            padding: 1.6rem;
         }
 
         .video-info h3 {
-            font-size: 1rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
         }
 
         .video-info p {
-            font-size: 0.7rem;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .testimonial-image-section {
+            margin: 3rem 2rem;
+            width: calc(100% - 4rem);
+            max-width: none;
+            position: relative;
+            left: 0;
+            transform: none;
+        }
+
+        .testimonial-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .quote-box {
+            margin: 2rem 2rem;
+            padding: 2rem;
+            max-width: none;
+            width: calc(100% - 4rem);
         }
     }
 
@@ -1219,50 +1378,54 @@ import ClientLogos from '../components/ClientLogos.astro';
         margin: 3rem auto 4rem auto;
         overflow: hidden;
         box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+        border-radius: 8px;
     }
+
     .testimonial-image {
         width: 100%;
         display: block;
         object-fit: cover;
     }
-    .testimonial-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: linear-gradient(to top, rgba(0,0,0,0.7) 80%, transparent 100%);
-        color: #fff;
-        padding: 2rem 2rem 0.5rem 2rem;
-        font-size: 0.85rem;
-        font-weight: 400;
-        letter-spacing: 0.01em;
-        z-index: 2;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.25);
-    }
-    .testimonial-overlay p {
-        opacity: 0.7;
-        font-size: 0.85rem;
-    }
-    .testimonial-attribution {
-        display: block;
-        margin-top: 1rem;
-        font-size: 0.85rem;
-        font-style: normal;
-        font-weight: 300;
-        opacity: 0.85;
-    }
+
     @media (max-width: 768px) {
         .testimonial-image-section {
             max-width: 100%;
             margin: 2rem 0 2.5rem 0;
         }
-        .testimonial-overlay {
-            padding: 1.2rem 1rem 0.5rem 1rem;
-            font-size: 0.75rem;
-        }
-        .testimonial-attribution {
-            font-size: 0.9rem;
-        }
+    }
+
+    .quote-box {
+        max-width: 800px;
+        margin: 3rem auto 4rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+        transition: transform 0.3s ease;
+    }
+
+    .quote-box:hover {
+        transform: scale(1.02);
+    }
+
+    .quote-box blockquote {
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    .quote-box blockquote p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 1rem;
+        font-style: italic;
+    }
+
+    .quote-box blockquote footer {
+        font-size: 1rem;
+        color: var(--accent-color, #FF3E00);
+        font-weight: 500;
     }
 </style>
 
@@ -1533,5 +1696,27 @@ import ClientLogos from '../components/ClientLogos.astro';
                 lastScrollY = currentScrollY;
             }, { passive: true });
         }
+
+        // Benefit items animation
+        const benefitObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add a small delay between each item's animation
+                    const index = Array.from(document.querySelectorAll('.benefit-item')).indexOf(entry.target);
+                    setTimeout(() => {
+                        entry.target.classList.add('animate');
+                    }, index * 100); // 100ms delay between each item
+                    benefitObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1, // Trigger when 10% of the item is visible
+            rootMargin: '50px' // Start animation slightly before the item comes into view
+        });
+
+        // Observe all benefit items
+        document.querySelectorAll('.benefit-item').forEach(item => {
+            benefitObserver.observe(item);
+        });
     });
 </script> 
