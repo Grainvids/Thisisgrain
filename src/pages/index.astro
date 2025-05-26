@@ -25,12 +25,13 @@ import ClientLogos from '../components/ClientLogos.astro';
 			</video>
 			<div class="overlay"></div>
 			<div class="section-content">
-				<div class="scroll-indicator">
-					<span class="scroll-text">Scroll Down</span>
+			</div>
+			<div class="scroll-indicator" style="opacity: 1 !important; visibility: visible !important;">
+				<button class="scroll-arrow-button" aria-label="Scroll to next section">
 					<svg class="scroll-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none">
 						<path d="M12 4L12 20M12 20L18 14M12 20L6 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 					</svg>
-				</div>
+				</button>
 			</div>
 		</section>
 
@@ -562,12 +563,18 @@ import ClientLogos from '../components/ClientLogos.astro';
 	}
 
 	/* Hero Section */
+	.hero {
+		position: relative;
+		min-height: 100vh;
+	}
+
 	.hero .section-content {
-		justify-content: flex-end;
-		align-items: flex-start;
-		padding: 0 3.2rem 3.2rem;
-		max-width: 100%;
-		margin: 0 auto;
+		position: relative;
+		height: 100%;
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+		padding-bottom: 3.2rem;
 	}
 
 	.hero h1 {
@@ -623,58 +630,51 @@ import ClientLogos from '../components/ClientLogos.astro';
 	}
 
 	.scroll-indicator {
-		position: fixed;
+		position: absolute;
 		bottom: 1.6rem;
 		left: 50%;
 		transform: translateX(-50%);
 		display: flex;
-		flex-direction: column;
 		align-items: center;
-		gap: 0.4rem;
-		color: rgba(255, 255, 255, 0.25);
-		opacity: 0;
-		visibility: hidden;
-		z-index: 100;
+		justify-content: center;
+		color: rgba(255, 255, 255, 0.8);
+		z-index: 9999;
+		width: 100%;
+		text-align: center;
+		pointer-events: auto;
 	}
 
-	.scroll-indicator.visible {
-		animation: fadeIn 0.5s ease-out forwards;
-		visibility: visible;
+	.scroll-arrow-button {
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		transition: transform 0.3s ease;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		pointer-events: auto;
 	}
 
-	.scroll-text {
-		font-size: 0.72rem;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		font-weight: 300;
+	.scroll-arrow-button:hover {
+		transform: translateY(5px);
 	}
 
 	.scroll-arrow {
-		animation: bounce 2s infinite;
-		width: 26px;
-		height: 26px;
+		animation: bounce 1s ease-in-out;
+		width: 32px;
+		height: 32px;
+		margin: 0 auto;
+		color: rgba(255, 255, 255, 0.8);
 	}
 
 	@keyframes bounce {
-		0%, 20%, 50%, 80%, 100% {
+		0%, 100% {
 			transform: translateY(0);
 		}
-		40% {
+		50% {
 			transform: translateY(-10px);
-		}
-		60% {
-			transform: translateY(-5px);
-		}
-	}
-
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-			transform: translateY(20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
 		}
 	}
 
@@ -1495,6 +1495,32 @@ import ClientLogos from '../components/ClientLogos.astro';
 <script>
 	// Defer script execution until DOM is loaded
 	document.addEventListener('DOMContentLoaded', () => {
+		// Debug logging
+		console.log('DOM Content Loaded');
+		
+		const scrollIndicator = document.querySelector('.scroll-indicator');
+		console.log('Scroll Indicator Element:', scrollIndicator);
+		
+		if (scrollIndicator) {
+			console.log('Adding visible class to scroll indicator');
+			scrollIndicator.classList.add('visible');
+			console.log('Scroll Indicator Classes:', scrollIndicator.classList);
+		}
+
+		// Add click handler for scroll arrow
+		const scrollArrowButton = document.querySelector('.scroll-arrow-button');
+		console.log('Scroll Arrow Button:', scrollArrowButton);
+		
+		if (scrollArrowButton) {
+			scrollArrowButton.addEventListener('click', () => {
+				console.log('Scroll arrow clicked');
+				const nextSection = document.querySelector('.striking');
+				if (nextSection) {
+					nextSection.scrollIntoView({ behavior: 'smooth' });
+				}
+			});
+		}
+
 		// Logo visibility based on scroll position - Mobile only
 		const isMobile = window.innerWidth <= 768;
 		const logo = document.querySelector('.nav-logo') as HTMLElement;
