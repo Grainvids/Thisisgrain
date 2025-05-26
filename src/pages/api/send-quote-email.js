@@ -11,6 +11,8 @@ const smtpPass = import.meta.env.EMAIL_SMTP_PASSWORD;
 const senderEmail = import.meta.env.EMAIL_SENDER_ADDRESS || 'hello@thisisgrain.com';
 
 export async function POST({ request }) {
+  console.log('API endpoint called');
+  
   if (!smtpHost || !smtpUser || !smtpPass) {
     console.error('Email service is not configured. Missing SMTP environment variables.');
     return new Response(JSON.stringify({ error: 'Email service not configured on the server.' }), {
@@ -20,7 +22,25 @@ export async function POST({ request }) {
   }
 
   try {
-    const data = await request.json(); // Expecting quoteDetails and pdfDataUri
+    const data = await request.json();
+    console.log('Request data received:', {
+      hasQuoteDetails: !!data.quoteDetails,
+      hasPdfData: !!data.pdfDataUri,
+      email: data.quoteDetails?.email
+    });
+
+    if (!data.quoteDetails || !data.pdfDataUri) {
+      throw new Error('Missing required data: quoteDetails or pdfDataUri');
+    }
+
+    if (!data.quoteDetails.email) {
+      throw new Error('Email address is required');
+    }
+
+    // Validate PDF data
+    if (!data.pdfDataUri.startsWith('data:application/pdf;base64,')) {
+      throw new Error('Invalid PDF data format');
+    }
 
     const transporter = nodemailer.createTransport({
       host: smtpHost,
@@ -36,6 +56,7 @@ export async function POST({ request }) {
     });
 
     // Verify connection configuration
+    console.log('Verifying SMTP connection...');
     await transporter.verify();
     console.log('SMTP connection verified successfully');
 
@@ -88,6 +109,7 @@ export async function POST({ request }) {
       ]
     };
 
+    console.log('Attempting to send email...');
     // Send the email
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully to:', data.quoteDetails.email);
@@ -99,14 +121,40 @@ export async function POST({ request }) {
 
   } catch (error) {
     console.error('Error in send-quote-email API:', error);
-    // Provide a more specific error message if it's an auth issue
+    
+    // Log the full error details
+    console.error('Full error details:', {
+      name: error.name,
+      message: error.message,
+      code: error.code,
+      stack: error.stack
+    });
+
+    // Provide more specific error messages based on the error type
     if (error.code === 'EAUTH' || error.responseCode === 535) {
-        return new Response(JSON.stringify({ error: 'Failed to send email: Authentication error. Please check server credentials.' }), {
-            status: 500,
-            headers: { 'Content-Type': 'application/json' },
-          });
+      return new Response(JSON.stringify({ 
+        error: 'Failed to send email: Authentication error. Please check server credentials.',
+        details: error.message
+      }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
-    return new Response(JSON.stringify({ error: 'Failed to process quote email request.' }), {
+
+    if (error.message.includes('Missing required data')) {
+      return new Response(JSON.stringify({ 
+        error: 'Invalid request data',
+        details: error.message
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    return new Response(JSON.stringify({ 
+      error: 'Failed to process quote email request.',
+      details: error.message
+    }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
