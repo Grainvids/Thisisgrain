@@ -655,8 +655,13 @@ import ClientLogos from '../components/ClientLogos.astro';
         padding: 1.5rem;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        transition: transform 0.3s ease;
+        transition: all 0.3s ease;
         cursor: pointer;
+    }
+
+    .timeline-content:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     }
 
     .timeline-content h3 {
@@ -669,21 +674,11 @@ import ClientLogos from '../components/ClientLogos.astro';
         color: #000;
         position: relative;
         padding-right: 2rem;
+        transition: color 0.3s ease;
     }
 
-    .timeline-content h3::after {
-        content: '−';
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 1.5rem;
+    .timeline-content:hover h3 {
         color: var(--accent-color);
-        transition: transform 0.3s ease;
-    }
-
-    .timeline-item.expanded .timeline-content h3::after {
-        content: '+';
     }
 
     .timeline-content p {
@@ -700,10 +695,6 @@ import ClientLogos from '../components/ClientLogos.astro';
     .timeline-item.expanded .timeline-content p {
         max-height: 0;
         margin-top: 0;
-    }
-
-    .timeline-content:hover {
-        transform: none;
     }
 
     /* CTA Button */
