@@ -4,8 +4,6 @@ import nodemailer from 'nodemailer';
 
 // Access environment variables
 // These should be set in your .env file (and on your deployment platform)
-const smtpHost = import.meta.env.EMAIL_SMTP_HOST;
-const smtpPort = parseInt(import.meta.env.EMAIL_SMTP_PORT || '587', 10);
 const smtpUser = import.meta.env.EMAIL_SMTP_USER;
 const smtpPass = import.meta.env.EMAIL_SMTP_PASSWORD;
 const senderEmail = import.meta.env.EMAIL_SENDER_ADDRESS || 'hello@thisisgrain.com';
@@ -13,8 +11,8 @@ const senderEmail = import.meta.env.EMAIL_SENDER_ADDRESS || 'hello@thisisgrain.c
 export async function POST({ request }) {
   console.log('API endpoint called');
   
-  if (!smtpHost || !smtpUser || !smtpPass) {
-    console.error('Email service is not configured. Missing SMTP environment variables.');
+  if (!smtpUser || !smtpPass) {
+    console.error('Email service is not configured. Missing SMTP credentials.');
     return new Response(JSON.stringify({ error: 'Email service not configured on the server.' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
@@ -42,18 +40,31 @@ export async function POST({ request }) {
       throw new Error('Invalid PDF data format');
     }
 
-    // Create transporter with Gmail-specific settings
+    // Create transporter with explicit TLS
+    console.log('Creating SMTP transporter...');
     const transporter = nodemailer.createTransport({
-      service: 'gmail', // Use Gmail service
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false, // use TLS
       auth: {
         user: smtpUser,
         pass: smtpPass,
       },
       tls: {
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        minVersion: 'TLSv1.2'
       },
-      debug: true, // Enable debug logging
-      logger: true // Enable logger
+      debug: true,
+      logger: true
+    });
+
+    // Log SMTP configuration (excluding sensitive data)
+    console.log('SMTP Configuration:', {
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      user: smtpUser,
+      hasPassword: !!smtpPass
     });
 
     // Verify connection configuration with retry
@@ -63,12 +74,20 @@ export async function POST({ request }) {
     
     while (retryCount < maxRetries) {
       try {
+        console.log(`SMTP verification attempt ${retryCount + 1}...`);
         await transporter.verify();
         console.log('SMTP connection verified successfully');
         break;
       } catch (error) {
         retryCount++;
-        console.error(`SMTP verification attempt ${retryCount} failed:`, error);
+        console.error(`SMTP verification attempt ${retryCount} failed:`, {
+          message: error.message,
+          code: error.code,
+          command: error.command,
+          responseCode: error.responseCode,
+          response: error.response
+        });
+        
         if (retryCount === maxRetries) {
           throw new Error(`Failed to verify SMTP connection after ${maxRetries} attempts: ${error.message}`);
         }
@@ -133,12 +152,25 @@ export async function POST({ request }) {
     
     while (sendRetryCount < maxSendRetries) {
       try {
-        await transporter.sendMail(mailOptions);
-        console.log('Email sent successfully to:', data.quoteDetails.email);
+        console.log(`Email send attempt ${sendRetryCount + 1}...`);
+        const info = await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully:', {
+          messageId: info.messageId,
+          response: info.response,
+          accepted: info.accepted,
+          rejected: info.rejected
+        });
         break;
       } catch (error) {
         sendRetryCount++;
-        console.error(`Email send attempt ${sendRetryCount} failed:`, error);
+        console.error(`Email send attempt ${sendRetryCount} failed:`, {
+          message: error.message,
+          code: error.code,
+          command: error.command,
+          responseCode: error.responseCode,
+          response: error.response
+        });
+        
         if (sendRetryCount === maxSendRetries) {
           throw new Error(`Failed to send email after ${maxSendRetries} attempts: ${error.message}`);
         }
@@ -160,6 +192,9 @@ export async function POST({ request }) {
       name: error.name,
       message: error.message,
       code: error.code,
+      command: error.command,
+      responseCode: error.responseCode,
+      response: error.response,
       stack: error.stack
     });
 
