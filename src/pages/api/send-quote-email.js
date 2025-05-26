@@ -42,25 +42,18 @@ export async function POST({ request }) {
       throw new Error('Invalid PDF data format');
     }
 
+    // Create transporter with Gmail-specific settings
     const transporter = nodemailer.createTransport({
-      host: smtpHost,
-      port: smtpPort,
-      secure: smtpPort === 465, // true for 465, false for other ports
+      service: 'gmail', // Use Gmail service
       auth: {
         user: smtpUser,
         pass: smtpPass,
       },
       tls: {
-        rejectUnauthorized: false, // Only use this in development
-        minVersion: 'TLSv1.2'
+        rejectUnauthorized: false
       },
-      pool: true, // Use pooled connections
-      maxConnections: 1,
-      maxMessages: 3,
-      socketTimeout: 10000, // 10 seconds
-      connectionTimeout: 10000, // 10 seconds
-      greetingTimeout: 10000, // 10 seconds
-      debug: true // Enable debug logging
+      debug: true, // Enable debug logging
+      logger: true // Enable logger
     });
 
     // Verify connection configuration with retry
@@ -79,8 +72,8 @@ export async function POST({ request }) {
         if (retryCount === maxRetries) {
           throw new Error(`Failed to verify SMTP connection after ${maxRetries} attempts: ${error.message}`);
         }
-        // Wait for 1 second before retrying
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Wait for 2 seconds before retrying
+        await new Promise(resolve => setTimeout(resolve, 2000));
       }
     }
 
@@ -149,8 +142,8 @@ export async function POST({ request }) {
         if (sendRetryCount === maxSendRetries) {
           throw new Error(`Failed to send email after ${maxSendRetries} attempts: ${error.message}`);
         }
-        // Wait for 1 second before retrying
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Wait for 2 seconds before retrying
+        await new Promise(resolve => setTimeout(resolve, 2000));
       }
     }
 
