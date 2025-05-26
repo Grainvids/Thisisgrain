@@ -7,7 +7,7 @@ const smtpUser = import.meta.env.EMAIL_SMTP_USER;
 const smtpPass = import.meta.env.EMAIL_SMTP_PASSWORD;
 const senderEmail = import.meta.env.EMAIL_SENDER_ADDRESS || 'hello@thisisgrain.com';
 
-export async function POST({ request }) {
+export const POST = async ({ request }) => {
   // Set CORS headers
   const headers = {
     'Content-Type': 'application/json',
