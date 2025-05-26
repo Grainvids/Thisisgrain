@@ -255,12 +255,14 @@ function NewPricingForm() {
       });
 
       console.log('API response status:', response.status);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to send quote email');
+      }
+
       const result = await response.json();
       console.log('API response:', result);
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to send quote email');
-      }
 
       setSubmitSuccess(true);
       // Reset form after successful submission

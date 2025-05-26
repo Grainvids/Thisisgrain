@@ -2,29 +2,31 @@
 import nodemailer from 'nodemailer';
 
 // Access environment variables
-const smtpHost = process.env.EMAIL_SMTP_HOST;
-const smtpPort = parseInt(process.env.EMAIL_SMTP_PORT || '587', 10);
-const smtpUser = process.env.EMAIL_SMTP_USER;
-const smtpPass = process.env.EMAIL_SMTP_PASSWORD;
-const senderEmail = process.env.EMAIL_SENDER_ADDRESS || 'hello@thisisgrain.com';
+const smtpHost = import.meta.env.EMAIL_SMTP_HOST;
+const smtpPort = parseInt(import.meta.env.EMAIL_SMTP_PORT || '587', 10);
+const smtpUser = import.meta.env.EMAIL_SMTP_USER;
+const smtpPass = import.meta.env.EMAIL_SMTP_PASSWORD;
+const senderEmail = import.meta.env.EMAIL_SENDER_ADDRESS || 'hello@thisisgrain.com';
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
+export async function POST({ request }) {
   if (!smtpHost || !smtpUser || !smtpPass) {
     console.error('Email service is not configured. Missing SMTP environment variables.');
-    return res.status(500).json({ error: 'Email service not configured on the server.' });
+    return new Response(JSON.stringify({ error: 'Email service not configured on the server.' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   try {
-    const data = req.body; // Expecting quoteDetails and pdfDataUri
+    const data = await request.json(); // Expecting quoteDetails and pdfDataUri
 
     // Check if the PDF data is too large (limit to 6MB)
     const pdfData = data.pdfDataUri.split('base64,')[1];
     if (pdfData.length > 6 * 1024 * 1024) {
-      return res.status(413).json({ error: 'PDF data is too large. Please try again with a smaller quote.' });
+      return new Response(JSON.stringify({ error: 'PDF data is too large. Please try again with a smaller quote.' }), {
+        status: 413,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
     const transporter = nodemailer.createTransport({
@@ -97,14 +99,23 @@ export default async function handler(req, res) {
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully to:', data.quoteDetails.email);
 
-    return res.status(200).json({ message: 'Quote email sent successfully!' });
+    return new Response(JSON.stringify({ message: 'Quote email sent successfully!' }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
 
   } catch (error) {
     console.error('Error in send-quote-email API:', error);
     // Provide a more specific error message if it's an auth issue
     if (error.code === 'EAUTH' || error.responseCode === 535) {
-      return res.status(500).json({ error: 'Failed to send email: Authentication error. Please check server credentials.' });
+      return new Response(JSON.stringify({ error: 'Failed to send email: Authentication error. Please check server credentials.' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
-    return res.status(500).json({ error: 'Failed to process quote email request.' });
+    return new Response(JSON.stringify({ error: 'Failed to process quote email request.' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 } 
