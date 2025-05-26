@@ -41,14 +41,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 				<div class="slide" style="background-image: url('/slide3.jpg')"></div>
 				<div class="slide" style="background-image: url('/slide4.jpg')"></div>
 				<div class="slide" style="background-image: url('/slide5.jpg')"></div>
-				
-				<div class="slide-dots">
-					<button class="dot active" aria-label="Go to slide 1"></button>
-					<button class="dot" aria-label="Go to slide 2"></button>
-					<button class="dot" aria-label="Go to slide 3"></button>
-					<button class="dot" aria-label="Go to slide 4"></button>
-					<button class="dot" aria-label="Go to slide 5"></button>
-				</div>
 			</div>
 			<div class="overlay"></div>
 			<div class="section-content">
@@ -60,6 +52,13 @@ import ClientLogos from '../components/ClientLogos.astro';
 						<p>Grain is a production collective that uniquely combines the talents of three individuals who have been working together independently for the last 15 years. By merging the fields of Directing, Cinematography, and the audio landscape, we offer a distinctive and innovative approach that breaks away from conventional norms and goes against the Grain.</p>
 					</div>
 				</div>
+			</div>
+			<div class="slide-dots">
+				<button class="dot active" aria-label="Go to slide 1"></button>
+				<button class="dot" aria-label="Go to slide 2"></button>
+				<button class="dot" aria-label="Go to slide 3"></button>
+				<button class="dot" aria-label="Go to slide 4"></button>
+				<button class="dot" aria-label="Go to slide 5"></button>
 			</div>
 		</section>
 
@@ -102,7 +101,7 @@ import ClientLogos from '../components/ClientLogos.astro';
 							<div class="loading-image" style="background-image: url('/loading/loading3.jpg')"></div>
 							<video src="/project3.mp4" muted loop playsinline></video>
 							<div class="video-info">
-								<h3>CHOLE FOY - Elephant In The Room</h3>
+								<h3>CHLOE FOY - Elephant In The Room</h3>
 								<p>Music Video</p>
 							</div>
 						</div>
@@ -1114,7 +1113,8 @@ import ClientLogos from '../components/ClientLogos.astro';
 		transform: translateX(-50%);
 		display: flex;
 		gap: 0.5rem;
-		z-index: 2;
+		z-index: 100;
+		pointer-events: auto;
 	}
 
 	.dot {
@@ -1126,6 +1126,9 @@ import ClientLogos from '../components/ClientLogos.astro';
 		padding: 0;
 		cursor: pointer;
 		transition: all 0.3s ease;
+		pointer-events: auto;
+		position: relative;
+		z-index: 100;
 	}
 
 	.dot.active {
@@ -1418,8 +1421,7 @@ import ClientLogos from '../components/ClientLogos.astro';
 		}
 
 		.footer-slideshow .slide-dots {
-			width: 40px;
-			height: 40px;
+			bottom: 1rem;
 		}
 	}
 
@@ -1564,7 +1566,16 @@ import ClientLogos from '../components/ClientLogos.astro';
 		const slideshows = document.querySelectorAll('.slideshow');
 		slideshows.forEach(slideshow => {
 			const slides = slideshow.querySelectorAll('.slide');
-			const dots = slideshow.querySelectorAll('.dot');
+			// Check if this is the top slideshow (striking section)
+			const isTopSlideshow = slideshow.closest('.striking') !== null;
+			// Get dots from the appropriate location based on which slideshow
+			const dots = isTopSlideshow 
+				? slideshow.parentElement?.querySelector('.slide-dots')?.querySelectorAll('.dot')
+				: slideshow.querySelectorAll('.dot');
+			
+			console.log('Found slideshow with dots:', dots?.length);
+			
+			if (!dots) return;
 			
 			// Randomize initial slide
 			const randomIndex = Math.floor(Math.random() * slides.length);
@@ -1580,8 +1591,11 @@ import ClientLogos from '../components/ClientLogos.astro';
 			
 			let currentSlide = randomIndex;
 			let isAnimating = false;
+			let touchStartX = 0;
+			let touchEndX = 0;
 
 			function goToSlide(index: number) {
+				console.log('Attempting to go to slide:', index);
 				if (isAnimating) return;
 				isAnimating = true;
 
@@ -1601,12 +1615,56 @@ import ClientLogos from '../components/ClientLogos.astro';
 				// Reset animation flag after transition
 				setTimeout(() => {
 					isAnimating = false;
-				}, 800); // Match the CSS transition duration
+				}, 800);
 			}
 
-			// Event listeners with passive option for better performance
+			// Touch event handlers for swipe
+			const handleTouchStart = (e: TouchEvent) => {
+				touchStartX = e.changedTouches[0].screenX;
+			};
+
+			const handleTouchEnd = (e: TouchEvent) => {
+				touchEndX = e.changedTouches[0].screenX;
+				handleSwipe();
+			};
+
+			function handleSwipe() {
+				const swipeThreshold = 50; // Minimum distance for a swipe
+				const swipeDistance = touchEndX - touchStartX;
+
+				if (Math.abs(swipeDistance) > swipeThreshold) {
+					if (swipeDistance > 0) {
+						// Swipe right - go to previous slide
+						goToSlide(currentSlide - 1);
+					} else {
+						// Swipe left - go to next slide
+						goToSlide(currentSlide + 1);
+					}
+				}
+			}
+
+			// Add touch events to both the slideshow and its parent for top slideshow
+			if (isTopSlideshow) {
+				const parentElement = slideshow.parentElement;
+				if (parentElement) {
+					parentElement.addEventListener('touchstart', handleTouchStart, { passive: true });
+					parentElement.addEventListener('touchend', handleTouchEnd, { passive: true });
+				}
+			}
+			
+			// Always add touch events to the slideshow itself
+			slideshow.addEventListener('touchstart', handleTouchStart, { passive: true });
+			slideshow.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+			// Event listeners for dots
 			dots.forEach((dot, index) => {
-				dot.addEventListener('click', () => goToSlide(index), { passive: true });
+				console.log('Adding click listener to dot:', index);
+				dot.addEventListener('click', (e) => {
+					console.log('Dot clicked:', index);
+					e.preventDefault();
+					e.stopPropagation();
+					goToSlide(index);
+				});
 			});
 
 			// Use setInterval with requestAnimationFrame for smoother animations
