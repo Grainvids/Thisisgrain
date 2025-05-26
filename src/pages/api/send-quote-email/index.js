@@ -66,7 +66,7 @@ export async function POST({ request }) {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <img src="https://thisisgrain.com/grainlogo.png" alt="Grain" style="max-width: 200px; height: auto;" />
+            <img src="cid:grain-logo" alt="Grain" style="max-width: 200px; height: auto;" />
           </div>
           
           <p style="font-size: 16px; line-height: 1.6; color: #333;">Dear ${data.quoteDetails.name || 'Customer'},</p>
@@ -103,6 +103,11 @@ export async function POST({ request }) {
           content: pdfData,
           encoding: 'base64',
           contentType: 'application/pdf'
+        },
+        {
+          filename: 'grainlogo.png',
+          path: './public/grainlogo.png',
+          cid: 'grain-logo'
         }
       ]
     };
