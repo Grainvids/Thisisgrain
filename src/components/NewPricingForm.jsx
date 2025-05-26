@@ -202,7 +202,9 @@ function NewPricingForm() {
       const imgY = 0;
 
       pdf.addImage(imgData, 'JPEG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-      pdfDataUri = pdf.output('datauristring');
+      
+      // Ensure we're using the correct PDF data URI format
+      pdfDataUri = 'data:application/pdf;base64,' + pdf.output('base64');
       console.log('PDF generated successfully');
 
     } catch (error) {
