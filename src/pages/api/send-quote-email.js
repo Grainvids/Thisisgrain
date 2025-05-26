@@ -40,12 +40,12 @@ export async function POST({ request }) {
       throw new Error('Invalid PDF data format');
     }
 
-    // Create transporter with explicit TLS
+    // Create transporter with SSL
     console.log('Creating SMTP transporter...');
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
-      port: 587,
-      secure: false, // use TLS
+      port: 465,
+      secure: true, // use SSL
       auth: {
         user: smtpUser,
         pass: smtpPass,
@@ -61,8 +61,8 @@ export async function POST({ request }) {
     // Log SMTP configuration (excluding sensitive data)
     console.log('SMTP Configuration:', {
       host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
+      port: 465,
+      secure: true,
       user: smtpUser,
       hasPassword: !!smtpPass
     });
@@ -85,7 +85,8 @@ export async function POST({ request }) {
           code: error.code,
           command: error.command,
           responseCode: error.responseCode,
-          response: error.response
+          response: error.response,
+          stack: error.stack
         });
         
         if (retryCount === maxRetries) {
@@ -168,7 +169,8 @@ export async function POST({ request }) {
           code: error.code,
           command: error.command,
           responseCode: error.responseCode,
-          response: error.response
+          response: error.response,
+          stack: error.stack
         });
         
         if (sendRetryCount === maxSendRetries) {
