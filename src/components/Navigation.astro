@@ -10,10 +10,14 @@ const navItems = [
 const socialLinks = [
     { href: "https://instagram.com", label: "Instagram", icon: "instagram" }
 ];
+
+// Get current path
+const currentPath = Astro.url.pathname;
+const isEducationPage = currentPath === '/education';
 ---
 
 <a href="https://www.instagram.com/grainvids" target="_blank" rel="noopener noreferrer" aria-label="Grain Instagram Profile">
-    <div class="persistent-logo">
+    <div class={`persistent-logo ${isEducationPage ? 'education-logo' : ''}`}>
         <Logo />
     </div>
 </a>
@@ -71,6 +75,12 @@ const socialLinks = [
         left: 4rem;
         z-index: 101;
         pointer-events: all;
+        transition: transform 0.8s ease, opacity 0.8s ease;
+    }
+
+    .education-logo {
+        transform: translateY(0);
+        opacity: 1;
     }
 
     .nav {
@@ -257,6 +267,16 @@ const socialLinks = [
 
         .mobile-menu-button.active span:nth-child(3) {
             transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        .education-logo {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        .education-logo.visible {
+            transform: translateY(0);
+            opacity: 1;
         }
     }
 

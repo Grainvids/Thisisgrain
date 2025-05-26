@@ -1,5 +1,5 @@
-<a href="/" class="logo">
-    <span class="logo-text">G</span><span class="logo-text">r</span><span class="logo-text">a</span><span class="logo-text">i</span><span class="logo-text">n</span>
+<a href="/" class="logo nav-logo">
+    <img src="/grainlogo.png" alt="Grain Logo" class="logo-image" />
 </a>
 
 <style>
@@ -14,15 +14,24 @@
         letter-spacing: -0.1em;
         position: relative;
         font-family: "Arial Black", Arial, sans-serif;
+        transition: opacity 0.8s ease, transform 0.8s ease;
+        z-index: 100;
     }
 
-    .logo-text {
-        display: inline-block;
-        position: relative;
+    .logo.hidden {
+        opacity: 0;
+        transform: translateY(-20px);
+        pointer-events: none;
+        visibility: hidden;
+    }
+
+    .logo-image {
+        height: 2.5rem;
+        width: auto;
         transition: all 0.3s ease;
     }
 
-    .logo:hover .logo-text {
+    .logo:hover .logo-image {
         animation: grainEffect 0.8s steps(10) infinite;
     }
 
@@ -56,13 +65,32 @@
     }
 
     /* Footer logo specific styles */
+    :global(.footer-logo) {
+        align-items: stretch !important;
+        width: 100% !important;
+    }
+
     :global(.footer-logo) .logo {
-        font-size: 10rem;  /* 500px equivalent */
+        width: 100% !important;
+        justify-content: center !important;
+        display: flex !important;
+    }
+
+    :global(.footer-logo) .logo-image {
+        height: 10rem !important;
+        width: auto !important;
+        max-width: none !important;
+        display: block !important;
+        margin: 0 auto !important;
     }
 
     @media (max-width: 768px) {
         :global(.footer-logo) .logo {
             font-size: 2.5rem;
+        }
+        :global(.footer-logo) .logo-image {
+            height: 7rem !important;
+            max-width: 300px !important;
         }
     }
 </style> 

@@ -245,7 +245,7 @@ import ClientLogos from '../components/ClientLogos.astro';
                     <div class="testimonial-image-section">
                         <img src="/edu-image1.jpg" alt="Hannah McGuigan, RNCM - Curriculum Lead" class="testimonial-image" />
                         <div class="testimonial-overlay">
-                            <p>“Really appreciate your calm approach and ability to be flexible with the speedy turnarounds and diversity of the projects.”<br><span class="testimonial-attribution">— Hannah McGuigan - Curriculum Lead</span></p>
+                            <p>"Really appreciate your calm approach and ability to be flexible with the speedy turnarounds and diversity of the projects."<br><span class="testimonial-attribution">— Hannah McGuigan - Curriculum Lead</span></p>
                         </div>
                     </div>
 
@@ -805,27 +805,16 @@ import ClientLogos from '../components/ClientLogos.astro';
     @media (max-width: 768px) {
         .content-container {
             grid-template-columns: 1fr;
+            max-width: none;
+            padding: 0 2rem;
         }
-
+        .content-area {
+            max-width: none;
+            padding: 0;
+        }
         .sidebar-nav {
-            position: relative;
-            top: 0;
-            transform: none;
-            margin-bottom: 2rem;
+            display: none;
         }
-
-        .sidebar-nav ul {
-            display: flex;
-            overflow-x: auto;
-            gap: 1rem;
-            padding-bottom: 1rem;
-        }
-
-        .sidebar-nav li {
-            margin: 0;
-            white-space: nowrap;
-        }
-
         .hero {
             height: 48vh;
             min-height: 320px;
@@ -1519,5 +1508,30 @@ import ClientLogos from '../components/ClientLogos.astro';
         document.querySelectorAll('.stat-donut').forEach(donut => {
             donutObserver.observe(donut);
         });
+
+        const logo = document.querySelector('.education-logo') as HTMLElement;
+        let lastScrollY = window.scrollY;
+        
+        if (logo) {
+            // Set initial state - visible if at top
+            if (window.scrollY <= 1) {
+                logo.classList.add('visible');
+            }
+
+            // Hide logo on scroll
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                
+                if (currentScrollY > 1) {
+                    // If we've scrolled at all, hide the logo
+                    logo.classList.remove('visible');
+                } else {
+                    // If we're back at the top, show the logo
+                    logo.classList.add('visible');
+                }
+                
+                lastScrollY = currentScrollY;
+            }, { passive: true });
+        }
     });
 </script> 

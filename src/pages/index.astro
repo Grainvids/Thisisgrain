@@ -1435,6 +1435,75 @@ import ClientLogos from '../components/ClientLogos.astro';
 <script>
 	// Defer script execution until DOM is loaded
 	document.addEventListener('DOMContentLoaded', () => {
+		// Logo visibility based on scroll position - Mobile only
+		const isMobile = window.innerWidth <= 768;
+		const logo = document.querySelector('.nav-logo') as HTMLElement;
+		const contactSection = document.querySelector('.contact-section-content') as HTMLElement;
+		const footerSection = document.querySelector('.footer-slideshow') as HTMLElement;
+
+		if (isMobile && logo && contactSection) {
+			const observerOptions = {
+				root: null,
+				rootMargin: '-100px 0px 0px 0px',
+				threshold: 0
+			};
+
+			// Function to check if element is in viewport
+			const isInViewport = (element: HTMLElement) => {
+				const rect = element.getBoundingClientRect();
+				return (
+					rect.top <= window.innerHeight &&
+					rect.bottom >= 0
+				);
+			};
+
+			// Function to handle logo visibility
+			const updateLogoVisibility = () => {
+				if (isInViewport(contactSection) || (footerSection && isInViewport(footerSection))) {
+					logo.classList.add('hidden');
+				} else {
+					logo.classList.remove('hidden');
+				}
+			};
+
+			// Initial check
+			updateLogoVisibility();
+
+			// Add scroll event listener
+			window.addEventListener('scroll', () => {
+				requestAnimationFrame(updateLogoVisibility);
+			}, { passive: true });
+
+			// Also observe the sections for more precise control
+			const sectionObserver = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						logo.classList.add('hidden');
+					} else {
+						// Only show if we're not in either section
+						if (!isInViewport(contactSection) && (!footerSection || !isInViewport(footerSection))) {
+							logo.classList.remove('hidden');
+						}
+					}
+				});
+			}, observerOptions);
+
+			// Observe both sections
+			sectionObserver.observe(contactSection);
+			if (footerSection) {
+				sectionObserver.observe(footerSection);
+			}
+
+			// Handle window resize
+			window.addEventListener('resize', () => {
+				const newIsMobile = window.innerWidth <= 768;
+				if (!newIsMobile) {
+					// If we're no longer on mobile, remove the hidden class
+					logo.classList.remove('hidden');
+				}
+			}, { passive: true });
+		}
+
 		// Randomize slideshow initial position
 		const slideshows = document.querySelectorAll('.slideshow');
 		slideshows.forEach(slideshow => {
