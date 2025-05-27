@@ -354,17 +354,41 @@ const isEducationPage = currentPath === '/education';
     const mobileMenuButton = document.querySelector('.mobile-menu-button');
     const mobileMenuContent = document.querySelector('.mobile-menu-content');
     const menuOverlay = document.querySelector('.menu-overlay');
+    const logo = document.querySelector('.education-logo');
     let mouseTimeout: number | undefined;
+
+    // Function to update visibility based on scroll position
+    const updateVisibility = () => {
+        if (window.scrollY <= 1) {
+            nav?.classList.add('visible');
+            logo?.classList.add('visible');
+        } else {
+            nav?.classList.remove('visible');
+            logo?.classList.remove('visible');
+        }
+    };
+
+    // Initial visibility check
+    updateVisibility();
+
+    // Update visibility on scroll
+    window.addEventListener('scroll', () => {
+        requestAnimationFrame(updateVisibility);
+    }, { passive: true });
 
     // Show nav when mouse is near the top of the page
     document.addEventListener('mousemove', (e) => {
         if (e.clientY < 100) { // Show when mouse is within 100px of the top
             nav?.classList.add('visible');
+            logo?.classList.add('visible');
             clearTimeout(mouseTimeout);
         } else {
             // Hide after a short delay when mouse moves away
             mouseTimeout = setTimeout(() => {
-                nav?.classList.remove('visible');
+                if (window.scrollY > 1) {
+                    nav?.classList.remove('visible');
+                    logo?.classList.remove('visible');
+                }
             }, 500);
         }
     });
@@ -373,6 +397,7 @@ const isEducationPage = currentPath === '/education';
     document.addEventListener('mouseenter', (e) => {
         if (e.clientY < 100) {
             nav?.classList.add('visible');
+            logo?.classList.add('visible');
         }
     });
 
@@ -388,23 +413,8 @@ const isEducationPage = currentPath === '/education';
     });
 
     // Close mobile menu when clicking a link (inside .mobile-menu-content)
-    mobileMenuContent?.querySelectorAll('.nav-link').forEach(link => {
+    document.querySelectorAll('.mobile-menu-content a').forEach(link => {
         link.addEventListener('click', () => {
-            if (mobileMenuButton?.classList.contains('active')) {
-                mobileMenuButton?.classList.remove('active');
-                mobileMenuContent?.classList.remove('active');
-                menuOverlay?.classList.remove('active');
-                mobileMenuButton?.setAttribute('aria-expanded', 'false');
-                mobileMenuContent?.setAttribute('aria-hidden', 'true');
-                menuOverlay?.setAttribute('aria-hidden', 'true');
-                document.body.style.overflow = '';
-            }
-        });
-    });
-
-    // Close menu when clicking overlay
-    menuOverlay?.addEventListener('click', () => {
-        if (mobileMenuButton?.classList.contains('active')) {
             mobileMenuButton?.classList.remove('active');
             mobileMenuContent?.classList.remove('active');
             menuOverlay?.classList.remove('active');
@@ -412,6 +422,6 @@ const isEducationPage = currentPath === '/education';
             mobileMenuContent?.setAttribute('aria-hidden', 'true');
             menuOverlay?.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
-        }
+        });
     });
 </script> 

@@ -1,5 +1,6 @@
 ---
 import Navigation from '../components/Navigation.astro';
+import '../tailwind.css';
 
 interface Props {
 	title?: string;
@@ -25,7 +26,7 @@ const { title = "Grain | Video Collective" } = Astro.props;
 		
 		<!-- Preload critical resources -->
 		<link rel="preload" href="/hero.mp4" as="video" type="video/mp4">
-		<link rel="preload" href="/slide1.jpg" as="image">
+		<link rel="preload" href="/slide1.jpg" as="image" type="image/jpeg">
 		
 		<!-- Preconnect to external domains -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,6 +38,7 @@ const { title = "Grain | Video Collective" } = Astro.props;
 		<!-- Performance meta tags -->
 		<meta http-equiv="Cache-Control" content="public, max-age=31536000">
 		<meta name="theme-color" content="#0a0a0a">
+		<meta name="mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		
