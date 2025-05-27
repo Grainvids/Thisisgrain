@@ -59,10 +59,10 @@ export async function POST({ request }) {
     console.log('SMTP connection verified successfully');
 
     const mailOptions = {
-      from: `"Grain Productions" <${senderEmail}>`,
+      from: `"Grain" <${senderEmail}>`,
       to: data.quoteDetails.email,
       cc: 'hello@thisisgrain.com',
-      subject: 'Your Custom Quote from Grain Productions',
+      subject: 'Your Custom Quote from Grain',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">

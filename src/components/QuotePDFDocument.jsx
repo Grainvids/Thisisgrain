@@ -99,7 +99,7 @@ const QuotePDFDocument = React.forwardRef(({
 
       {/* Footer / Thank you note */}
       <div className="text-center text-xs text-gray-500 pt-8 border-t border-gray-200">
-        <p>Thank you for considering Grain Productions!</p>
+        <p>Thank you for considering Grain!</p>
         <p>This quote is valid for 30 days.</p>
         <p>hello@thisisgrain.com | +44 796 700 4106</p>
       </div>
