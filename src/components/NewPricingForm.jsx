@@ -321,7 +321,7 @@ function NewPricingForm() {
           <label htmlFor="shootDays" className="text-lg font-semibold text-black">
             Number of Shoot Days
           </label>
-          <span className="text-2xl font-bold text-orange-600">{shootDays}</span>
+          <span className="text-2xl font-bold text-[#FF3E00]">{shootDays}</span>
         </div>
         <input
           type="range"
@@ -332,7 +332,7 @@ function NewPricingForm() {
           step="1"
           value={shootDays}
           onChange={handleShootDaysChange}
-          className="w-full h-6 rounded-lg appearance-none cursor-pointer accent-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+          className="w-full h-6 rounded-lg appearance-none cursor-pointer accent-[#FF3E00] focus:outline-none focus:ring-2 focus:ring-[#FF3E00] focus:ring-offset-2 [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#FF3E00] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow-lg [&::-moz-range-thumb]:w-8 [&::-moz-range-thumb]:h-8 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#FF3E00] [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:shadow-lg"
           aria-describedby="shoot-days-description"
         />
         <p className="text-sm text-gray-600 mt-2">
@@ -378,14 +378,14 @@ function NewPricingForm() {
             const isEmphasizedItem = addon.id === FULL_WORKS_BUNDLE_ID;
             
             let baseBgClass = 'bg-white';
-            if (addon.id === FULL_WORKS_BUNDLE_ID) baseBgClass = 'bg-orange-50';
+            if (addon.id === FULL_WORKS_BUNDLE_ID) baseBgClass = 'bg-[#FF3E00]/5';
 
             let borderClass = '';
             if (selectedAddons[addon.id]) {
               if (isEmphasizedItem) {
-                borderClass = 'border-[3px] border-orange-500';
+                borderClass = 'border-[3px] border-[#FF3E00]';
               } else {
-                borderClass = 'border-2 border-orange-500';
+                borderClass = 'border-2 border-[#FF3E00]';
               }
             } else {
               if (isEmphasizedItem) {
@@ -402,14 +402,14 @@ function NewPricingForm() {
             const daySuffixJsx = (currentAddon) => 
                 !currentAddon.isFixedPrice && currentAddon.price > 0 ? <span className="text-gray-600 text-xs"> / day</span> : null;
             
-            const defaultPriceJsx = <><span className="text-orange-600">{formatCurrency(addon.price)}</span>{daySuffixJsx(addon)}</>;
+            const defaultPriceJsx = <><span className="text-[#FF3E00]">{formatCurrency(addon.price)}</span>{daySuffixJsx(addon)}</>;
             
             const getDiscountedPriceJsx = (currentAddon, componentIds) => {
                 const originalPriceSum = componentIds.reduce((sum, compId) => sum + (addonsData.find(a=>a.id===compId)?.price || 0), 0);
                 if (originalPriceSum > currentAddon.price) {
-                    return <><del className="text-gray-500 mr-1">{formatCurrency(originalPriceSum)}</del><span className="text-orange-600 ml-1">{formatCurrency(currentAddon.price)}</span>{daySuffixJsx(currentAddon)}</>;
+                    return <><del className="text-gray-500 mr-1">{formatCurrency(originalPriceSum)}</del><span className="text-[#FF3E00] ml-1">{formatCurrency(currentAddon.price)}</span>{daySuffixJsx(currentAddon)}</>;
                 }
-                return <><span className="text-orange-600">{formatCurrency(currentAddon.price)}</span>{daySuffixJsx(currentAddon)}</>;
+                return <><span className="text-[#FF3E00]">{formatCurrency(currentAddon.price)}</span>{daySuffixJsx(currentAddon)}</>;
             };
 
             if (isFwbSelected) {
@@ -445,14 +445,14 @@ function NewPricingForm() {
         <div className="text-sm text-black">
           + VAT (20%): {formatCurrency(calculatedVatAmount)}
         </div>
-        <div className="text-lg font-semibold text-orange-600 pt-1">
+        <div className="text-lg font-semibold text-[#FF3E00] pt-1">
           Grand Total: {formatCurrency(calculatedGrandTotal)}
         </div>
         <div className="pt-4 flex flex-col sm:flex-row gap-2 justify-end">
           <button 
             type="button" 
             onClick={handleOpenQuoteModal}
-            className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium py-2 px-4 rounded transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 w-full sm:w-auto"
+            className="bg-[#FF3E00] hover:bg-[#FF3E00]/90 text-white text-sm font-medium py-2 px-4 rounded transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#FF3E00] focus:ring-offset-2 w-full sm:w-auto"
           >
             Email me this quote
           </button>
@@ -476,7 +476,7 @@ function NewPricingForm() {
                   value={quoteName} 
                   onChange={(e) => setQuoteName(e.target.value)} 
                   required 
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm text-black"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#FF3E00] focus:border-[#FF3E00] sm:text-sm text-black"
                 />
               </div>
               <div>
@@ -487,7 +487,7 @@ function NewPricingForm() {
                   value={quoteEmail} 
                   onChange={(e) => setQuoteEmail(e.target.value)} 
                   required 
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm text-black"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#FF3E00] focus:border-[#FF3E00] sm:text-sm text-black"
                 />
               </div>
               <div>
@@ -498,7 +498,7 @@ function NewPricingForm() {
                   id="quoteInstitution"
                   value={quoteInstitution}
                   onChange={(e) => setQuoteInstitution(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm text-black"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#FF3E00] focus:border-[#FF3E00] sm:text-sm text-black"
                 />
               </div>
               <div>
@@ -509,7 +509,7 @@ function NewPricingForm() {
                   id="quotePhoneNumber"
                   value={quotePhoneNumber}
                   onChange={(e) => setQuotePhoneNumber(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm text-black"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#FF3E00] focus:border-[#FF3E00] sm:text-sm text-black"
                 />
               </div>
               <div className="flex justify-end space-x-3 pt-2">
@@ -523,7 +523,7 @@ function NewPricingForm() {
                 <button 
                   type="submit"
                   disabled={isSubmitting}
-                  className={`px-4 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ${
+                  className={`px-4 py-2 text-sm font-medium text-white bg-[#FF3E00] hover:bg-[#FF3E00]/90 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF3E00] ${
                     isSubmitting ? 'cursor-not-allowed bg-gray-400' : ''
                   }`}
                 >
