@@ -328,7 +328,7 @@ import ClientLogos from '../components/ClientLogos.astro';
 	.nav-bar {
 		opacity: var(--nav-opacity);
 		pointer-events: var(--nav-pointer-events);
-		transition: all 0.3s ease;
+		transition: all 0.8s ease;
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -346,17 +346,25 @@ import ClientLogos from '../components/ClientLogos.astro';
 		transform: translateZ(0);
 	}
 
-	.nav-bar:hover {
-		background: transparent !important; /* Ensure no background on hover */
-		backdrop-filter: none !important;
-		-webkit-backdrop-filter: none !important;
-		box-shadow: none !important; /* Also ensure no shadow */
+	.nav-bar.hidden {
+		opacity: 0;
+		transform: translateY(-20px);
+		pointer-events: none;
+		visibility: hidden;
 	}
 
 	.nav-logo {
 		display: flex;
 		align-items: center;
 		gap: 0.8rem;
+		transition: all 0.8s ease;
+	}
+
+	.nav-logo.hidden {
+		opacity: 0;
+		transform: translateY(-20px);
+		pointer-events: none;
+		visibility: hidden;
 	}
 
 	.nav-logo :global(svg) {
@@ -1456,11 +1464,13 @@ import ClientLogos from '../components/ClientLogos.astro';
 
 		// Logo visibility based on scroll position - Mobile only
 		const isMobile = window.innerWidth <= 768;
-		const logo = document.querySelector('.nav-logo') as HTMLElement;
+		const logo = document.querySelector('.persistent-logo') as HTMLElement;
 		const contactSection = document.querySelector('.contact-section-content') as HTMLElement;
+		const navBar = document.querySelector('.nav') as HTMLElement;
 
-		if (isMobile && logo && contactSection) {
-			const observerOptions = {
+		// Mobile visibility logic
+		if (isMobile && logo && navBar && contactSection) {
+			const mobileObserverOptions = {
 				root: null,
 				rootMargin: '-100px 0px 0px 0px',
 				threshold: 0
@@ -1475,36 +1485,64 @@ import ClientLogos from '../components/ClientLogos.astro';
 				);
 			};
 
-			// Function to handle logo visibility
-			const updateLogoVisibility = () => {
+			// Function to handle logo and nav bar visibility
+			const updateVisibility = () => {
 				if (isInViewport(contactSection)) {
-					logo.classList.add('hidden');
+					logo.style.opacity = '0';
+					logo.style.transform = 'translateY(-20px)';
+					logo.style.pointerEvents = 'none';
+					logo.style.visibility = 'hidden';
+					navBar.style.opacity = '0';
+					navBar.style.transform = 'translateY(-20px)';
+					navBar.style.pointerEvents = 'none';
+					navBar.style.visibility = 'hidden';
 				} else {
-					logo.classList.remove('hidden');
+					logo.style.opacity = '1';
+					logo.style.transform = 'translateY(0)';
+					logo.style.pointerEvents = 'all';
+					logo.style.visibility = 'visible';
+					navBar.style.opacity = '1';
+					navBar.style.transform = 'translateY(0)';
+					navBar.style.pointerEvents = 'all';
+					navBar.style.visibility = 'visible';
 				}
 			};
 
 			// Initial check
-			updateLogoVisibility();
+			updateVisibility();
 
 			// Add scroll event listener
 			window.addEventListener('scroll', () => {
-				requestAnimationFrame(updateLogoVisibility);
+				requestAnimationFrame(updateVisibility);
 			}, { passive: true });
 
 			// Also observe the sections for more precise control
 			const sectionObserver = new IntersectionObserver((entries) => {
 				entries.forEach(entry => {
 					if (entry.isIntersecting) {
-						logo.classList.add('hidden');
+						logo.style.opacity = '0';
+						logo.style.transform = 'translateY(-20px)';
+						logo.style.pointerEvents = 'none';
+						logo.style.visibility = 'hidden';
+						navBar.style.opacity = '0';
+						navBar.style.transform = 'translateY(-20px)';
+						navBar.style.pointerEvents = 'none';
+						navBar.style.visibility = 'hidden';
 					} else {
 						// Only show if we're not in either section
 						if (!isInViewport(contactSection)) {
-							logo.classList.remove('hidden');
+							logo.style.opacity = '1';
+							logo.style.transform = 'translateY(0)';
+							logo.style.pointerEvents = 'all';
+							logo.style.visibility = 'visible';
+							navBar.style.opacity = '1';
+							navBar.style.transform = 'translateY(0)';
+							navBar.style.pointerEvents = 'all';
+							navBar.style.visibility = 'visible';
 						}
 					}
 				});
-			}, observerOptions);
+			}, mobileObserverOptions);
 
 			// Observe both sections
 			sectionObserver.observe(contactSection);
@@ -1513,8 +1551,15 @@ import ClientLogos from '../components/ClientLogos.astro';
 			window.addEventListener('resize', () => {
 				const newIsMobile = window.innerWidth <= 768;
 				if (!newIsMobile) {
-					// If we're no longer on mobile, remove the hidden class
-					logo.classList.remove('hidden');
+					// If we're no longer on mobile, reset the styles
+					logo.style.opacity = '1';
+					logo.style.transform = 'translateY(0)';
+					logo.style.pointerEvents = 'all';
+					logo.style.visibility = 'visible';
+					navBar.style.opacity = '1';
+					navBar.style.transform = 'translateY(0)';
+					navBar.style.pointerEvents = 'all';
+					navBar.style.visibility = 'visible';
 				}
 			}, { passive: true });
 		}
@@ -1820,41 +1865,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 				heroVideo.classList.add('loaded');
 				heroLoading.classList.add('hidden');
 			}, { once: true });
-		}
-
-		// Nav Bar Theme Changer based on Section
-		const navBar = document.querySelector('.nav-bar') as HTMLElement;
-		// Select all elements that have a data-theme attribute
-		const themedSections = document.querySelectorAll('[data-theme]'); 
-
-		if (navBar && themedSections.length > 0) {
-			const observerOptions = {
-				root: null, // Use the viewport as the root
-				rootMargin: '-40px 0px -90% 0px', // Adjust top margin based on nav height, bottom margin high to only trigger at top
-				threshold: 0 // Trigger as soon as any part enters the margin area
-			};
-
-			const themeObserver = new IntersectionObserver((entries) => {
-				entries.forEach(entry => {
-					// Check if the entry is intersecting the top part of the viewport defined by rootMargin
-					if (entry.isIntersecting) {
-						const theme = (entry.target as HTMLElement).dataset.theme;
-
-						if (theme === 'light') {
-							navBar.classList.add('nav-on-light-bg');
-							navBar.classList.remove('nav-on-dark-bg'); // Optional: if you add dark styles
-						} else { // Assuming default/dark theme
-							navBar.classList.remove('nav-on-light-bg');
-							navBar.classList.add('nav-on-dark-bg'); // Optional: if you add dark styles
-						}
-					}
-				});
-			}, observerOptions);
-
-			// Observe all themed sections
-			themedSections.forEach(section => {
-				themeObserver.observe(section);
-			});
 		}
 	});
 </script>
