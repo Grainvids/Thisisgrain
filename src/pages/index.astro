@@ -201,11 +201,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 
 				<!-- Lightbox -->
 				<div class="lightbox" id="artistLightbox">
-					<button class="lightbox-close" aria-label="Close">
-						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-							<path d="M18 6L6 18M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					</button>
 					<div class="lightbox-content">
 						<div class="artist-info">
 							<h2 class="artist-name"></h2>
@@ -1152,30 +1147,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 		opacity: 1;
 	}
 
-	.lightbox-close {
-		position: absolute;
-		top: auto;
-		bottom: 2rem;
-		right: 2rem;
-		background: rgba(255, 255, 255, 0.1);
-		border: none;
-		width: 48px;
-		height: 48px;
-		border-radius: 50%;
-		color: white;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		z-index: 1001;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.lightbox-close:hover {
-		background: rgba(255, 255, 255, 0.2);
-		transform: scale(1.1);
-	}
-
 	.lightbox-content {
 		max-width: 1400px;
 		margin: 0 auto;
@@ -1715,7 +1686,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 
 		// Lightbox Functionality
 		const lightbox = document.getElementById('artistLightbox') as HTMLElement;
-		const lightboxCloseBtn = lightbox?.querySelector('.lightbox-close') as HTMLButtonElement;
 		const lightboxName = lightbox?.querySelector('.artist-name') as HTMLElement;
 		const lightboxDesc = lightbox?.querySelector('.artist-description') as HTMLElement;
 		const lightboxSessionInfo = lightbox?.querySelector('.session-info') as HTMLElement;
@@ -1776,12 +1746,7 @@ import ClientLogos from '../components/ClientLogos.astro';
 			if (sessionParent) sessionParent.style.display = '';
 			const behindParent = lightboxBehindScenes?.parentElement;
 			if (behindParent) behindParent.style.display = '';
-			// Decide if you want to resume background videos here
-			// allVideos.forEach(vid => vid.play().catch(e => console.log("Autoplay prevented"))); 
 		}
-
-		// Close lightbox via button
-		lightboxCloseBtn?.addEventListener('click', closeLightbox);
 
 		// Close lightbox via background click
 		lightbox?.addEventListener('click', (e) => {

@@ -63,6 +63,9 @@ import ClientLogos from '../components/ClientLogos.astro';
                             <div class="video-carousel">
                                 <div class="carousel-container">
                                     <div class="carousel-slide active">
+                                        <div class="loading-overlay">
+                                            <div class="loading-spinner"></div>
+                                        </div>
                                         <video 
                                             autoplay 
                                             muted 
@@ -70,6 +73,7 @@ import ClientLogos from '../components/ClientLogos.astro';
                                             playsinline 
                                             preload="auto"
                                             class="content-video"
+                                            poster="/education-content_load.jpg"
                                         >
                                             <source src="/education-content.mp4" type="video/mp4">
                                             Your browser does not support the video tag.
@@ -133,7 +137,7 @@ import ClientLogos from '../components/ClientLogos.astro';
                         </div>
                     </section>
 
-                    <section id="Benefits" class="content-block">
+                    <section id="benefits" class="content-block">
                         <h2>Benefits</h2>
                         <div class="benefits-grid">
                             <div class="benefit-item">
@@ -287,11 +291,6 @@ import ClientLogos from '../components/ClientLogos.astro';
 
     <!-- Lightbox -->
     <div class="lightbox" id="educationLightbox">
-        <button class="lightbox-close" aria-label="Close">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M18 6L6 18M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
         <div class="lightbox-content">
             <div class="artist-info">
                 <h2 class="artist-name"></h2>
@@ -1444,6 +1443,40 @@ import ClientLogos from '../components/ClientLogos.astro';
         color: #FF3E00;
         font-weight: 500;
     }
+
+    /* Loading Spinner Styles */
+    .loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+    }
+
+    .loading-overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .loading-spinner {
+        width: 30px;
+        height: 30px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
 </style>
 
 <script>
@@ -1526,10 +1559,23 @@ import ClientLogos from '../components/ClientLogos.astro';
 
             // Lightbox functionality
             const lightbox = document.getElementById('educationLightbox');
-            const lightboxCloseBtn = lightbox?.querySelector('.lightbox-close');
             const lightboxName = lightbox?.querySelector('.artist-name');
             const lightboxSubtitle = lightbox?.querySelector('.artist-subtitle');
             const youtubePlayer = document.getElementById('youtubePlayer');
+
+            // Handle loading spinner and initialize first video
+            const loadingOverlay = slides[0].querySelector('.loading-overlay');
+            const firstVideo = slides[0].querySelector('video');
+            
+            if (firstVideo && loadingOverlay) {
+                firstVideo.addEventListener('loadeddata', () => {
+                    loadingOverlay.classList.add('hidden');
+                });
+                // Initialize first video
+                firstVideo.play().catch(() => {
+                    console.log('Autoplay prevented');
+                });
+            }
 
             // Add click handlers to slides
             slides.forEach((slide, index) => {
@@ -1588,7 +1634,6 @@ import ClientLogos from '../components/ClientLogos.astro';
                 }
             }
 
-            lightboxCloseBtn?.addEventListener('click', closeLightbox);
             lightbox?.addEventListener('click', (e) => {
                 const target = e.target as HTMLElement;
                 // Only close if clicking the lightbox background or elements without z-index: 1002
@@ -1658,14 +1703,6 @@ import ClientLogos from '../components/ClientLogos.astro';
                     goToSlide(currentSlide + 1);
                 }, 10000);
             });
-
-            // Initialize first video
-            const firstVideo = slides[0].querySelector('video');
-            if (firstVideo) {
-                firstVideo.play().catch(() => {
-                    console.log('Autoplay prevented');
-                });
-            }
         }
 
         // Donut chart animation
