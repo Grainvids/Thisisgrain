@@ -26,6 +26,7 @@ const { title = "Grain | Video Collective" } = Astro.props;
 		
 		<!-- Preload critical resources -->
 		<link rel="preload" href="/hero.mp4" as="video" type="video/mp4">
+		<link rel="preload" href="/hero-loading.jpg" as="image" type="image/jpeg">
 		<link rel="preload" href="/slide1.jpg" as="image" type="image/jpeg">
 		
 		<!-- Preconnect to external domains -->
@@ -41,6 +42,12 @@ const { title = "Grain | Video Collective" } = Astro.props;
 		<meta name="mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		
+		<!-- Resource hints for non-critical resources -->
+		<link rel="prefetch" href="/slide2.jpg" as="image">
+		<link rel="prefetch" href="/slide3.jpg" as="image">
+		<link rel="prefetch" href="/slide4.jpg" as="image">
+		<link rel="prefetch" href="/slide5.jpg" as="image">
 		
 		<!-- Open Graph tags -->
 		<meta property="og:title" content={title}>
