@@ -110,7 +110,7 @@ import ClientLogos from '../components/ClientLogos.astro';
                                         </video>
                                         <div class="video-info">
                                             <h3>Pablo Miller</h3>
-                                            <p>Broken</p>
+                                            <p>Broken Mirror</p>
                                         </div>
                                     </div>
                                 </div>
@@ -337,7 +337,7 @@ import ClientLogos from '../components/ClientLogos.astro';
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('/education-hero.png');
+        background-image: url('/education-hero.jpg');
         background-size: cover;
         background-position: center;
         filter: brightness(0.7);
@@ -1296,16 +1296,21 @@ import ClientLogos from '../components/ClientLogos.astro';
 
     .lightbox-close {
         position: absolute;
-        top: 2rem;
+        top: auto;
+        bottom: 2rem;
         right: 2rem;
-        background: none;
+        background: rgba(255, 255, 255, 0.1);
         border: none;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
         color: white;
         cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 50%;
         transition: all 0.3s ease;
         z-index: 1001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .lightbox-close:hover {
@@ -1320,11 +1325,14 @@ import ClientLogos from '../components/ClientLogos.astro';
         color: white;
         height: 100%;
         overflow-y: auto;
+        position: relative;
     }
 
     .artist-info {
         text-align: left;
         margin-bottom: 4rem;
+        position: relative;
+        z-index: 1002;
     }
 
     .artist-name {
@@ -1347,6 +1355,8 @@ import ClientLogos from '../components/ClientLogos.astro';
         background: #000;
         border-radius: 4px;
         overflow: hidden;
+        position: relative;
+        z-index: 1002;
     }
 
     .artist-video iframe {
@@ -1548,7 +1558,7 @@ import ClientLogos from '../components/ClientLogos.astro';
                         } else if (title === 'Nyah Grace') {
                             youtubeId = 'cwAeW8UnL1s';
                         } else if (title === 'Pablo Miller') {
-                            youtubeId = 'qtf7wV2Wcfo';
+                            youtubeId = 'bwAqDBwNVIM';
                         }
                         console.log('YouTube ID:', youtubeId);
                         if (youtubeId) {
@@ -1580,7 +1590,9 @@ import ClientLogos from '../components/ClientLogos.astro';
 
             lightboxCloseBtn?.addEventListener('click', closeLightbox);
             lightbox?.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
+                const target = e.target as HTMLElement;
+                // Only close if clicking the lightbox background or elements without z-index: 1002
+                if (target === lightbox || target.closest('[style*="z-index: 1002"]') === null) {
                     closeLightbox();
                 }
             });

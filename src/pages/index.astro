@@ -1145,8 +1145,9 @@ import ClientLogos from '../components/ClientLogos.astro';
 	}
 
 	.lightbox-close {
-		position: fixed;
-		top: 2rem;
+		position: absolute;
+		top: auto;
+		bottom: 2rem;
 		right: 2rem;
 		background: rgba(255, 255, 255, 0.1);
 		border: none;
@@ -1174,11 +1175,14 @@ import ClientLogos from '../components/ClientLogos.astro';
 		color: white;
 		height: 100%;
 		overflow-y: auto;
+		position: relative;
 	}
 
 	.artist-info {
 		text-align: left;
 		margin-bottom: 4rem;
+		position: relative;
+		z-index: 1002;
 	}
 
 	.artist-name {
@@ -1201,6 +1205,8 @@ import ClientLogos from '../components/ClientLogos.astro';
 		background: #000;
 		border-radius: 4px;
 		overflow: hidden;
+		position: relative;
+		z-index: 1002;
 	}
 
 	.artist-video iframe {
@@ -1734,7 +1740,9 @@ import ClientLogos from '../components/ClientLogos.astro';
 
 		// Close lightbox via background click
 		lightbox?.addEventListener('click', (e) => {
-			if (e.target === lightbox) {
+			const target = e.target as HTMLElement;
+			// Only close if clicking the lightbox background or elements without z-index: 1002
+			if (target === lightbox || target.closest('[style*="z-index: 1002"]') === null) {
 				closeLightbox();
 			}
 		});
