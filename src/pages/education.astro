@@ -108,6 +108,24 @@ import ClientLogos from '../components/ClientLogos.astro';
                                             playsinline 
                                             preload="auto"
                                             class="content-video"
+                                            poster="/education-content_load.jpg"
+                                        >
+                                            <source src="/education-content4.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        <div class="video-info">
+                                            <h3>Róise McHugh</h3>
+                                            <p>Television</p>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <video 
+                                            autoplay 
+                                            muted 
+                                            loop 
+                                            playsinline 
+                                            preload="auto"
+                                            class="content-video"
                                         >
                                             <source src="/education-content3.mp4" type="video/mp4">
                                             Your browser does not support the video tag.
@@ -132,6 +150,7 @@ import ClientLogos from '../components/ClientLogos.astro';
                                     <button class="dot active" aria-label="Go to video 1"></button>
                                     <button class="dot" aria-label="Go to video 2"></button>
                                     <button class="dot" aria-label="Go to video 3"></button>
+                                    <button class="dot" aria-label="Go to video 4"></button>
                                 </div>
                             </div>
                         </div>
@@ -1605,6 +1624,8 @@ import ClientLogos from '../components/ClientLogos.astro';
                             youtubeId = 'cwAeW8UnL1s';
                         } else if (title === 'Pablo Miller') {
                             youtubeId = 'bwAqDBwNVIM';
+                        } else if (title === 'Róise McHugh') {
+                            youtubeId = '7KCgK5B5qrw';
                         }
                         console.log('YouTube ID:', youtubeId);
                         if (youtubeId) {
