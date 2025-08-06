@@ -1,6 +1,7 @@
 ---
 import Navigation from '../components/Navigation.astro';
 import '../tailwind.css';
+import { injectSpeedInsights } from '@vercel/speed-insights';
 
 interface Props {
 	title?: string;
@@ -55,6 +56,11 @@ const { title = "Grain | Video Collective" } = Astro.props;
 		<meta property="og:type" content="website">
 		<meta property="og:image" content="/og-image.jpg">
 		<meta property="og:url" content={Astro.url}>
+		
+		<!-- Vercel Speed Insights -->
+		<script type="module">
+			injectSpeedInsights();
+		</script>
 	</head>
 	<body>
 		<Navigation />
