@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GRAIN — Vision Mixer Log</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
     --bg: #0a0a0a;
@@ -38,6 +37,97 @@
     font-family: var(--font-sans);
     font-size: 14px;
     min-height: 100vh;
+  }
+
+  /* PASSWORD SCREEN */
+  #passwordScreen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pw-box {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 40px;
+    width: 380px;
+    max-width: 95vw;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .pw-logo {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.2em;
+    text-align: center;
+  }
+
+  .pw-logo span { color: var(--text-muted); font-weight: 400; }
+
+  .pw-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  #pwInput {
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    text-align: center;
+    letter-spacing: 0.1em;
+    transition: border-color 0.15s;
+  }
+  #pwInput:focus { border-color: var(--amber); }
+  #pwInput.error { border-color: var(--red); animation: shake 0.3s; }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  .pw-btn {
+    width: 100%;
+    padding: 11px;
+    background: var(--amber);
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .pw-btn:hover { background: var(--amber-dim); }
+
+  .pw-error {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--red);
+    text-align: center;
+    min-height: 16px;
   }
 
   header {
@@ -93,24 +183,18 @@
 
   .header-right { display: flex; align-items: center; gap: 16px; }
 
-  .clock {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--text-dim);
-  }
+  .clock { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
 
   .db-indicator {
     font-family: var(--font-mono);
     font-size: 11px;
     color: var(--text-muted);
     transition: color 0.3s;
-    cursor: default;
   }
   .db-indicator.connected { color: var(--green); }
   .db-indicator.saving { color: var(--yellow); }
   .db-indicator.error { color: var(--red); }
 
-  /* SESSION SWITCHER */
   .session-bar {
     background: #0d0d0d;
     border-bottom: 1px solid var(--border);
@@ -146,12 +230,6 @@
   .session-chip:hover { border-color: var(--amber); color: var(--amber); }
   .session-chip.active { border-color: var(--amber); color: var(--amber); background: rgba(245,166,35,0.1); }
 
-  .session-bar-sep {
-    color: var(--border2);
-    font-size: 16px;
-    user-select: none;
-  }
-
   .export-btn {
     margin-left: auto;
     padding: 5px 12px;
@@ -168,7 +246,6 @@
   }
   .export-btn:hover { border-color: var(--green); color: var(--green); }
 
-  /* BIG STATUS BAR */
   .status-bar {
     background: #0c0c0c;
     border-bottom: 2px solid var(--border2);
@@ -207,7 +284,6 @@
   .status-cell-value.track-val { font-size: 42px; color: var(--blue); }
   .status-cell-value.take-val { font-size: 42px; color: var(--amber); }
 
-  /* SHORTCUT BAR */
   .shortcut-bar {
     background: #0d0d0d;
     border-bottom: 1px solid var(--border);
@@ -257,20 +333,16 @@
   .key-btn.new-take { border-color: #1a3a5c; }
   .key-btn.new-take:hover, .key-btn.new-take.flash { border-color: var(--blue); color: var(--blue); background: rgba(96,165,250,0.08); }
   .key-btn.new-take.flash .key-badge { background: var(--blue); color: #000; }
-
   .key-btn.select-take { border-color: #1a3a1a; }
   .key-btn.select-take:hover, .key-btn.select-take.flash { border-color: var(--green); color: var(--green); background: rgba(74,222,128,0.08); }
   .key-btn.select-take.flash .key-badge { background: var(--green); color: #000; }
-
   .key-btn.false-start { border-color: #3a1a1a; }
   .key-btn.false-start:hover, .key-btn.false-start.flash { border-color: var(--red); color: var(--red); background: rgba(248,113,113,0.08); }
   .key-btn.false-start.flash .key-badge { background: var(--red); color: #000; }
-
   .key-btn.new-artist { border-color: #3a2a0a; }
   .key-btn.new-artist:hover, .key-btn.new-artist.flash { border-color: var(--amber); color: var(--amber); background: rgba(245,166,35,0.08); }
   .key-btn.new-artist.flash .key-badge { background: var(--amber); color: #000; }
 
-  /* MAIN */
   .main {
     display: grid;
     grid-template-columns: 300px 1fr;
@@ -307,7 +379,7 @@
     text-transform: uppercase;
   }
 
-  input[type="text"], input[type="number"], textarea {
+  input[type="text"], input[type="number"], input[type="password"], textarea {
     background: var(--bg);
     border: 1px solid var(--border2);
     border-radius: 4px;
@@ -376,7 +448,6 @@
   }
   .new-artist-btn:hover { border-color: var(--amber); color: var(--amber); }
 
-  /* LOG */
   .log-panel { display: flex; flex-direction: column; overflow: hidden; }
 
   .log-header {
@@ -400,7 +471,6 @@
   }
 
   .log-stats { display: flex; gap: 16px; align-items: center; }
-
   .stat { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); white-space: nowrap; }
   .stat span { color: var(--amber); font-weight: 600; }
 
@@ -419,7 +489,6 @@
     white-space: nowrap;
   }
   .action-btn:hover { border-color: var(--amber); color: var(--amber); }
-  .action-btn.print:hover { border-color: var(--text-dim); color: var(--text); }
 
   .log-scroll { flex: 1; overflow-y: auto; }
 
@@ -448,14 +517,12 @@
   tbody tr.is-selected:hover { background: #213010; }
 
   td { padding: 8px 12px; color: var(--text); vertical-align: middle; }
-
   td.take-cell { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--amber); width: 48px; }
   td.track-cell { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--blue); width: 64px; }
   td.artist-cell { font-weight: 500; }
   td.sumo-cell { font-family: var(--font-mono); font-size: 11px; color: var(--blue); }
   td.time-cell { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); white-space: nowrap; }
   td.notes-cell { font-size: 11px; color: var(--text-dim); max-width: 180px; }
-  td.session-cell { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); white-space: nowrap; }
 
   .badge {
     display: inline-block;
@@ -497,71 +564,6 @@
   .empty-state .big { font-size: 32px; opacity: 0.3; }
   .empty-state p { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; }
 
-  /* CONFIG OVERLAY */
-  .config-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.85);
-    z-index: 999;
-    align-items: center;
-    justify-content: center;
-  }
-  .config-overlay.show { display: flex; }
-
-  .config-box {
-    background: var(--surface);
-    border: 1px solid var(--border2);
-    border-radius: 8px;
-    padding: 32px;
-    width: 480px;
-    max-width: 95vw;
-  }
-
-  .config-title {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--amber);
-    letter-spacing: 0.1em;
-    margin-bottom: 6px;
-  }
-
-  .config-sub {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-bottom: 24px;
-    line-height: 1.6;
-  }
-
-  .config-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-  .config-field label { color: var(--text-dim); font-size: 11px; }
-
-  .config-save-btn {
-    width: 100%;
-    padding: 11px;
-    background: var(--amber);
-    color: #000;
-    border: none;
-    border-radius: 4px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    margin-top: 8px;
-  }
-  .config-save-btn:hover { background: var(--amber-dim); }
-
-  .config-help {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--text-muted);
-    margin-top: 16px;
-    line-height: 1.7;
-  }
-  .config-help a { color: var(--blue); text-decoration: none; }
-
   .toast {
     position: fixed; bottom: 24px; right: 24px;
     background: var(--surface2); border: 1px solid var(--border2);
@@ -580,88 +582,59 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
-  /* PRINT */
   @media print {
-    header, .shortcut-bar, .session-bar, .sidebar,
-    .add-take-btn, .new-artist-btn, .delete-btn,
-    .log-actions, .config-overlay, .toast { display: none !important; }
-
+    #passwordScreen, header, .shortcut-bar, .session-bar, .sidebar,
+    .add-take-btn, .new-artist-btn, .delete-btn, .log-actions, .toast { display: none !important; }
     body { background: white; color: black; font-size: 11px; }
     .main { display: block; height: auto; }
     .log-panel, .log-scroll { overflow: visible; }
-
     .status-bar { border: 1px solid #ccc; margin-bottom: 14px; display: grid; grid-template-columns: 1fr 1fr 180px 140px; }
     .status-cell { border-right: 1px solid #ccc; padding: 10px 14px; }
     .status-cell-label { color: #666; }
     .status-cell-value.artist-val { font-size: 16px; color: black; }
     .status-cell-value.song-val { font-size: 13px; color: #333; }
     .status-cell-value.track-val, .status-cell-value.take-val { font-size: 28px; color: black; }
-
     .log-header { background: white; padding: 8px 0; border-bottom: 2px solid black; }
     .log-title { color: black; font-weight: bold; font-size: 12px; }
     .stat, .stat span { color: black; }
     .stat span { font-weight: bold; }
-
     table { border-collapse: collapse; }
     thead th { background: #f0f0f0; color: black; border: 1px solid #ccc; padding: 5px 8px; font-size: 9px; position: static; }
     td { border: 1px solid #ddd; padding: 5px 8px; color: black; }
     td.take-cell { color: black; font-size: 14px; font-weight: bold; }
     td.track-cell { color: black; font-size: 13px; font-weight: bold; }
-    td.sumo-cell, td.time-cell, td.notes-cell, td.session-cell { color: black; }
-
+    td.sumo-cell, td.time-cell, td.notes-cell { color: black; }
     .badge-selected { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
     .badge-false { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
     tbody tr.is-selected { background: #f0fff0; }
     tbody tr.is-false-start { background: #fff5f5; opacity: 1; }
     tr.artist-divider td { background: #e8e8e8; color: black; font-weight: bold; border-top: 2px solid #999; }
-
     .print-header-block { display: block !important; }
     @page { margin: 15mm; }
   }
 
-  .print-header-block {
-    display: none;
-    font-family: monospace;
-    text-align: center;
-    margin-bottom: 16px;
-  }
+  .print-header-block { display: none; font-family: monospace; text-align: center; margin-bottom: 16px; }
   .print-header-block .ph-title { font-size: 15px; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase; }
   .print-header-block .ph-date { font-size: 10px; color: #666; margin-top: 3px; }
 </style>
 </head>
 <body>
 
+<!-- PASSWORD SCREEN -->
+<div id="passwordScreen">
+  <div class="pw-box">
+    <div class="pw-logo">GRAIN <span>/ VM Log</span></div>
+    <div class="pw-label">Enter password to continue</div>
+    <input type="password" id="pwInput" placeholder="••••••••" />
+    <div class="pw-error" id="pwError"></div>
+    <button class="pw-btn" id="pwBtn">Enter</button>
+  </div>
+</div>
+
 <!-- Print header -->
 <div class="print-header-block" id="printHeaderBlock">
   <div class="ph-title" id="printTitle">GRAIN — VISION MIXER LOG</div>
   <div class="ph-date" id="printDate"></div>
-</div>
-
-<!-- Config overlay (shown if no Supabase keys) -->
-<div class="config-overlay" id="configOverlay">
-  <div class="config-box">
-    <div class="config-title">⚙ Connect to Database</div>
-    <div class="config-sub">Enter your Supabase credentials to enable cloud saving.<br>These are stored in your browser only.</div>
-
-    <div class="config-field">
-      <label>Supabase Project URL</label>
-      <input type="text" id="cfgUrl" placeholder="https://xxxxxxxxxx.supabase.co" />
-    </div>
-
-    <div class="config-field">
-      <label>Supabase Anon Key</label>
-      <input type="text" id="cfgKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." />
-    </div>
-
-    <button class="config-save-btn" onclick="saveConfig()">Connect &amp; Save</button>
-
-    <div class="config-help">
-      1. Go to <a href="https://supabase.com" target="_blank">supabase.com</a> → your project<br>
-      2. Settings → API → copy <strong>Project URL</strong> and <strong>anon public</strong> key<br>
-      3. Paste above and click Connect<br><br>
-      See the setup guide for full instructions.
-    </div>
-  </div>
 </div>
 
 <header>
@@ -673,31 +646,29 @@
     </div>
   </div>
   <div class="header-right">
-    <div class="db-indicator" id="dbIndicator" title="Database status">● OFFLINE</div>
+    <div class="db-indicator" id="dbIndicator">● CONNECTING</div>
     <div class="clock" id="clock">--:--:--</div>
   </div>
 </header>
 
-<!-- SESSION SWITCHER -->
-<div class="session-bar" id="sessionBar">
+<div class="session-bar">
   <span class="session-bar-label">Sessions:</span>
   <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted)" id="sessionList">Loading...</span>
-  <button class="export-btn" onclick="exportCSV()">↓ Export CSV</button>
+  <button class="export-btn" id="exportBtn">&#8595; Export CSV</button>
 </div>
 
-<!-- BIG STATUS BAR -->
 <div class="status-bar">
   <div class="status-cell">
     <div class="status-cell-label">Artist</div>
-    <div class="status-cell-value artist-val" id="statusArtist">—</div>
+    <div class="status-cell-value artist-val" id="statusArtist">&#8212;</div>
   </div>
   <div class="status-cell">
     <div class="status-cell-label">Song</div>
-    <div class="status-cell-value song-val" id="statusSong">—</div>
+    <div class="status-cell-value song-val" id="statusSong">&#8212;</div>
   </div>
   <div class="status-cell">
     <div class="status-cell-label">Track #</div>
-    <div class="status-cell-value track-val" id="statusTrack">—</div>
+    <div class="status-cell-value track-val" id="statusTrack">&#8212;</div>
   </div>
   <div class="status-cell">
     <div class="status-cell-label">Take</div>
@@ -707,59 +678,44 @@
 
 <div class="shortcut-bar">
   <span class="shortcut-label">Stream Deck</span>
-  <button class="key-btn new-take" id="btn-new-take" onclick="newTake()">
-    <span class="key-badge">7</span> Log Take
-  </button>
-  <button class="key-btn select-take" id="btn-select" onclick="toggleSelected()">
-    <span class="key-badge">8</span> Mark Selected
-  </button>
-  <button class="key-btn false-start" id="btn-false" onclick="toggleFalseStart()">
-    <span class="key-badge">9</span> False Start
-  </button>
-  <button class="key-btn new-artist" id="btn-new-artist" onclick="newArtist()">
-    <span class="key-badge">0</span> New Artist
-  </button>
+  <button class="key-btn new-take" id="btn-new-take" id="btnNewTake"><span class="key-badge">7</span> Log Take</button>
+  <button class="key-btn select-take" id="btn-select"><span class="key-badge">8</span> Mark Selected</button>
+  <button class="key-btn false-start" id="btn-false"><span class="key-badge">9</span> False Start</button>
+  <button class="key-btn new-artist" id="btn-new-artist"><span class="key-badge">0</span> New Artist</button>
 </div>
 
 <div class="main">
   <div class="sidebar">
     <div class="sidebar-title">Current Entry</div>
-
     <div class="field-group">
       <label>Artist / Act Name</label>
-      <input type="text" id="artistName" placeholder="e.g. Nyah Grace" oninput="updateStatusBar()" />
+      <input type="text" id="artistName" placeholder="e.g. Nyah Grace" />
     </div>
-
     <div class="field-group">
       <label>Song Title</label>
-      <input type="text" id="songTitle" placeholder="e.g. Only Mine" oninput="updateStatusBar()" />
+      <input type="text" id="songTitle" placeholder="e.g. Only Mine" />
     </div>
-
     <div class="field-group">
       <label>Track Number</label>
-      <input type="number" id="trackNumber" placeholder="e.g. 3" min="1" oninput="updateStatusBar()" />
+      <input type="number" id="trackNumber" placeholder="e.g. 3" min="1" />
     </div>
-
     <div class="field-group">
       <label>Sumo Video ID</label>
       <input type="text" id="sumoId" placeholder="e.g. Video 039" />
     </div>
-
     <div class="field-group">
       <label>Status</label>
       <div class="status-flags">
-        <button class="flag-btn" id="selectedFlag" onclick="toggleSelectedFlag()">✓ Selected</button>
-        <button class="flag-btn" id="falseFlag" onclick="toggleFalseFlag()">✕ False Start</button>
+        <button class="flag-btn" id="selectedFlag">&#10003; Selected</button>
+        <button class="flag-btn" id="falseFlag">&#10005; False Start</button>
       </div>
     </div>
-
     <div class="field-group">
       <label>Notes</label>
       <textarea id="notes" placeholder="e.g. Great energy, slight fluff on ending."></textarea>
     </div>
-
-    <button class="add-take-btn" id="logBtn" onclick="logTake()">＋ LOG TAKE [7]</button>
-    <button class="new-artist-btn" onclick="newArtist()">↓ NEW ARTIST / RESET [0]</button>
+    <button class="add-take-btn" id="logBtn">&#xFF0B; LOG TAKE [7]</button>
+    <button class="new-artist-btn" id="newArtistBtn">&#8595; NEW ARTIST / RESET [0]</button>
   </div>
 
   <div class="log-panel">
@@ -771,30 +727,21 @@
         <div class="stat">Selected: <span id="statSelected">0</span></div>
       </div>
       <div class="log-actions">
-        <button class="action-btn" onclick="triggerPrint()">⎙ Print</button>
-        <button class="action-btn" onclick="showConfig()" title="Database settings">⚙</button>
+        <button class="action-btn" id="printBtn">&#8984; Print</button>
       </div>
     </div>
-
     <div class="log-scroll">
       <table>
         <thead>
           <tr>
-            <th>Take</th>
-            <th>Track #</th>
-            <th>Artist</th>
-            <th>Song</th>
-            <th>Sumo ID</th>
-            <th>Time</th>
-            <th>Status</th>
-            <th>Notes</th>
-            <th></th>
+            <th>Take</th><th>Track #</th><th>Artist</th><th>Song</th>
+            <th>Sumo ID</th><th>Time</th><th>Status</th><th>Notes</th><th></th>
           </tr>
         </thead>
         <tbody id="logBody"></tbody>
       </table>
       <div class="empty-state" id="emptyState">
-        <div class="big">◉</div>
+        <div class="big">&#9711;</div>
         <p>No takes logged yet</p>
         <p style="color:var(--text-muted);margin-top:4px;font-size:10px">Fill in the form and press 7 or Log Take</p>
       </div>
@@ -805,104 +752,136 @@
 <div class="toast" id="toast"></div>
 
 <script is:inline>
-  // ─── SUPABASE CONFIG ────────────────────────────────────────────────────────
-  // These are loaded from localStorage (set via the config overlay)
-  // You can also hardcode them here if you prefer:
-const SUPABASE_URL = 'https://cnvzalggkgvixbxqjlzn.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNudnphbGdna2d2aXhieHFqbHpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwMzg4OTksImV4cCI6MjA4NzYxNDg5OX0.lbo9HpmsMQMNQwQk9xlna5bcAVr3XUDjx2CIqfJcmRk';
+(function() {
+
+  // ── CONFIG — edit these two values ──────────────────────────────────────────
+  var SUPABASE_URL = 'https://cnvzalggkgvixbxqjlzn.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNudnphbGdna2d2aXhieHFqbHpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwMzg4OTksImV4cCI6MjA4NzYxNDg5OX0.lbo9HpmsMQMNQwQk9xlna5bcAVr3XUDjx2CIqfJcmRk';
+  var APP_PASSWORD = 'grain2026';
   // ────────────────────────────────────────────────────────────────────────────
 
-  let supabaseClient = null;
-  let takes = [];
-  let allSessions = [];
-  let activeSession = null;
-  let currentTake = 1;
-  let selectedFlag = false;
-  let falseFlag = false;
+  var sb = null;
+  var takes = [];
+  var allSessions = [];
+  var activeSession = null;
+  var currentTake = 1;
+  var selectedFlag = false;
+  var falseFlag = false;
 
-  // ─── INIT ───────────────────────────────────────────────────────────────────
+  // ── PASSWORD ─────────────────────────────────────────────────────────────────
 
-  async function init() {
-const url = SUPABASE_URL;
-const key = SUPABASE_ANON_KEY;
-
-    if (url && key) {
-      connectSupabase(url, key);
+  function checkPassword() {
+    var val = document.getElementById('pwInput').value;
+    if (val === APP_PASSWORD) {
+      document.getElementById('passwordScreen').style.display = 'none';
+      sessionStorage.setItem('grain_auth', '1');
+      startApp();
     } else {
-      document.getElementById('configOverlay').classList.add('show');
-      setDbStatus('offline');
+      var inp = document.getElementById('pwInput');
+      document.getElementById('pwError').textContent = 'Incorrect password';
+      inp.classList.add('error');
+      inp.value = '';
+      setTimeout(function() { inp.classList.remove('error'); }, 400);
     }
+  }
+
+  document.getElementById('pwBtn').addEventListener('click', checkPassword);
+  document.getElementById('pwInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPassword();
+  });
+
+  // Check if already authenticated this session
+  if (sessionStorage.getItem('grain_auth') === '1') {
+    document.getElementById('passwordScreen').style.display = 'none';
+    startApp();
+  }
+
+  // ── APP START ────────────────────────────────────────────────────────────────
+
+  function startApp() {
+    loadSupabase(function() {
+      try {
+        sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        setDbStatus('connected');
+        loadSessions();
+      } catch(e) {
+        setDbStatus('error');
+        showToast('DB connection failed', 'red');
+      }
+    });
 
     restoreFormState();
     updateClock();
     setInterval(updateClock, 1000);
+    bindEvents();
   }
 
-  function connectSupabase(url, key) {
-    try {
-      supabaseClient = supabase.createClient(url, key);
-      setDbStatus('connected');
-      loadSessions();
-    } catch(e) {
-      setDbStatus('error');
-      showToast('DB connection failed — check credentials', 'red');
-    }
+  // ── LOAD SUPABASE DYNAMICALLY ────────────────────────────────────────────────
+
+  function loadSupabase(cb) {
+    if (window.supabase) { cb(); return; }
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    s.onload = cb;
+    s.onerror = function() {
+      // Try fallback CDN
+      var s2 = document.createElement('script');
+      s2.src = 'https://unpkg.com/@supabase/supabase-js@2';
+      s2.onload = cb;
+      s2.onerror = function() { setDbStatus('error'); showToast('Could not load database library', 'red'); };
+      document.head.appendChild(s2);
+    };
+    document.head.appendChild(s);
   }
 
-  // ─── CONFIG ─────────────────────────────────────────────────────────────────
+  // ── BIND EVENTS ──────────────────────────────────────────────────────────────
 
-  function saveConfig() {
-    const url = document.getElementById('cfgUrl').value.trim();
-    const key = document.getElementById('cfgKey').value.trim();
-    if (!url || !key) { showToast('Enter both URL and key', 'red'); return; }
-    localStorage.setItem('grain_sb_url', url);
-    localStorage.setItem('grain_sb_key', key);
-    document.getElementById('configOverlay').classList.remove('show');
-    connectSupabase(url, key);
-    showToast('Connected to database', 'green');
+  function bindEvents() {
+    document.getElementById('logBtn').addEventListener('click', logTake);
+    document.getElementById('newArtistBtn').addEventListener('click', newArtist);
+    document.getElementById('btn-new-take').addEventListener('click', function() { flashBtn('btn-new-take', 300); logTake(); });
+    document.getElementById('btn-select').addEventListener('click', toggleSelected);
+    document.getElementById('btn-false').addEventListener('click', toggleFalseStart);
+    document.getElementById('btn-new-artist').addEventListener('click', newArtist);
+    document.getElementById('selectedFlag').addEventListener('click', toggleSelectedFlag);
+    document.getElementById('falseFlag').addEventListener('click', toggleFalseFlag);
+    document.getElementById('printBtn').addEventListener('click', triggerPrint);
+    document.getElementById('exportBtn').addEventListener('click', exportCSV);
+
+    document.getElementById('artistName').addEventListener('input', function() { updateStatusBar(); saveFormState(); });
+    document.getElementById('songTitle').addEventListener('input', function() { updateStatusBar(); saveFormState(); });
+    document.getElementById('trackNumber').addEventListener('input', function() { updateStatusBar(); saveFormState(); });
+    document.getElementById('sumoId').addEventListener('input', saveFormState);
+    document.getElementById('sessionName').addEventListener('input', saveFormState);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === '7') { e.preventDefault(); flashBtn('btn-new-take', 300); logTake(); }
+      if (e.key === '8') { e.preventDefault(); toggleSelected(); }
+      if (e.key === '9') { e.preventDefault(); toggleFalseStart(); }
+      if (e.key === '0') { e.preventDefault(); newArtist(); }
+    });
   }
 
-  function showConfig() {
-    const url = localStorage.getItem('grain_sb_url') || '';
-    const key = localStorage.getItem('grain_sb_key') || '';
-    document.getElementById('cfgUrl').value = url;
-    document.getElementById('cfgKey').value = key;
-    document.getElementById('configOverlay').classList.add('show');
-  }
-
-  // Close overlay on background click
-  document.getElementById('configOverlay').addEventListener('click', function(e) {
-    if (e.target === this && supabaseClient) this.classList.remove('show');
-  });
-
-  // ─── SESSIONS ───────────────────────────────────────────────────────────────
+  // ── SESSIONS ─────────────────────────────────────────────────────────────────
 
   async function loadSessions() {
-    if (!supabaseClient) return;
+    if (!sb) return;
     try {
-      const { data, error } = await supabaseClient
-        .from('takes')
-        .select('session_name')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-
-      // Get unique sessions preserving order
-      const seen = new Set();
+      var result = await sb.from('takes').select('session_name').order('created_at', { ascending: false });
+      if (result.error) throw result.error;
+      var seen = {};
       allSessions = [];
-      data.forEach(r => {
-        if (r.session_name && !seen.has(r.session_name)) {
-          seen.add(r.session_name);
+      result.data.forEach(function(r) {
+        if (r.session_name && !seen[r.session_name]) {
+          seen[r.session_name] = true;
           allSessions.push(r.session_name);
         }
       });
-
       renderSessionChips();
-
-      // Default to most recent session or restore last active
-      const lastSession = localStorage.getItem('grain_active_session');
-      if (lastSession && allSessions.includes(lastSession)) {
-        loadSession(lastSession);
+      var last = localStorage.getItem('grain_active_session');
+      if (last && allSessions.indexOf(last) > -1) {
+        loadSession(last);
       } else if (allSessions.length > 0) {
         loadSession(allSessions[0]);
       } else {
@@ -915,55 +894,53 @@ const key = SUPABASE_ANON_KEY;
   }
 
   function renderSessionChips() {
-    const container = document.getElementById('sessionList');
+    var container = document.getElementById('sessionList');
     if (allSessions.length === 0) {
-      container.innerHTML = '<span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted)">No sessions yet — start logging to create one</span>';
+      container.innerHTML = '<span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted)">No sessions yet</span>';
       return;
     }
+    container.innerHTML = allSessions.map(function(s) {
+      return '<button class="session-chip ' + (s === activeSession ? 'active' : '') + '" data-session="' + esc(s) + '">' + esc(s) + '</button>';
+    }).join('<span style="color:var(--border2)"> &middot; </span>');
 
-    container.innerHTML = allSessions.map(s =>
-      `<button class="session-chip ${s === activeSession ? 'active' : ''}" onclick="loadSession('${esc(s)}')">${esc(s)}</button>`
-    ).join('<span class="session-bar-sep"> · </span>');
+    container.querySelectorAll('.session-chip').forEach(function(btn) {
+      btn.addEventListener('click', function() { loadSession(this.getAttribute('data-session')); });
+    });
   }
 
   async function loadSession(sessionName) {
-    if (!supabaseClient) return;
+    if (!sb) return;
     activeSession = sessionName;
     localStorage.setItem('grain_active_session', sessionName);
     document.getElementById('logTitle').textContent = 'Session: ' + sessionName;
     renderSessionChips();
-
     try {
-      const { data, error } = await supabaseClient
-        .from('takes')
-        .select('*')
-        .eq('session_name', sessionName)
-        .order('created_at', { ascending: true });
-
-      if (error) throw error;
-      takes = data || [];
+      var result = await sb.from('takes').select('*').eq('session_name', sessionName).order('created_at', { ascending: true });
+      if (result.error) throw result.error;
+      takes = result.data || [];
       renderLog();
     } catch(e) {
       showToast('Could not load session', 'red');
     }
   }
 
-  // ─── LOGGING TAKES ──────────────────────────────────────────────────────────
+  // ── LOG TAKE ──────────────────────────────────────────────────────────────────
 
   async function logTake() {
-    const artist = document.getElementById('artistName').value.trim();
+    var artist = document.getElementById('artistName').value.trim();
     if (!artist) {
-      document.getElementById('artistName').focus();
-      document.getElementById('artistName').style.borderColor = 'var(--red)';
-      setTimeout(() => document.getElementById('artistName').style.borderColor = '', 1000);
-      showToast('⚠ Enter artist name first', 'red');
+      var inp = document.getElementById('artistName');
+      inp.focus();
+      inp.style.borderColor = 'var(--red)';
+      setTimeout(function() { inp.style.borderColor = ''; }, 1000);
+      showToast('Enter artist name first', 'red');
       return;
     }
 
-    const sessionName = document.getElementById('sessionName').value.trim() || 'Unnamed Session';
-    const take = {
+    var sessionName = document.getElementById('sessionName').value.trim() || 'Unnamed Session';
+    var take = {
       session_name: sessionName,
-      artist,
+      artist: artist,
       song: document.getElementById('songTitle').value.trim(),
       track_num: document.getElementById('trackNumber').value.trim(),
       sumo_id: document.getElementById('sumoId').value.trim(),
@@ -971,40 +948,26 @@ const key = SUPABASE_ANON_KEY;
       time_of_day: new Date().toTimeString().slice(0,8),
       notes: document.getElementById('notes').value.trim(),
       selected: selectedFlag,
-      false_start: falseFlag,
+      false_start: falseFlag
     };
 
     setDbStatus('saving');
     document.getElementById('logBtn').disabled = true;
 
     try {
-      if (supabaseClient) {
-        const { data, error } = await supabaseClient
-          .from('takes')
-          .insert([take])
-          .select()
-          .single();
-
-        if (error) throw error;
-
-        takes.push(data);
-
-        // Update session list if new session
-        if (!allSessions.includes(sessionName)) {
+      if (sb) {
+        var result = await sb.from('takes').insert([take]).select().single();
+        if (result.error) throw result.error;
+        takes.push(result.data);
+        if (allSessions.indexOf(sessionName) === -1) {
           allSessions.unshift(sessionName);
-          activeSession = sessionName;
-          renderSessionChips();
         }
-        if (activeSession !== sessionName) {
-          activeSession = sessionName;
-          renderSessionChips();
-        }
-
+        activeSession = sessionName;
+        renderSessionChips();
         setDbStatus('connected');
-        showToast('Take ' + currentTake + ' saved — ' + artist, take.selected ? 'green' : take.false_start ? 'red' : 'blue');
+        showToast('Take ' + currentTake + ' saved', selectedFlag ? 'green' : falseFlag ? 'red' : 'blue');
       } else {
-        // Offline fallback
-        takes.push({ ...take, id: Date.now() });
+        takes.push(Object.assign({}, take, { id: Date.now() }));
         showToast('Take ' + currentTake + ' logged (offline)', 'amber');
       }
 
@@ -1019,79 +982,60 @@ const key = SUPABASE_ANON_KEY;
 
     } catch(e) {
       setDbStatus('error');
-      showToast('Save failed — check connection', 'red');
+      showToast('Save failed: ' + (e.message || 'unknown error'), 'red');
     }
 
     document.getElementById('logBtn').disabled = false;
   }
 
   async function deleteTake(id) {
-    if (!supabaseClient) {
-      takes = takes.filter(t => t.id !== id);
-      renderLog(); return;
+    if (sb) {
+      var result = await sb.from('takes').delete().eq('id', id);
+      if (result.error) { showToast('Delete failed', 'red'); return; }
     }
-    try {
-      const { error } = await supabaseClient.from('takes').delete().eq('id', id);
-      if (error) throw error;
-      takes = takes.filter(t => t.id !== id);
-      renderLog();
-      showToast('Take deleted', 'amber');
-    } catch(e) {
-      showToast('Delete failed', 'red');
-    }
+    takes = takes.filter(function(t) { return t.id !== id; });
+    renderLog();
+    showToast('Take deleted', 'amber');
   }
 
   async function updateTakeField(id, field, value) {
-    if (!supabaseClient) {
-      const t = takes.find(t => t.id === id);
-      if (t) t[field] = value;
-      renderLog(); return;
-    }
-    try {
-      const { error } = await supabaseClient
-        .from('takes')
-        .update({ [field]: value })
-        .eq('id', id);
-      if (error) throw error;
-      const t = takes.find(t => t.id === id);
-      if (t) t[field] = value;
-      renderLog();
-    } catch(e) {
-      showToast('Update failed', 'red');
+    var t = takes.find(function(t) { return t.id === id; });
+    if (t) t[field] = value;
+    renderLog();
+    if (sb) {
+      var update = {};
+      update[field] = value;
+      await sb.from('takes').update(update).eq('id', id);
     }
   }
 
-  // ─── STREAM DECK ACTIONS ────────────────────────────────────────────────────
-
-  function newTake() { flashBtn('btn-new-take', 300); logTake(); }
+  // ── STREAM DECK ───────────────────────────────────────────────────────────────
 
   function toggleSelected() {
     flashBtn('btn-select');
     if (takes.length > 0) {
-      const last = takes[takes.length - 1];
-      const newVal = !last.selected;
-      if (newVal) last.false_start = false;
+      var last = takes[takes.length - 1];
+      var newVal = !last.selected;
+      if (newVal) { last.false_start = false; updateTakeField(last.id, 'false_start', false); }
       updateTakeField(last.id, 'selected', newVal);
-      if (newVal) updateTakeField(last.id, 'false_start', false);
-      showToast(newVal ? '✓ Take marked as SELECTED' : 'Take deselected', 'green');
+      showToast(newVal ? 'Take marked as SELECTED' : 'Take deselected', 'green');
     } else { toggleSelectedFlag(); }
   }
 
   function toggleFalseStart() {
     flashBtn('btn-false');
     if (takes.length > 0) {
-      const last = takes[takes.length - 1];
-      const newVal = !last.false_start;
-      if (newVal) last.selected = false;
+      var last = takes[takes.length - 1];
+      var newVal = !last.false_start;
+      if (newVal) { last.selected = false; updateTakeField(last.id, 'selected', false); }
       updateTakeField(last.id, 'false_start', newVal);
-      if (newVal) updateTakeField(last.id, 'selected', false);
-      showToast(newVal ? '✕ Marked as FALSE START' : 'False start cleared', 'red');
+      showToast(newVal ? 'Marked as FALSE START' : 'False start cleared', 'red');
     } else { toggleFalseFlag(); }
   }
 
   function newArtist() {
     flashBtn('btn-new-artist');
-    ['artistName','songTitle','trackNumber','sumoId','notes'].forEach(id => {
+    ['artistName','songTitle','trackNumber','sumoId','notes'].forEach(function(id) {
       document.getElementById(id).value = '';
     });
     currentTake = 1;
@@ -1101,110 +1045,95 @@ const key = SUPABASE_ANON_KEY;
     document.getElementById('statusTake').textContent = 1;
     updateStatusBar();
     document.getElementById('artistName').focus();
-    showToast('↓ New artist — form cleared', 'amber');
+    showToast('New artist — form cleared', 'amber');
     saveFormState();
   }
 
-  // ─── KEYBOARD SHORTCUTS ─────────────────────────────────────────────────────
-
-  document.addEventListener('keydown', (e) => {
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-    if (e.key === '7') { e.preventDefault(); newTake(); }
-    if (e.key === '8') { e.preventDefault(); toggleSelected(); }
-    if (e.key === '9') { e.preventDefault(); toggleFalseStart(); }
-    if (e.key === '0') { e.preventDefault(); newArtist(); }
-  });
-
-  // ─── RENDER ─────────────────────────────────────────────────────────────────
+  // ── RENDER ────────────────────────────────────────────────────────────────────
 
   function renderLog() {
-    const tbody = document.getElementById('logBody');
-    const empty = document.getElementById('emptyState');
-
+    var tbody = document.getElementById('logBody');
+    var empty = document.getElementById('emptyState');
     if (takes.length === 0) {
-      tbody.innerHTML = ''; empty.style.display = 'flex';
-      updateStats(); return;
+      tbody.innerHTML = '';
+      empty.style.display = 'flex';
+      updateStats();
+      return;
     }
-
     empty.style.display = 'none';
-    let html = '';
-    let prevArtist = null;
-
-    takes.forEach(t => {
+    var html = '';
+    var prevArtist = null;
+    takes.forEach(function(t) {
       if (t.artist !== prevArtist) {
-        html += `<tr class="artist-divider"><td colspan="9">▸ ${esc(t.artist)}</td></tr>`;
+        html += '<tr class="artist-divider"><td colspan="9">&#9658; ' + esc(t.artist) + '</td></tr>';
         prevArtist = t.artist;
       }
-      const rowClass = t.selected ? 'is-selected' : t.false_start ? 'is-false-start' : '';
-      const badge = t.selected
+      var rowClass = t.selected ? 'is-selected' : t.false_start ? 'is-false-start' : '';
+      var badge = t.selected
         ? '<span class="badge badge-selected">Selected</span>'
         : t.false_start ? '<span class="badge badge-false">False Start</span>' : '';
-
-      html += `<tr class="${rowClass}">
-        <td class="take-cell">${t.take_num}</td>
-        <td class="track-cell">${esc(t.track_num)}</td>
-        <td class="artist-cell">${esc(t.artist)}</td>
-        <td>${esc(t.song)}</td>
-        <td class="sumo-cell">${esc(t.sumo_id)}</td>
-        <td class="time-cell">${t.time_of_day || ''}</td>
-        <td>${badge}</td>
-        <td class="notes-cell">${esc(t.notes)}</td>
-        <td><button class="delete-btn" onclick="deleteTake('${t.id}')">✕</button></td>
-      </tr>`;
+      html += '<tr class="' + rowClass + '">' +
+        '<td class="take-cell">' + (t.take_num || '') + '</td>' +
+        '<td class="track-cell">' + esc(t.track_num) + '</td>' +
+        '<td class="artist-cell">' + esc(t.artist) + '</td>' +
+        '<td>' + esc(t.song) + '</td>' +
+        '<td class="sumo-cell">' + esc(t.sumo_id) + '</td>' +
+        '<td class="time-cell">' + (t.time_of_day || '') + '</td>' +
+        '<td>' + badge + '</td>' +
+        '<td class="notes-cell">' + esc(t.notes) + '</td>' +
+        '<td><button class="delete-btn" data-id="' + t.id + '">&#10005;</button></td>' +
+        '</tr>';
     });
-
     tbody.innerHTML = html;
+    tbody.querySelectorAll('.delete-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() { deleteTake(this.getAttribute('data-id')); });
+    });
     updateStats();
-    const scroll = document.querySelector('.log-scroll');
-    scroll.scrollTop = scroll.scrollHeight;
+    var scroll = document.querySelector('.log-scroll');
+    if (scroll) scroll.scrollTop = scroll.scrollHeight;
   }
 
   function updateStats() {
-    document.getElementById('statActs').textContent = new Set(takes.map(t => t.artist)).size;
+    var artists = {};
+    takes.forEach(function(t) { if (t.artist) artists[t.artist] = true; });
+    document.getElementById('statActs').textContent = Object.keys(artists).length;
     document.getElementById('statTakes').textContent = takes.length;
-    document.getElementById('statSelected').textContent = takes.filter(t => t.selected).length;
+    document.getElementById('statSelected').textContent = takes.filter(function(t) { return t.selected; }).length;
   }
 
-  // ─── EXPORT CSV ─────────────────────────────────────────────────────────────
+  // ── EXPORT ────────────────────────────────────────────────────────────────────
 
-  async function exportCSV() {
-    let exportTakes = takes;
-
-    // If connected, get all takes for active session (already loaded) or prompt
-    if (exportTakes.length === 0) {
-      showToast('No takes to export', 'amber'); return;
-    }
-
-    const headers = ['Take','Track #','Artist','Song','Sumo ID','Time','Selected','False Start','Notes','Session'];
-    const rows = exportTakes.map(t => [
-      t.take_num, t.track_num, t.artist, t.song, t.sumo_id,
-      t.time_of_day, t.selected ? 'YES' : '', t.false_start ? 'YES' : '',
-      t.notes, t.session_name
-    ].map(v => `"${(v||'').toString().replace(/"/g,'""')}"`).join(','));
-
-    const csv = [headers.join(','), ...rows].join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+  function exportCSV() {
+    if (takes.length === 0) { showToast('No takes to export', 'amber'); return; }
+    var headers = ['Take','Track #','Artist','Song','Sumo ID','Time','Selected','False Start','Notes','Session'];
+    var rows = takes.map(function(t) {
+      return [t.take_num, t.track_num, t.artist, t.song, t.sumo_id, t.time_of_day,
+        t.selected ? 'YES' : '', t.false_start ? 'YES' : '', t.notes, t.session_name
+      ].map(function(v) { return '"' + (v||'').toString().replace(/"/g,'""') + '"'; }).join(',');
+    });
+    var csv = [headers.join(',')].concat(rows).join('\n');
+    var blob = new Blob([csv], { type: 'text/csv' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
     a.href = url;
-    a.download = `grain-log-${activeSession || 'export'}-${new Date().toISOString().slice(0,10)}.csv`;
+    a.download = 'grain-log-' + (activeSession || 'export') + '-' + new Date().toISOString().slice(0,10) + '.csv';
     a.click();
     URL.revokeObjectURL(url);
     showToast('CSV exported', 'green');
   }
 
-  // ─── PRINT ──────────────────────────────────────────────────────────────────
+  // ── PRINT ─────────────────────────────────────────────────────────────────────
 
   function triggerPrint() {
-    const session = document.getElementById('sessionName').value || activeSession || 'Session';
+    var session = document.getElementById('sessionName').value || activeSession || 'Session';
     document.getElementById('printTitle').textContent = 'GRAIN — ' + session.toUpperCase();
     document.getElementById('printDate').textContent =
-      new Date().toLocaleDateString('en-GB', { weekday:'long', year:'numeric', month:'long', day:'numeric' })
-      + ' — printed ' + new Date().toTimeString().slice(0,5);
+      new Date().toLocaleDateString('en-GB', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) +
+      ' — printed ' + new Date().toTimeString().slice(0,5);
     window.print();
   }
 
-  // ─── UI HELPERS ─────────────────────────────────────────────────────────────
+  // ── HELPERS ───────────────────────────────────────────────────────────────────
 
   function updateStatusBar() {
     document.getElementById('statusArtist').textContent = document.getElementById('artistName').value || '—';
@@ -1217,16 +1146,11 @@ const key = SUPABASE_ANON_KEY;
   }
 
   function setDbStatus(status) {
-    const el = document.getElementById('dbIndicator');
-    const map = {
-      connected: ['● LIVE', 'connected'],
-      saving: ['● SAVING', 'saving'],
-      error: ['● ERROR', 'error'],
-      offline: ['● OFFLINE', ''],
-    };
-    const [text, cls] = map[status] || ['● OFFLINE', ''];
-    el.textContent = text;
-    el.className = 'db-indicator ' + cls;
+    var el = document.getElementById('dbIndicator');
+    var map = { connected: ['● LIVE', 'connected'], saving: ['● SAVING', 'saving'], error: ['● ERROR', 'error'], offline: ['● OFFLINE', ''] };
+    var s = map[status] || map.offline;
+    el.textContent = s[0];
+    el.className = 'db-indicator ' + s[1];
   }
 
   function toggleSelectedFlag() {
@@ -1246,18 +1170,19 @@ const key = SUPABASE_ANON_KEY;
     document.getElementById('falseFlag').className = 'flag-btn' + (falseFlag ? ' false-active' : '');
   }
 
-  function flashBtn(id, duration = 200) {
-    const el = document.getElementById(id);
+  function flashBtn(id, duration) {
+    var el = document.getElementById(id);
+    if (!el) return;
     el.classList.add('flash');
-    setTimeout(() => el.classList.remove('flash'), duration);
+    setTimeout(function() { el.classList.remove('flash'); }, duration || 200);
   }
 
-  function showToast(msg, type = '', duration = 2000) {
-    const t = document.getElementById('toast');
+  function showToast(msg, type, duration) {
+    var t = document.getElementById('toast');
     t.textContent = msg;
-    t.className = 'toast show ' + type;
+    t.className = 'toast show ' + (type || '');
     clearTimeout(t._timer);
-    t._timer = setTimeout(() => t.className = 'toast', duration);
+    t._timer = setTimeout(function() { t.className = 'toast'; }, duration || 2000);
   }
 
   function esc(s) {
@@ -1265,28 +1190,21 @@ const key = SUPABASE_ANON_KEY;
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  // ─── FORM STATE ─────────────────────────────────────────────────────────────
-
   function saveFormState() {
-    ['artistName','songTitle','trackNumber','sumoId','sessionName'].forEach(id => {
+    ['artistName','songTitle','trackNumber','sumoId','sessionName'].forEach(function(id) {
       localStorage.setItem('grain_form_' + id, document.getElementById(id).value);
     });
   }
 
   function restoreFormState() {
-    ['artistName','songTitle','trackNumber','sumoId','sessionName'].forEach(id => {
-      const v = localStorage.getItem('grain_form_' + id);
+    ['artistName','songTitle','trackNumber','sumoId','sessionName'].forEach(function(id) {
+      var v = localStorage.getItem('grain_form_' + id);
       if (v) document.getElementById(id).value = v;
     });
     updateStatusBar();
   }
 
-  ['artistName','songTitle','trackNumber','sumoId','sessionName'].forEach(id => {
-    document.getElementById(id).addEventListener('input', saveFormState);
-  });
-
-  // ─── START ──────────────────────────────────────────────────────────────────
-  init();
+})();
 </script>
 </body>
 </html>
