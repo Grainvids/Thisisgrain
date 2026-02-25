@@ -9,327 +9,70 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0a;
-    --surface: #111111;
-    --surface2: #1a1a1a;
-    --border: #2a2a2a;
-    --border2: #333;
-    --text: #e8e8e8;
-    --text-dim: #888;
-    --text-muted: #555;
-    --amber: #f5a623;
-    --amber-dim: #c4821c;
-    --green: #4ade80;
-    --red: #f87171;
-    --blue: #60a5fa;
-    --yellow: #fbbf24;
-    --selected-bg: #1a2a0a;
-    --false-start-bg: #2a0a0a;
-    --font-mono: 'IBM Plex Mono', monospace;
-    --font-sans: 'IBM Plex Sans', sans-serif;
+    --bg: #0a0a0a; --surface: #111111; --surface2: #1a1a1a;
+    --border: #2a2a2a; --border2: #333; --text: #e8e8e8;
+    --text-dim: #888; --text-muted: #555; --amber: #f5a623;
+    --amber-dim: #c4821c; --green: #4ade80; --red: #f87171;
+    --blue: #60a5fa; --yellow: #fbbf24;
+    --selected-bg: #1a2a0a; --false-start-bg: #2a0a0a;
+    --font-mono: 'IBM Plex Mono', monospace; --font-sans: 'IBM Plex Sans', sans-serif;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 14px; min-height: 100vh; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-sans);
-    font-size: 14px;
-    min-height: 100vh;
-  }
-
-  /* PASSWORD SCREEN */
-  #passwordScreen {
-    position: fixed;
-    inset: 0;
-    background: var(--bg);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .pw-box {
-    background: var(--surface);
-    border: 1px solid var(--border2);
-    border-radius: 8px;
-    padding: 40px;
-    width: 380px;
-    max-width: 95vw;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .pw-logo {
-    font-family: var(--font-mono);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--amber);
-    letter-spacing: 0.2em;
-    text-align: center;
-  }
-
+  #passwordScreen { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+  .pw-box { background: var(--surface); border: 1px solid var(--border2); border-radius: 8px; padding: 40px; width: 380px; max-width: 95vw; display: flex; flex-direction: column; gap: 20px; }
+  .pw-logo { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--amber); letter-spacing: 0.2em; text-align: center; }
   .pw-logo span { color: var(--text-muted); font-weight: 400; }
-
-  .pw-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-align: center;
-  }
-
-  #pwInput {
-    background: var(--bg);
-    border: 1px solid var(--border2);
-    border-radius: 4px;
-    padding: 10px 14px;
-    color: var(--text);
-    font-family: var(--font-mono);
-    font-size: 14px;
-    width: 100%;
-    outline: none;
-    text-align: center;
-    letter-spacing: 0.1em;
-    transition: border-color 0.15s;
-  }
+  .pw-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; text-align: center; }
+  #pwInput { background: var(--bg); border: 1px solid var(--border2); border-radius: 4px; padding: 10px 14px; color: var(--text); font-family: var(--font-mono); font-size: 14px; width: 100%; outline: none; text-align: center; letter-spacing: 0.1em; transition: border-color 0.15s; }
   #pwInput:focus { border-color: var(--amber); }
   #pwInput.error { border-color: var(--red); animation: shake 0.3s; }
-
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-6px); }
-    75% { transform: translateX(6px); }
-  }
-
-  .pw-btn {
-    width: 100%;
-    padding: 11px;
-    background: var(--amber);
-    color: #000;
-    border: none;
-    border-radius: 4px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+  .pw-btn { width: 100%; padding: 11px; background: var(--amber); color: #000; border: none; border-radius: 4px; font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
   .pw-btn:hover { background: var(--amber-dim); }
+  .pw-error { font-family: var(--font-mono); font-size: 11px; color: var(--red); text-align: center; min-height: 16px; }
 
-  .pw-error {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--red);
-    text-align: center;
-    min-height: 16px;
-  }
-
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 10px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
+  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
   .header-left { display: flex; align-items: center; gap: 20px; }
-
-  .logo {
-    font-family: var(--font-mono);
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 0.2em;
-    color: var(--amber);
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
+  .logo { font-family: var(--font-mono); font-weight: 600; font-size: 13px; letter-spacing: 0.2em; color: var(--amber); text-transform: uppercase; white-space: nowrap; }
   .logo span { color: var(--text-dim); font-weight: 400; }
-
   .session-name-wrap { display: flex; align-items: center; gap: 8px; }
-
-  .session-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  #sessionName {
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid var(--border2);
-    padding: 3px 6px;
-    color: var(--text);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    width: 200px;
-    outline: none;
-    transition: border-color 0.15s;
-  }
+  .session-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  #sessionName { background: transparent; border: none; border-bottom: 1px solid var(--border2); padding: 3px 6px; color: var(--text); font-family: var(--font-mono); font-size: 12px; width: 200px; outline: none; }
   #sessionName:focus { border-bottom-color: var(--amber); }
   #sessionName::placeholder { color: var(--text-muted); }
-
   .header-right { display: flex; align-items: center; gap: 16px; }
-
   .clock { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
-
-  .db-indicator {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    transition: color 0.3s;
-  }
+  .db-indicator { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); transition: color 0.3s; }
   .db-indicator.connected { color: var(--green); }
   .db-indicator.saving { color: var(--yellow); }
   .db-indicator.error { color: var(--red); }
 
-  .session-bar {
-    background: #0d0d0d;
-    border-bottom: 1px solid var(--border);
-    padding: 8px 24px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    overflow-x: auto;
-  }
-
-  .session-bar-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    margin-right: 4px;
-  }
-
-  .session-chip {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--border2);
-    background: transparent;
-    color: var(--text-dim);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.15s;
-  }
-  .session-chip:hover { border-color: var(--amber); color: var(--amber); }
-  .session-chip.active { border-color: var(--amber); color: var(--amber); background: rgba(245,166,35,0.1); }
-
-  .export-btn {
-    margin-left: auto;
-    padding: 5px 12px;
-    background: transparent;
-    border: 1px solid var(--border2);
-    border-radius: 4px;
-    color: var(--text-dim);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.15s;
-    flex-shrink: 0;
-  }
+  .session-bar { background: #0d0d0d; border-bottom: 1px solid var(--border); padding: 8px 24px; display: flex; align-items: center; gap: 10px; overflow-x: auto; }
+  .session-bar-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; margin-right: 4px; }
+  .session-chip { font-family: var(--font-mono); font-size: 11px; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border2); background: transparent; color: var(--text-dim); cursor: pointer; white-space: nowrap; transition: all 0.15s; }
+  .session-chip:hover, .session-chip.active { border-color: var(--amber); color: var(--amber); }
+  .session-chip.active { background: rgba(245,166,35,0.1); }
+  .export-btn { margin-left: auto; padding: 5px 12px; background: transparent; border: 1px solid var(--border2); border-radius: 4px; color: var(--text-dim); font-family: var(--font-mono); font-size: 11px; cursor: pointer; white-space: nowrap; transition: all 0.15s; flex-shrink: 0; }
   .export-btn:hover { border-color: var(--green); color: var(--green); }
 
-  .status-bar {
-    background: #0c0c0c;
-    border-bottom: 2px solid var(--border2);
-    display: grid;
-    grid-template-columns: 1fr 1fr 180px 140px;
-  }
-
-  .status-cell {
-    padding: 14px 20px;
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
+  .status-bar { background: #0c0c0c; border-bottom: 2px solid var(--border2); display: grid; grid-template-columns: 1fr 1fr 180px 140px; }
+  .status-cell { padding: 14px 20px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
   .status-cell:last-child { border-right: none; }
-
-  .status-cell-label {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-
-  .status-cell-value {
-    font-family: var(--font-mono);
-    font-weight: 700;
-    line-height: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
+  .status-cell-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; }
+  .status-cell-value { font-family: var(--font-mono); font-weight: 700; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .status-cell-value.artist-val { font-size: 22px; color: var(--text); }
   .status-cell-value.song-val { font-size: 16px; color: var(--text-dim); font-weight: 500; }
   .status-cell-value.track-val { font-size: 42px; color: var(--blue); }
   .status-cell-value.take-val { font-size: 42px; color: var(--amber); }
 
-  .shortcut-bar {
-    background: #0d0d0d;
-    border-bottom: 1px solid var(--border);
-    padding: 7px 24px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .shortcut-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-right: 8px;
-  }
-
-  .key-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    border-radius: 4px;
-    padding: 5px 12px;
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: var(--font-sans);
-    font-size: 12px;
-    color: var(--text);
-  }
+  .shortcut-bar { background: #0d0d0d; border-bottom: 1px solid var(--border); padding: 7px 24px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .shortcut-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-right: 4px; }
+  .shortcut-sep { width: 1px; height: 22px; background: var(--border2); margin: 0 6px; flex-shrink: 0; }
+  .key-btn { display: flex; align-items: center; gap: 6px; background: var(--surface2); border: 1px solid var(--border2); border-radius: 4px; padding: 5px 12px; cursor: pointer; transition: all 0.15s; font-family: var(--font-sans); font-size: 12px; color: var(--text); }
   .key-btn:active { transform: scale(0.97); }
-
-  .key-badge {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: 700;
-    background: var(--border2);
-    border-radius: 3px;
-    padding: 1px 7px;
-    color: var(--text);
-    min-width: 26px;
-    text-align: center;
-  }
-
+  .key-badge { font-family: var(--font-mono); font-size: 13px; font-weight: 700; background: var(--border2); border-radius: 3px; padding: 1px 7px; color: var(--text); min-width: 26px; text-align: center; }
   .key-btn.new-take { border-color: #1a3a5c; }
   .key-btn.new-take:hover, .key-btn.new-take.flash { border-color: var(--blue); color: var(--blue); background: rgba(96,165,250,0.08); }
   .key-btn.new-take.flash .key-badge { background: var(--blue); color: #000; }
@@ -342,236 +85,90 @@
   .key-btn.new-artist { border-color: #3a2a0a; }
   .key-btn.new-artist:hover, .key-btn.new-artist.flash { border-color: var(--amber); color: var(--amber); background: rgba(245,166,35,0.08); }
   .key-btn.new-artist.flash .key-badge { background: var(--amber); color: #000; }
+  .key-btn.rate-1 { border-color: #3a1a1a; }
+  .key-btn.rate-1:hover, .key-btn.rate-1.flash, .key-btn.rate-1.active { border-color: var(--red); color: var(--red); background: rgba(248,113,113,0.08); }
+  .key-btn.rate-1.active .key-badge, .key-btn.rate-1.flash .key-badge { background: var(--red); color: #000; }
+  .key-btn.rate-2 { border-color: #3a2a0a; }
+  .key-btn.rate-2:hover, .key-btn.rate-2.flash, .key-btn.rate-2.active { border-color: var(--amber); color: var(--amber); background: rgba(245,166,35,0.08); }
+  .key-btn.rate-2.active .key-badge, .key-btn.rate-2.flash .key-badge { background: var(--amber); color: #000; }
+  .key-btn.rate-3 { border-color: #1a3a1a; }
+  .key-btn.rate-3:hover, .key-btn.rate-3.flash, .key-btn.rate-3.active { border-color: var(--green); color: var(--green); background: rgba(74,222,128,0.08); }
+  .key-btn.rate-3.active .key-badge, .key-btn.rate-3.flash .key-badge { background: var(--green); color: #000; }
 
-  .main {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    height: calc(100vh - 192px);
-  }
-
-  .sidebar {
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 11px;
-    overflow-y: auto;
-  }
-
-  .sidebar-title {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-  }
-
+  .main { display: grid; grid-template-columns: 300px 1fr; height: calc(100vh - 200px); }
+  .sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 11px; overflow-y: auto; }
+  .sidebar-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
   .field-group { display: flex; flex-direction: column; gap: 4px; }
-
-  label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-
-  input[type="text"], input[type="number"], input[type="password"], textarea {
-    background: var(--bg);
-    border: 1px solid var(--border2);
-    border-radius: 4px;
-    padding: 7px 10px;
-    color: var(--text);
-    font-family: var(--font-sans);
-    font-size: 13px;
-    width: 100%;
-    outline: none;
-    transition: border-color 0.15s;
-  }
+  label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; }
+  input[type="text"], input[type="number"], input[type="password"], textarea { background: var(--bg); border: 1px solid var(--border2); border-radius: 4px; padding: 7px 10px; color: var(--text); font-family: var(--font-sans); font-size: 13px; width: 100%; outline: none; transition: border-color 0.15s; }
   input:focus, textarea:focus { border-color: var(--amber); }
   textarea { resize: vertical; min-height: 55px; font-size: 12px; }
-
   .status-flags { display: flex; gap: 8px; }
-
-  .flag-btn {
-    flex: 1;
-    padding: 7px;
-    border-radius: 4px;
-    border: 1px solid var(--border2);
-    background: transparent;
-    color: var(--text-dim);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    cursor: pointer;
-    transition: all 0.15s;
-    text-align: center;
-  }
+  .flag-btn { flex: 1; padding: 7px; border-radius: 4px; border: 1px solid var(--border2); background: transparent; color: var(--text-dim); font-family: var(--font-mono); font-size: 11px; cursor: pointer; transition: all 0.15s; text-align: center; }
   .flag-btn.selected-active { border-color: var(--green); color: var(--green); background: rgba(74,222,128,0.1); }
   .flag-btn.false-active { border-color: var(--red); color: var(--red); background: rgba(248,113,113,0.1); }
 
-  .add-take-btn {
-    width: 100%;
-    padding: 12px;
-    background: var(--amber);
-    color: #000;
-    border: none;
-    border-radius: 4px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.15s;
-    margin-top: auto;
-  }
+  .rating-group { display: flex; gap: 6px; }
+  .rating-btn { flex: 1; padding: 10px 4px; border-radius: 4px; border: 1px solid var(--border2); background: transparent; color: var(--text-muted); font-family: var(--font-mono); font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.15s; text-align: center; letter-spacing: 0.05em; }
+  .rating-btn:hover { border-color: var(--text-dim); color: var(--text-dim); }
+  .rating-btn[data-r="1"].active { border-color: var(--red); background: rgba(248,113,113,0.12); color: var(--red); }
+  .rating-btn[data-r="2"].active { border-color: var(--amber); background: rgba(245,166,35,0.12); color: var(--amber); }
+  .rating-btn[data-r="3"].active { border-color: var(--green); background: rgba(74,222,128,0.12); color: var(--green); }
+
+  .add-take-btn { width: 100%; padding: 12px; background: var(--amber); color: #000; border: none; border-radius: 4px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; margin-top: auto; }
   .add-take-btn:hover { background: var(--amber-dim); }
   .add-take-btn:active { transform: scale(0.98); }
   .add-take-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  .new-artist-btn {
-    width: 100%;
-    padding: 9px;
-    background: transparent;
-    color: var(--text-dim);
-    border: 1px solid var(--border2);
-    border-radius: 4px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
+  .new-artist-btn { width: 100%; padding: 9px; background: transparent; color: var(--text-dim); border: 1px solid var(--border2); border-radius: 4px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
   .new-artist-btn:hover { border-color: var(--amber); color: var(--amber); }
 
   .log-panel { display: flex; flex-direction: column; overflow: hidden; }
-
-  .log-header {
-    padding: 12px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--surface);
-    flex-shrink: 0;
-    gap: 12px;
-  }
-
-  .log-title {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
+  .log-header { padding: 12px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--surface); flex-shrink: 0; gap: 12px; }
+  .log-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; white-space: nowrap; }
   .log-stats { display: flex; gap: 16px; align-items: center; }
   .stat { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); white-space: nowrap; }
   .stat span { color: var(--amber); font-weight: 600; }
-
   .log-actions { display: flex; gap: 8px; }
-
-  .action-btn {
-    padding: 5px 12px;
-    background: transparent;
-    border: 1px solid var(--border2);
-    border-radius: 4px;
-    color: var(--text-dim);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    cursor: pointer;
-    transition: all 0.15s;
-    white-space: nowrap;
-  }
+  .action-btn { padding: 5px 12px; background: transparent; border: 1px solid var(--border2); border-radius: 4px; color: var(--text-dim); font-family: var(--font-mono); font-size: 11px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
   .action-btn:hover { border-color: var(--amber); color: var(--amber); }
-
   .log-scroll { flex: 1; overflow-y: auto; }
-
   table { width: 100%; border-collapse: collapse; font-size: 12px; }
-
-  thead th {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    padding: 9px 12px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    white-space: nowrap;
-  }
-
+  thead th { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); background: var(--surface); position: sticky; top: 0; z-index: 10; white-space: nowrap; }
   tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
   tbody tr:hover { background: var(--surface2); }
   tbody tr.is-selected { background: var(--selected-bg); }
   tbody tr.is-false-start { background: var(--false-start-bg); opacity: 0.6; }
   tbody tr.is-selected:hover { background: #213010; }
-
   td { padding: 8px 12px; color: var(--text); vertical-align: middle; }
   td.take-cell { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--amber); width: 48px; }
   td.track-cell { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--blue); width: 64px; }
+  td.tape-cell { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }
   td.artist-cell { font-weight: 500; }
-  td.sumo-cell { font-family: var(--font-mono); font-size: 11px; color: var(--blue); }
   td.time-cell { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); white-space: nowrap; }
-  td.notes-cell { font-size: 11px; color: var(--text-dim); max-width: 180px; }
+  td.notes-cell { font-size: 11px; color: var(--text-dim); max-width: 160px; }
+  td.rating-cell { width: 72px; }
 
-  .badge {
-    display: inline-block;
-    padding: 2px 7px;
-    border-radius: 3px;
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
+  .rating-dots { display: flex; gap: 5px; align-items: center; }
+  .rating-dot { width: 11px; height: 11px; border-radius: 50%; border: 1px solid var(--border2); cursor: pointer; transition: all 0.15s; flex-shrink: 0; }
+  .rating-dot:hover { transform: scale(1.3); border-color: var(--text-dim); }
+  .rating-dot.r1.filled { background: var(--red); border-color: var(--red); box-shadow: 0 0 4px rgba(248,113,113,0.4); }
+  .rating-dot.r2.filled { background: var(--amber); border-color: var(--amber); box-shadow: 0 0 4px rgba(245,166,35,0.4); }
+  .rating-dot.r3.filled { background: var(--green); border-color: var(--green); box-shadow: 0 0 4px rgba(74,222,128,0.4); }
+
+  .badge { display: inline-block; padding: 2px 7px; border-radius: 3px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
   .badge-selected { background: rgba(74,222,128,0.15); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
   .badge-false { background: rgba(248,113,113,0.15); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
 
-  td .delete-btn {
-    background: none; border: none; color: var(--text-muted);
-    cursor: pointer; font-size: 14px; padding: 2px 6px;
-    border-radius: 3px; transition: all 0.15s; opacity: 0;
-  }
+  td .delete-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; padding: 2px 6px; border-radius: 3px; transition: all 0.15s; opacity: 0; }
   tbody tr:hover .delete-btn { opacity: 1; }
   .delete-btn:hover { color: var(--red); background: rgba(248,113,113,0.1); }
+  tr.artist-divider td { background: #0f0f0f; padding: 5px 12px; font-family: var(--font-mono); font-size: 10px; color: var(--amber); letter-spacing: 0.15em; text-transform: uppercase; border-top: 2px solid var(--border2); border-bottom: 1px solid var(--border); }
 
-  tr.artist-divider td {
-    background: #0f0f0f;
-    padding: 5px 12px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--amber);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border-top: 2px solid var(--border2);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .empty-state {
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: center; height: 300px; color: var(--text-muted); gap: 8px;
-  }
+  .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--text-muted); gap: 8px; }
   .empty-state .big { font-size: 32px; opacity: 0.3; }
   .empty-state p { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; }
 
-  .toast {
-    position: fixed; bottom: 24px; right: 24px;
-    background: var(--surface2); border: 1px solid var(--border2);
-    border-radius: 6px; padding: 10px 16px;
-    font-family: var(--font-mono); font-size: 12px; color: var(--text);
-    opacity: 0; transform: translateY(8px); transition: all 0.2s;
-    z-index: 998; pointer-events: none;
-  }
+  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--surface2); border: 1px solid var(--border2); border-radius: 6px; padding: 10px 16px; font-family: var(--font-mono); font-size: 12px; color: var(--text); opacity: 0; transform: translateY(8px); transition: all 0.2s; z-index: 998; pointer-events: none; }
   .toast.show { opacity: 1; transform: translateY(0); }
   .toast.green { border-color: var(--green); color: var(--green); }
   .toast.red { border-color: var(--red); color: var(--red); }
@@ -583,8 +180,7 @@
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
   @media print {
-    #passwordScreen, header, .shortcut-bar, .session-bar, .sidebar,
-    .add-take-btn, .new-artist-btn, .delete-btn, .log-actions, .toast { display: none !important; }
+    #passwordScreen, header, .shortcut-bar, .session-bar, .sidebar, .add-take-btn, .new-artist-btn, .delete-btn, .log-actions, .toast { display: none !important; }
     body { background: white; color: black; font-size: 11px; }
     .main { display: block; height: auto; }
     .log-panel, .log-scroll { overflow: visible; }
@@ -596,23 +192,21 @@
     .status-cell-value.track-val, .status-cell-value.take-val { font-size: 28px; color: black; }
     .log-header { background: white; padding: 8px 0; border-bottom: 2px solid black; }
     .log-title { color: black; font-weight: bold; font-size: 12px; }
-    .stat, .stat span { color: black; }
-    .stat span { font-weight: bold; }
+    .stat, .stat span { color: black; } .stat span { font-weight: bold; }
     table { border-collapse: collapse; }
     thead th { background: #f0f0f0; color: black; border: 1px solid #ccc; padding: 5px 8px; font-size: 9px; position: static; }
     td { border: 1px solid #ddd; padding: 5px 8px; color: black; }
     td.take-cell { color: black; font-size: 14px; font-weight: bold; }
     td.track-cell { color: black; font-size: 13px; font-weight: bold; }
-    td.sumo-cell, td.time-cell, td.notes-cell { color: black; }
     .badge-selected { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
     .badge-false { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
     tbody tr.is-selected { background: #f0fff0; }
     tbody tr.is-false-start { background: #fff5f5; opacity: 1; }
     tr.artist-divider td { background: #e8e8e8; color: black; font-weight: bold; border-top: 2px solid #999; }
+    .rating-dot { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
     .print-header-block { display: block !important; }
     @page { margin: 15mm; }
   }
-
   .print-header-block { display: none; font-family: monospace; text-align: center; margin-bottom: 16px; }
   .print-header-block .ph-title { font-size: 15px; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase; }
   .print-header-block .ph-date { font-size: 10px; color: #666; margin-top: 3px; }
@@ -620,7 +214,6 @@
 </head>
 <body>
 
-<!-- PASSWORD SCREEN -->
 <div id="passwordScreen">
   <div class="pw-box">
     <div class="pw-logo">GRAIN <span>/ VM Log</span></div>
@@ -631,8 +224,7 @@
   </div>
 </div>
 
-<!-- Print header -->
-<div class="print-header-block" id="printHeaderBlock">
+<div class="print-header-block">
   <div class="ph-title" id="printTitle">GRAIN — VISION MIXER LOG</div>
   <div class="ph-date" id="printDate"></div>
 </div>
@@ -678,10 +270,15 @@
 
 <div class="shortcut-bar">
   <span class="shortcut-label">Stream Deck</span>
-  <button class="key-btn new-take" id="btn-new-take" id="btnNewTake"><span class="key-badge">7</span> Log Take</button>
+  <button class="key-btn new-take" id="btn-new-take"><span class="key-badge">7</span> Log Take</button>
   <button class="key-btn select-take" id="btn-select"><span class="key-badge">8</span> Mark Selected</button>
   <button class="key-btn false-start" id="btn-false"><span class="key-badge">9</span> False Start</button>
   <button class="key-btn new-artist" id="btn-new-artist"><span class="key-badge">0</span> New Artist</button>
+  <div class="shortcut-sep"></div>
+  <span class="shortcut-label" style="margin-right:0">Rate:</span>
+  <button class="key-btn rate-1" id="btn-rate-1"><span class="key-badge">1</span> Poor</button>
+  <button class="key-btn rate-2" id="btn-rate-2"><span class="key-badge">2</span> Good</button>
+  <button class="key-btn rate-3" id="btn-rate-3"><span class="key-badge">3</span> Great</button>
 </div>
 
 <div class="main">
@@ -700,14 +297,22 @@
       <input type="number" id="trackNumber" placeholder="e.g. 3" min="1" />
     </div>
     <div class="field-group">
-      <label>Sumo Video ID</label>
-      <input type="text" id="sumoId" placeholder="e.g. Video 039" />
+      <label>Tape #</label>
+      <input type="number" id="tapeNum" placeholder="e.g. 26" min="1" />
     </div>
     <div class="field-group">
       <label>Status</label>
       <div class="status-flags">
         <button class="flag-btn" id="selectedFlag">&#10003; Selected</button>
         <button class="flag-btn" id="falseFlag">&#10005; False Start</button>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Rating</label>
+      <div class="rating-group">
+        <button class="rating-btn" data-r="1" id="ratingBtn1">Poor</button>
+        <button class="rating-btn" data-r="2" id="ratingBtn2">Good</button>
+        <button class="rating-btn" data-r="3" id="ratingBtn3">Great</button>
       </div>
     </div>
     <div class="field-group">
@@ -735,7 +340,7 @@
         <thead>
           <tr>
             <th>Take</th><th>Track #</th><th>Artist</th><th>Song</th>
-            <th>Sumo ID</th><th>Time</th><th>Status</th><th>Notes</th><th></th>
+            <th>Tape #</th><th>Time</th><th>Rating</th><th>Status</th><th>Notes</th><th></th>
           </tr>
         </thead>
         <tbody id="logBody"></tbody>
@@ -754,22 +359,14 @@
 <script is:inline>
 (function() {
 
-  // ── CONFIG — edit these two values ──────────────────────────────────────────
   var SUPABASE_URL = 'https://cnvzalggkgvixbxqjlzn.supabase.co';
   var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNudnphbGdna2d2aXhieHFqbHpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwMzg4OTksImV4cCI6MjA4NzYxNDg5OX0.lbo9HpmsMQMNQwQk9xlna5bcAVr3XUDjx2CIqfJcmRk';
   var APP_PASSWORD = 'grain2026';
-  // ────────────────────────────────────────────────────────────────────────────
 
-  var sb = null;
-  var takes = [];
-  var allSessions = [];
-  var activeSession = null;
-  var currentTake = 1;
-  var selectedFlag = false;
-  var falseFlag = false;
+  var sb = null, takes = [], allSessions = [], activeSession = null;
+  var currentTake = 1, selectedFlag = false, falseFlag = false, currentRating = 0;
 
-  // ── PASSWORD ─────────────────────────────────────────────────────────────────
-
+  // PASSWORD
   function checkPassword() {
     var val = document.getElementById('pwInput').value;
     if (val === APP_PASSWORD) {
@@ -779,44 +376,27 @@
     } else {
       var inp = document.getElementById('pwInput');
       document.getElementById('pwError').textContent = 'Incorrect password';
-      inp.classList.add('error');
-      inp.value = '';
+      inp.classList.add('error'); inp.value = '';
       setTimeout(function() { inp.classList.remove('error'); }, 400);
     }
   }
-
   document.getElementById('pwBtn').addEventListener('click', checkPassword);
-  document.getElementById('pwInput').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') checkPassword();
-  });
-
-  // Check if already authenticated this session
+  document.getElementById('pwInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') checkPassword(); });
   if (sessionStorage.getItem('grain_auth') === '1') {
     document.getElementById('passwordScreen').style.display = 'none';
     startApp();
   }
 
-  // ── APP START ────────────────────────────────────────────────────────────────
-
+  // START
   function startApp() {
     loadSupabase(function() {
       try {
         sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        setDbStatus('connected');
-        loadSessions();
-      } catch(e) {
-        setDbStatus('error');
-        showToast('DB connection failed', 'red');
-      }
+        setDbStatus('connected'); loadSessions();
+      } catch(e) { setDbStatus('error'); showToast('DB connection failed', 'red'); }
     });
-
-    restoreFormState();
-    updateClock();
-    setInterval(updateClock, 1000);
-    bindEvents();
+    restoreFormState(); updateClock(); setInterval(updateClock, 1000); bindEvents();
   }
-
-  // ── LOAD SUPABASE DYNAMICALLY ────────────────────────────────────────────────
 
   function loadSupabase(cb) {
     if (window.supabase) { cb(); return; }
@@ -824,18 +404,16 @@
     s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
     s.onload = cb;
     s.onerror = function() {
-      // Try fallback CDN
       var s2 = document.createElement('script');
       s2.src = 'https://unpkg.com/@supabase/supabase-js@2';
       s2.onload = cb;
-      s2.onerror = function() { setDbStatus('error'); showToast('Could not load database library', 'red'); };
+      s2.onerror = function() { setDbStatus('error'); showToast('Could not load DB library', 'red'); };
       document.head.appendChild(s2);
     };
     document.head.appendChild(s);
   }
 
-  // ── BIND EVENTS ──────────────────────────────────────────────────────────────
-
+  // EVENTS
   function bindEvents() {
     document.getElementById('logBtn').addEventListener('click', logTake);
     document.getElementById('newArtistBtn').addEventListener('click', newArtist);
@@ -843,181 +421,175 @@
     document.getElementById('btn-select').addEventListener('click', toggleSelected);
     document.getElementById('btn-false').addEventListener('click', toggleFalseStart);
     document.getElementById('btn-new-artist').addEventListener('click', newArtist);
+    document.getElementById('btn-rate-1').addEventListener('click', function() { rateLastTake(1); });
+    document.getElementById('btn-rate-2').addEventListener('click', function() { rateLastTake(2); });
+    document.getElementById('btn-rate-3').addEventListener('click', function() { rateLastTake(3); });
     document.getElementById('selectedFlag').addEventListener('click', toggleSelectedFlag);
     document.getElementById('falseFlag').addEventListener('click', toggleFalseFlag);
+    document.getElementById('ratingBtn1').addEventListener('click', function() { setSidebarRating(1); });
+    document.getElementById('ratingBtn2').addEventListener('click', function() { setSidebarRating(2); });
+    document.getElementById('ratingBtn3').addEventListener('click', function() { setSidebarRating(3); });
     document.getElementById('printBtn').addEventListener('click', triggerPrint);
     document.getElementById('exportBtn').addEventListener('click', exportCSV);
-
     document.getElementById('artistName').addEventListener('input', function() { updateStatusBar(); saveFormState(); });
     document.getElementById('songTitle').addEventListener('input', function() { updateStatusBar(); saveFormState(); });
     document.getElementById('trackNumber').addEventListener('input', function() { updateStatusBar(); saveFormState(); });
-    document.getElementById('sumoId').addEventListener('input', saveFormState);
+    document.getElementById('tapeNum').addEventListener('input', saveFormState);
     document.getElementById('sessionName').addEventListener('input', saveFormState);
-
     document.addEventListener('keydown', function(e) {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
       if (e.key === '7') { e.preventDefault(); flashBtn('btn-new-take', 300); logTake(); }
       if (e.key === '8') { e.preventDefault(); toggleSelected(); }
       if (e.key === '9') { e.preventDefault(); toggleFalseStart(); }
       if (e.key === '0') { e.preventDefault(); newArtist(); }
+      if (e.key === '1') { e.preventDefault(); rateLastTake(1); }
+      if (e.key === '2') { e.preventDefault(); rateLastTake(2); }
+      if (e.key === '3') { e.preventDefault(); rateLastTake(3); }
     });
   }
 
-  // ── SESSIONS ─────────────────────────────────────────────────────────────────
+  // RATING
+  function setSidebarRating(r) {
+    currentRating = (currentRating === r) ? 0 : r;
+    updateRatingBtns();
+  }
 
+  function updateRatingBtns() {
+    [1,2,3].forEach(function(r) {
+      document.getElementById('ratingBtn' + r).classList.toggle('active', currentRating === r);
+      var sd = document.getElementById('btn-rate-' + r);
+      if (sd) sd.classList.toggle('active', currentRating === r);
+    });
+  }
+
+  function rateLastTake(r) {
+    flashBtn('btn-rate-' + r);
+    if (takes.length > 0) {
+      var last = takes[takes.length - 1];
+      var newRating = (last.rating === r) ? 0 : r;
+      updateTakeField(last.id, 'rating', newRating);
+      var labels = {1:'Poor',2:'Good',3:'Great'};
+      var colors = {1:'red',2:'amber',3:'green'};
+      showToast(newRating ? labels[newRating] + ' (' + newRating + '/3)' : 'Rating cleared', newRating ? colors[newRating] : 'amber');
+    }
+  }
+
+  function ratingDotsHtml(id, rating) {
+    var html = '<div class="rating-dots">';
+    for (var i = 1; i <= 3; i++) {
+      html += '<div class="rating-dot r' + i + (rating >= i ? ' filled' : '') + '" data-id="' + id + '" data-r="' + i + '"></div>';
+    }
+    return html + '</div>';
+  }
+
+  // SESSIONS
   async function loadSessions() {
     if (!sb) return;
     try {
-      var result = await sb.from('takes').select('session_name').order('created_at', { ascending: false });
-      if (result.error) throw result.error;
-      var seen = {};
-      allSessions = [];
-      result.data.forEach(function(r) {
-        if (r.session_name && !seen[r.session_name]) {
-          seen[r.session_name] = true;
-          allSessions.push(r.session_name);
-        }
-      });
+      var r = await sb.from('takes').select('session_name').order('created_at', { ascending: false });
+      if (r.error) throw r.error;
+      var seen = {}; allSessions = [];
+      r.data.forEach(function(x) { if (x.session_name && !seen[x.session_name]) { seen[x.session_name]=true; allSessions.push(x.session_name); } });
       renderSessionChips();
       var last = localStorage.getItem('grain_active_session');
-      if (last && allSessions.indexOf(last) > -1) {
-        loadSession(last);
-      } else if (allSessions.length > 0) {
-        loadSession(allSessions[0]);
-      } else {
-        renderLog();
-      }
-    } catch(e) {
-      showToast('Could not load sessions', 'red');
-      renderLog();
-    }
+      if (last && allSessions.indexOf(last) > -1) { loadSession(last); }
+      else if (allSessions.length > 0) { loadSession(allSessions[0]); }
+      else { renderLog(); }
+    } catch(e) { showToast('Could not load sessions', 'red'); renderLog(); }
   }
 
   function renderSessionChips() {
-    var container = document.getElementById('sessionList');
-    if (allSessions.length === 0) {
-      container.innerHTML = '<span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted)">No sessions yet</span>';
-      return;
-    }
-    container.innerHTML = allSessions.map(function(s) {
-      return '<button class="session-chip ' + (s === activeSession ? 'active' : '') + '" data-session="' + esc(s) + '">' + esc(s) + '</button>';
+    var c = document.getElementById('sessionList');
+    if (allSessions.length === 0) { c.innerHTML = '<span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted)">No sessions yet</span>'; return; }
+    c.innerHTML = allSessions.map(function(s) {
+      return '<button class="session-chip ' + (s===activeSession?'active':'') + '" data-session="' + esc(s) + '">' + esc(s) + '</button>';
     }).join('<span style="color:var(--border2)"> &middot; </span>');
-
-    container.querySelectorAll('.session-chip').forEach(function(btn) {
-      btn.addEventListener('click', function() { loadSession(this.getAttribute('data-session')); });
-    });
+    c.querySelectorAll('.session-chip').forEach(function(b) { b.addEventListener('click', function() { loadSession(this.getAttribute('data-session')); }); });
   }
 
-  async function loadSession(sessionName) {
+  async function loadSession(name) {
     if (!sb) return;
-    activeSession = sessionName;
-    localStorage.setItem('grain_active_session', sessionName);
-    document.getElementById('logTitle').textContent = 'Session: ' + sessionName;
+    activeSession = name;
+    localStorage.setItem('grain_active_session', name);
+    document.getElementById('logTitle').textContent = 'Session: ' + name;
     renderSessionChips();
     try {
-      var result = await sb.from('takes').select('*').eq('session_name', sessionName).order('created_at', { ascending: true });
-      if (result.error) throw result.error;
-      takes = result.data || [];
-      renderLog();
-    } catch(e) {
-      showToast('Could not load session', 'red');
-    }
+      var r = await sb.from('takes').select('*').eq('session_name', name).order('created_at', { ascending: true });
+      if (r.error) throw r.error;
+      takes = r.data || []; renderLog();
+    } catch(e) { showToast('Could not load session', 'red'); }
   }
 
-  // ── LOG TAKE ──────────────────────────────────────────────────────────────────
-
+  // LOG TAKE
   async function logTake() {
     var artist = document.getElementById('artistName').value.trim();
     if (!artist) {
       var inp = document.getElementById('artistName');
-      inp.focus();
-      inp.style.borderColor = 'var(--red)';
-      setTimeout(function() { inp.style.borderColor = ''; }, 1000);
-      showToast('Enter artist name first', 'red');
-      return;
+      inp.focus(); inp.style.borderColor = 'var(--red)';
+      setTimeout(function() { inp.style.borderColor=''; }, 1000);
+      showToast('Enter artist name first', 'red'); return;
     }
-
+    var tapeVal = document.getElementById('tapeNum').value.trim();
     var sessionName = document.getElementById('sessionName').value.trim() || 'Unnamed Session';
     var take = {
-      session_name: sessionName,
-      artist: artist,
+      session_name: sessionName, artist: artist,
       song: document.getElementById('songTitle').value.trim(),
       track_num: document.getElementById('trackNumber').value.trim(),
-      sumo_id: document.getElementById('sumoId').value.trim(),
-      take_num: currentTake,
+      sumo_id: tapeVal, take_num: currentTake,
       time_of_day: new Date().toTimeString().slice(0,8),
       notes: document.getElementById('notes').value.trim(),
-      selected: selectedFlag,
-      false_start: falseFlag
+      selected: selectedFlag, false_start: falseFlag,
+      rating: currentRating || null
     };
-
     setDbStatus('saving');
     document.getElementById('logBtn').disabled = true;
-
     try {
       if (sb) {
-        var result = await sb.from('takes').insert([take]).select().single();
-        if (result.error) throw result.error;
-        takes.push(result.data);
-        if (allSessions.indexOf(sessionName) === -1) {
-          allSessions.unshift(sessionName);
-        }
-        activeSession = sessionName;
-        renderSessionChips();
+        var r = await sb.from('takes').insert([take]).select().single();
+        if (r.error) throw r.error;
+        takes.push(r.data);
+        if (allSessions.indexOf(sessionName) === -1) allSessions.unshift(sessionName);
+        activeSession = sessionName; renderSessionChips();
         setDbStatus('connected');
         showToast('Take ' + currentTake + ' saved', selectedFlag ? 'green' : falseFlag ? 'red' : 'blue');
       } else {
         takes.push(Object.assign({}, take, { id: Date.now() }));
         showToast('Take ' + currentTake + ' logged (offline)', 'amber');
       }
-
       currentTake++;
       document.getElementById('statusTake').textContent = currentTake;
-      selectedFlag = false;
-      falseFlag = false;
-      updateFlagBtns();
+      // Auto-increment tape number
+      if (tapeVal && !isNaN(parseInt(tapeVal))) {
+        document.getElementById('tapeNum').value = parseInt(tapeVal) + 1;
+      }
+      selectedFlag = false; falseFlag = false; currentRating = 0;
+      updateFlagBtns(); updateRatingBtns();
       document.getElementById('notes').value = '';
-      renderLog();
-      saveFormState();
-
-    } catch(e) {
-      setDbStatus('error');
-      showToast('Save failed: ' + (e.message || 'unknown error'), 'red');
-    }
-
+      renderLog(); saveFormState();
+    } catch(e) { setDbStatus('error'); showToast('Save failed: ' + (e.message||'unknown'), 'red'); }
     document.getElementById('logBtn').disabled = false;
   }
 
   async function deleteTake(id) {
-    if (sb) {
-      var result = await sb.from('takes').delete().eq('id', id);
-      if (result.error) { showToast('Delete failed', 'red'); return; }
-    }
+    if (sb) { var r = await sb.from('takes').delete().eq('id', id); if (r.error) { showToast('Delete failed','red'); return; } }
     takes = takes.filter(function(t) { return t.id !== id; });
-    renderLog();
-    showToast('Take deleted', 'amber');
+    renderLog(); showToast('Take deleted', 'amber');
   }
 
   async function updateTakeField(id, field, value) {
-    var t = takes.find(function(t) { return t.id === id; });
+    var t = takes.find(function(t) { return t.id == id; });
     if (t) t[field] = value;
     renderLog();
-    if (sb) {
-      var update = {};
-      update[field] = value;
-      await sb.from('takes').update(update).eq('id', id);
-    }
+    if (sb) { var u = {}; u[field] = value; await sb.from('takes').update(u).eq('id', id); }
   }
 
-  // ── STREAM DECK ───────────────────────────────────────────────────────────────
-
+  // STREAM DECK
   function toggleSelected() {
     flashBtn('btn-select');
     if (takes.length > 0) {
-      var last = takes[takes.length - 1];
-      var newVal = !last.selected;
-      if (newVal) { last.false_start = false; updateTakeField(last.id, 'false_start', false); }
-      updateTakeField(last.id, 'selected', newVal);
+      var last = takes[takes.length-1], newVal = !last.selected;
+      if (newVal) { last.false_start=false; updateTakeField(last.id,'false_start',false); }
+      updateTakeField(last.id,'selected',newVal);
       showToast(newVal ? 'Take marked as SELECTED' : 'Take deselected', 'green');
     } else { toggleSelectedFlag(); }
   }
@@ -1025,69 +597,58 @@
   function toggleFalseStart() {
     flashBtn('btn-false');
     if (takes.length > 0) {
-      var last = takes[takes.length - 1];
-      var newVal = !last.false_start;
-      if (newVal) { last.selected = false; updateTakeField(last.id, 'selected', false); }
-      updateTakeField(last.id, 'false_start', newVal);
+      var last = takes[takes.length-1], newVal = !last.false_start;
+      if (newVal) { last.selected=false; updateTakeField(last.id,'selected',false); }
+      updateTakeField(last.id,'false_start',newVal);
       showToast(newVal ? 'Marked as FALSE START' : 'False start cleared', 'red');
     } else { toggleFalseFlag(); }
   }
 
   function newArtist() {
     flashBtn('btn-new-artist');
-    ['artistName','songTitle','trackNumber','sumoId','notes'].forEach(function(id) {
-      document.getElementById(id).value = '';
-    });
-    currentTake = 1;
-    selectedFlag = false;
-    falseFlag = false;
-    updateFlagBtns();
+    ['artistName','songTitle','trackNumber','notes'].forEach(function(id) { document.getElementById(id).value=''; });
+    currentTake=1; selectedFlag=false; falseFlag=false; currentRating=0;
+    updateFlagBtns(); updateRatingBtns();
     document.getElementById('statusTake').textContent = 1;
-    updateStatusBar();
-    document.getElementById('artistName').focus();
-    showToast('New artist — form cleared', 'amber');
-    saveFormState();
+    updateStatusBar(); document.getElementById('artistName').focus();
+    showToast('New artist — form cleared', 'amber'); saveFormState();
   }
 
-  // ── RENDER ────────────────────────────────────────────────────────────────────
-
+  // RENDER
   function renderLog() {
-    var tbody = document.getElementById('logBody');
-    var empty = document.getElementById('emptyState');
-    if (takes.length === 0) {
-      tbody.innerHTML = '';
-      empty.style.display = 'flex';
-      updateStats();
-      return;
-    }
+    var tbody = document.getElementById('logBody'), empty = document.getElementById('emptyState');
+    if (takes.length === 0) { tbody.innerHTML=''; empty.style.display='flex'; updateStats(); return; }
     empty.style.display = 'none';
-    var html = '';
-    var prevArtist = null;
+    var html = '', prevArtist = null;
     takes.forEach(function(t) {
       if (t.artist !== prevArtist) {
-        html += '<tr class="artist-divider"><td colspan="9">&#9658; ' + esc(t.artist) + '</td></tr>';
+        html += '<tr class="artist-divider"><td colspan="10">&#9658; ' + esc(t.artist) + '</td></tr>';
         prevArtist = t.artist;
       }
       var rowClass = t.selected ? 'is-selected' : t.false_start ? 'is-false-start' : '';
-      var badge = t.selected
-        ? '<span class="badge badge-selected">Selected</span>'
-        : t.false_start ? '<span class="badge badge-false">False Start</span>' : '';
+      var badge = t.selected ? '<span class="badge badge-selected">Selected</span>' : t.false_start ? '<span class="badge badge-false">False Start</span>' : '';
       html += '<tr class="' + rowClass + '">' +
-        '<td class="take-cell">' + (t.take_num || '') + '</td>' +
+        '<td class="take-cell">' + (t.take_num||'') + '</td>' +
         '<td class="track-cell">' + esc(t.track_num) + '</td>' +
         '<td class="artist-cell">' + esc(t.artist) + '</td>' +
         '<td>' + esc(t.song) + '</td>' +
-        '<td class="sumo-cell">' + esc(t.sumo_id) + '</td>' +
-        '<td class="time-cell">' + (t.time_of_day || '') + '</td>' +
+        '<td class="tape-cell">' + esc(t.sumo_id) + '</td>' +
+        '<td class="time-cell">' + (t.time_of_day||'') + '</td>' +
+        '<td class="rating-cell">' + ratingDotsHtml(t.id, t.rating||0) + '</td>' +
         '<td>' + badge + '</td>' +
         '<td class="notes-cell">' + esc(t.notes) + '</td>' +
         '<td><button class="delete-btn" data-id="' + t.id + '">&#10005;</button></td>' +
         '</tr>';
     });
     tbody.innerHTML = html;
-    tbody.querySelectorAll('.delete-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() { deleteTake(this.getAttribute('data-id')); });
+    tbody.querySelectorAll('.rating-dot').forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        var id = this.getAttribute('data-id'), r = parseInt(this.getAttribute('data-r'));
+        var t = takes.find(function(t) { return t.id == id; });
+        updateTakeField(id, 'rating', (t && t.rating===r) ? 0 : r);
+      });
     });
+    tbody.querySelectorAll('.delete-btn').forEach(function(b) { b.addEventListener('click', function() { deleteTake(this.getAttribute('data-id')); }); });
     updateStats();
     var scroll = document.querySelector('.log-scroll');
     if (scroll) scroll.scrollTop = scroll.scrollHeight;
@@ -1095,111 +656,68 @@
 
   function updateStats() {
     var artists = {};
-    takes.forEach(function(t) { if (t.artist) artists[t.artist] = true; });
+    takes.forEach(function(t) { if (t.artist) artists[t.artist]=true; });
     document.getElementById('statActs').textContent = Object.keys(artists).length;
     document.getElementById('statTakes').textContent = takes.length;
-    document.getElementById('statSelected').textContent = takes.filter(function(t) { return t.selected; }).length;
+    document.getElementById('statSelected').textContent = takes.filter(function(t){return t.selected;}).length;
   }
 
-  // ── EXPORT ────────────────────────────────────────────────────────────────────
-
+  // EXPORT
   function exportCSV() {
-    if (takes.length === 0) { showToast('No takes to export', 'amber'); return; }
-    var headers = ['Take','Track #','Artist','Song','Sumo ID','Time','Selected','False Start','Notes','Session'];
+    if (takes.length===0) { showToast('No takes to export','amber'); return; }
+    var headers = ['Take','Track #','Artist','Song','Tape #','Time','Rating','Selected','False Start','Notes','Session'];
     var rows = takes.map(function(t) {
-      return [t.take_num, t.track_num, t.artist, t.song, t.sumo_id, t.time_of_day,
-        t.selected ? 'YES' : '', t.false_start ? 'YES' : '', t.notes, t.session_name
-      ].map(function(v) { return '"' + (v||'').toString().replace(/"/g,'""') + '"'; }).join(',');
+      return [t.take_num,t.track_num,t.artist,t.song,t.sumo_id,t.time_of_day,
+        t.rating||'',t.selected?'YES':'',t.false_start?'YES':'',t.notes,t.session_name
+      ].map(function(v){return '"'+(v||'').toString().replace(/"/g,'""')+'"';}).join(',');
     });
     var csv = [headers.join(',')].concat(rows).join('\n');
-    var blob = new Blob([csv], { type: 'text/csv' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'grain-log-' + (activeSession || 'export') + '-' + new Date().toISOString().slice(0,10) + '.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('CSV exported', 'green');
+    var blob = new Blob([csv],{type:'text/csv'}), url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href=url; a.download='grain-log-'+(activeSession||'export')+'-'+new Date().toISOString().slice(0,10)+'.csv';
+    a.click(); URL.revokeObjectURL(url); showToast('CSV exported','green');
   }
 
-  // ── PRINT ─────────────────────────────────────────────────────────────────────
-
+  // PRINT
   function triggerPrint() {
     var session = document.getElementById('sessionName').value || activeSession || 'Session';
     document.getElementById('printTitle').textContent = 'GRAIN — ' + session.toUpperCase();
     document.getElementById('printDate').textContent =
-      new Date().toLocaleDateString('en-GB', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) +
+      new Date().toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric'}) +
       ' — printed ' + new Date().toTimeString().slice(0,5);
     window.print();
   }
 
-  // ── HELPERS ───────────────────────────────────────────────────────────────────
-
+  // HELPERS
   function updateStatusBar() {
-    document.getElementById('statusArtist').textContent = document.getElementById('artistName').value || '—';
-    document.getElementById('statusSong').textContent = document.getElementById('songTitle').value || '—';
-    document.getElementById('statusTrack').textContent = document.getElementById('trackNumber').value || '—';
+    document.getElementById('statusArtist').textContent = document.getElementById('artistName').value||'—';
+    document.getElementById('statusSong').textContent = document.getElementById('songTitle').value||'—';
+    document.getElementById('statusTrack').textContent = document.getElementById('trackNumber').value||'—';
   }
-
-  function updateClock() {
-    document.getElementById('clock').textContent = new Date().toTimeString().slice(0,8);
+  function updateClock() { document.getElementById('clock').textContent = new Date().toTimeString().slice(0,8); }
+  function setDbStatus(s) {
+    var el=document.getElementById('dbIndicator'), map={connected:['● LIVE','connected'],saving:['● SAVING','saving'],error:['● ERROR','error'],offline:['● OFFLINE','']};
+    var x=map[s]||map.offline; el.textContent=x[0]; el.className='db-indicator '+x[1];
   }
-
-  function setDbStatus(status) {
-    var el = document.getElementById('dbIndicator');
-    var map = { connected: ['● LIVE', 'connected'], saving: ['● SAVING', 'saving'], error: ['● ERROR', 'error'], offline: ['● OFFLINE', ''] };
-    var s = map[status] || map.offline;
-    el.textContent = s[0];
-    el.className = 'db-indicator ' + s[1];
-  }
-
-  function toggleSelectedFlag() {
-    selectedFlag = !selectedFlag;
-    if (selectedFlag) falseFlag = false;
-    updateFlagBtns();
-  }
-
-  function toggleFalseFlag() {
-    falseFlag = !falseFlag;
-    if (falseFlag) selectedFlag = false;
-    updateFlagBtns();
-  }
-
+  function toggleSelectedFlag() { selectedFlag=!selectedFlag; if(selectedFlag)falseFlag=false; updateFlagBtns(); }
+  function toggleFalseFlag() { falseFlag=!falseFlag; if(falseFlag)selectedFlag=false; updateFlagBtns(); }
   function updateFlagBtns() {
-    document.getElementById('selectedFlag').className = 'flag-btn' + (selectedFlag ? ' selected-active' : '');
-    document.getElementById('falseFlag').className = 'flag-btn' + (falseFlag ? ' false-active' : '');
+    document.getElementById('selectedFlag').className='flag-btn'+(selectedFlag?' selected-active':'');
+    document.getElementById('falseFlag').className='flag-btn'+(falseFlag?' false-active':'');
   }
-
-  function flashBtn(id, duration) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    el.classList.add('flash');
-    setTimeout(function() { el.classList.remove('flash'); }, duration || 200);
+  function flashBtn(id,dur) { var el=document.getElementById(id); if(!el)return; el.classList.add('flash'); setTimeout(function(){el.classList.remove('flash');},dur||200); }
+  function showToast(msg,type,dur) {
+    var t=document.getElementById('toast'); t.textContent=msg; t.className='toast show '+(type||'');
+    clearTimeout(t._timer); t._timer=setTimeout(function(){t.className='toast';},dur||2000);
   }
-
-  function showToast(msg, type, duration) {
-    var t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = 'toast show ' + (type || '');
-    clearTimeout(t._timer);
-    t._timer = setTimeout(function() { t.className = 'toast'; }, duration || 2000);
-  }
-
-  function esc(s) {
-    if (!s) return '';
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
+  function esc(s) { if(!s)return''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function saveFormState() {
-    ['artistName','songTitle','trackNumber','sumoId','sessionName'].forEach(function(id) {
-      localStorage.setItem('grain_form_' + id, document.getElementById(id).value);
+    ['artistName','songTitle','trackNumber','tapeNum','sessionName'].forEach(function(id) {
+      localStorage.setItem('grain_form_'+id, document.getElementById(id).value);
     });
   }
-
   function restoreFormState() {
-    ['artistName','songTitle','trackNumber','sumoId','sessionName'].forEach(function(id) {
-      var v = localStorage.getItem('grain_form_' + id);
-      if (v) document.getElementById(id).value = v;
+    ['artistName','songTitle','trackNumber','tapeNum','sessionName'].forEach(function(id) {
+      var v=localStorage.getItem('grain_form_'+id); if(v) document.getElementById(id).value=v;
     });
     updateStatusBar();
   }
