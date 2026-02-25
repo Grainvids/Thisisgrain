@@ -808,8 +808,8 @@
   // ─── SUPABASE CONFIG ────────────────────────────────────────────────────────
   // These are loaded from localStorage (set via the config overlay)
   // You can also hardcode them here if you prefer:
-  // const SUPABASE_URL = 'https://your-project.supabase.co';
-  // const SUPABASE_ANON_KEY = 'your-anon-key';
+const SUPABASE_URL = 'https://cnvzalggkgvixbxqjlzn.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNudnphbGdna2d2aXhieHFqbHpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwMzg4OTksImV4cCI6MjA4NzYxNDg5OX0.lbo9HpmsMQMNQwQk9xlna5bcAVr3XUDjx2CIqfJcmRk';
   // ────────────────────────────────────────────────────────────────────────────
 
   let supabaseClient = null;
@@ -823,8 +823,8 @@
   // ─── INIT ───────────────────────────────────────────────────────────────────
 
   async function init() {
-    const url = localStorage.getItem('grain_sb_url');
-    const key = localStorage.getItem('grain_sb_key');
+const url = SUPABASE_URL;
+const key = SUPABASE_ANON_KEY;
 
     if (url && key) {
       connectSupabase(url, key);
