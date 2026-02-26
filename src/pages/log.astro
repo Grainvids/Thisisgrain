@@ -670,7 +670,8 @@
       rowIndex++;
       var zebraBg = rowIndex % 2 === 0 ? '#0a0a0a' : '#202020';
       var rowClass = (t.selected ? 'is-selected' : t.false_start ? 'is-false-start' : '');
-      var rowStyle = (t.selected || t.false_start) ? '' : 'background:' + zebraBg + ';';
+      var baseColor = t.selected ? (rowIndex % 2 === 0 ? '#1a2a0a' : '#213510') : t.false_start ? (rowIndex % 2 === 0 ? '#2a0a0a' : '#320d0d') : zebraBg;
+      var rowStyle = 'background:' + baseColor + ';';
       var badge = t.selected ? '<span class="badge badge-selected">Selected</span>' : t.false_start ? '<span class="badge badge-false">False Start</span>' : '';
       var starStyle = t.starred ? 'background:none;border:none;font-size:20px;cursor:pointer;color:#f5a623;padding:2px 6px;line-height:1;display:block;filter:drop-shadow(0 0 4px rgba(245,166,35,0.7));' : 'background:none;border:none;font-size:20px;cursor:pointer;color:#555;padding:2px 6px;line-height:1;display:block;';
       html += '<tr class="' + rowClass + '" style="' + rowStyle + '">' +
