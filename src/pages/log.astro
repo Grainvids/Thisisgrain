@@ -139,11 +139,11 @@
   tbody tr.is-selected { background: var(--selected-bg); }
   tbody tr.is-false-start { background: var(--false-start-bg); opacity: 0.6; }
   tbody tr.is-selected:hover { background: #213010; }
-  tbody tr.zebra { background: #0e0e0e; }
+  tbody tr.zebra { background: #161616; }
   tbody tr.zebra:hover { background: var(--surface2); }
-  tbody tr.zebra.is-selected { background: #162208; }
+  tbody tr.zebra.is-selected { background: #1c2a0e; }
   tbody tr.zebra.is-selected:hover { background: #1a2a0a; }
-  tbody tr.zebra.is-false-start { background: #1e0808; }
+  tbody tr.zebra.is-false-start { background: #240a0a; }
   td { padding: 8px 12px; color: var(--text); vertical-align: middle; }
   td.take-cell { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--amber); width: 48px; }
   td.track-cell { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--blue); width: 64px; }
@@ -354,8 +354,8 @@
       <table>
         <thead>
           <tr>
-            <th>&#9733;</th><th>Take</th><th>Track #</th><th>Artist</th><th>Song</th>
-            <th>Tape #</th><th>Time</th><th>Rating</th><th>Status</th><th>Notes</th><th></th>
+            <th>Take</th><th>Track #</th><th>Artist</th><th>Song</th>
+            <th>Tape #</th><th>Time</th><th>Rating</th><th>Status</th><th>Notes</th><th>&#9733;</th><th></th>
           </tr>
         </thead>
         <tbody id="logBody"></tbody>
@@ -546,7 +546,17 @@
     try {
       var r = await sb.from('takes').select('*').eq('session_name', name).order('created_at', { ascending: true });
       if (r.error) throw r.error;
-      takes = r.data || []; renderLog();
+      takes = r.data || [];
+      // Restore currentTake counter from loaded data
+      if (takes.length > 0) {
+        var maxTake = takes.reduce(function(max, t) { return Math.max(max, t.take_num || 0); }, 0);
+        currentTake = maxTake + 1;
+        document.getElementById('statusTake').textContent = currentTake;
+      } else {
+        currentTake = 1;
+        document.getElementById('statusTake').textContent = 1;
+      }
+      renderLog();
     } catch(e) { showToast('Could not load session', 'red'); }
   }
 
@@ -664,7 +674,6 @@
       var badge = t.selected ? '<span class="badge badge-selected">Selected</span>' : t.false_start ? '<span class="badge badge-false">False Start</span>' : '';
       var starClass = t.starred ? 'star-btn starred' : 'star-btn';
       html += '<tr class="' + rowClass + '">' +
-        '<td class="star-cell"><button class="' + starClass + '" data-id="' + t.id + '" data-track="' + esc(t.track_num) + '">&#9733;</button></td>' +
         '<td class="take-cell">' + (t.take_num||'') + '</td>' +
         '<td class="track-cell">' + esc(t.track_num) + '</td>' +
         '<td class="artist-cell">' + esc(t.artist) + '</td>' +
@@ -674,6 +683,7 @@
         '<td class="rating-cell">' + ratingDotsHtml(t.id, t.rating||0) + '</td>' +
         '<td>' + badge + '</td>' +
         '<td class="notes-cell">' + esc(t.notes) + '</td>' +
+        '<td class="star-cell"><button class="' + starClass + '" data-id="' + t.id + '" data-track="' + esc(t.track_num) + '">&#9733;</button></td>' +
         '<td><button class="delete-btn" data-id="' + t.id + '">&#10005;</button></td>' +
         '</tr>';
     });
