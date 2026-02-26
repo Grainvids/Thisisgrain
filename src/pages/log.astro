@@ -139,6 +139,11 @@
   tbody tr.is-selected { background: var(--selected-bg); }
   tbody tr.is-false-start { background: var(--false-start-bg); opacity: 0.6; }
   tbody tr.is-selected:hover { background: #213010; }
+  tbody tr.zebra { background: #0e0e0e; }
+  tbody tr.zebra:hover { background: var(--surface2); }
+  tbody tr.zebra.is-selected { background: #162208; }
+  tbody tr.zebra.is-selected:hover { background: #1a2a0a; }
+  tbody tr.zebra.is-false-start { background: #1e0808; }
   td { padding: 8px 12px; color: var(--text); vertical-align: middle; }
   td.take-cell { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--amber); width: 48px; }
   td.track-cell { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--blue); width: 64px; }
@@ -147,6 +152,10 @@
   td.time-cell { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); white-space: nowrap; }
   td.notes-cell { font-size: 11px; color: var(--text-dim); max-width: 160px; }
   td.rating-cell { width: 72px; }
+  td.star-cell { width: 36px; text-align: center; }
+  .star-btn { background: none; border: none; font-size: 18px; cursor: pointer; color: var(--border2); transition: all 0.15s; padding: 2px 4px; line-height: 1; }
+  .star-btn:hover { color: var(--yellow); transform: scale(1.2); }
+  .star-btn.starred { color: var(--yellow); text-shadow: 0 0 6px rgba(251,191,36,0.5); }
 
   .rating-dots { display: flex; gap: 5px; align-items: center; }
   .rating-dot { width: 11px; height: 11px; border-radius: 50%; border: 1px solid var(--border2); cursor: pointer; transition: all 0.15s; flex-shrink: 0; }
@@ -345,7 +354,7 @@
       <table>
         <thead>
           <tr>
-            <th>Take</th><th>Track #</th><th>Artist</th><th>Song</th>
+            <th>&#9733;</th><th>Take</th><th>Track #</th><th>Artist</th><th>Song</th>
             <th>Tape #</th><th>Time</th><th>Rating</th><th>Status</th><th>Notes</th><th></th>
           </tr>
         </thead>
@@ -560,7 +569,8 @@
       time_of_day: new Date().toTimeString().slice(0,8),
       notes: document.getElementById('notes').value.trim(),
       selected: selectedFlag, false_start: falseFlag,
-      rating: currentRating || null
+      rating: currentRating || null,
+      starred: false
     };
     setDbStatus('saving');
     document.getElementById('logBtn').disabled = true;
@@ -641,14 +651,20 @@
     if (takes.length === 0) { tbody.innerHTML=''; empty.style.display='flex'; updateStats(); return; }
     empty.style.display = 'none';
     var html = '', prevArtist = null;
+    var rowIndex = 0;
     takes.forEach(function(t) {
       if (t.artist !== prevArtist) {
-        html += '<tr class="artist-divider"><td colspan="10">&#9658; ' + esc(t.artist) + '</td></tr>';
+        html += '<tr class="artist-divider"><td colspan="11">&#9658; ' + esc(t.artist) + '</td></tr>';
         prevArtist = t.artist;
+        rowIndex = 0;
       }
-      var rowClass = t.selected ? 'is-selected' : t.false_start ? 'is-false-start' : '';
+      rowIndex++;
+      var zebraClass = rowIndex % 2 === 1 ? ' zebra' : '';
+      var rowClass = (t.selected ? 'is-selected' : t.false_start ? 'is-false-start' : '') + zebraClass;
       var badge = t.selected ? '<span class="badge badge-selected">Selected</span>' : t.false_start ? '<span class="badge badge-false">False Start</span>' : '';
+      var starClass = t.starred ? 'star-btn starred' : 'star-btn';
       html += '<tr class="' + rowClass + '">' +
+        '<td class="star-cell"><button class="' + starClass + '" data-id="' + t.id + '" data-track="' + esc(t.track_num) + '">&#9733;</button></td>' +
         '<td class="take-cell">' + (t.take_num||'') + '</td>' +
         '<td class="track-cell">' + esc(t.track_num) + '</td>' +
         '<td class="artist-cell">' + esc(t.artist) + '</td>' +
@@ -662,6 +678,24 @@
         '</tr>';
     });
     tbody.innerHTML = html;
+    tbody.querySelectorAll('.star-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var id = this.getAttribute('data-id');
+        var track = this.getAttribute('data-track');
+        var t = takes.find(function(t) { return t.id == id; });
+        var newVal = t ? !t.starred : true;
+        // If starring, unstar all other takes with same track_num
+        if (newVal) {
+          takes.forEach(function(other) {
+            if (other.id != id && other.track_num == track && other.starred) {
+              updateTakeField(other.id, 'starred', false);
+            }
+          });
+        }
+        updateTakeField(id, 'starred', newVal);
+        showToast(newVal ? '&#9733; Take starred' : 'Star removed', 'amber');
+      });
+    });
     tbody.querySelectorAll('.rating-dot').forEach(function(dot) {
       dot.addEventListener('click', function() {
         var id = this.getAttribute('data-id'), r = parseInt(this.getAttribute('data-r'));
@@ -728,9 +762,9 @@
   // EXPORT
   function exportCSV() {
     if (takes.length===0) { showToast('No takes to export','amber'); return; }
-    var headers = ['Take','Track #','Artist','Song','Tape #','Time','Rating','Selected','False Start','Notes','Session'];
+    var headers = ['Star','Take','Track #','Artist','Song','Tape #','Time','Rating','Selected','False Start','Notes','Session'];
     var rows = takes.map(function(t) {
-      return [t.take_num,t.track_num,t.artist,t.song,t.sumo_id,t.time_of_day,
+      return [t.starred?'★':'',t.take_num,t.track_num,t.artist,t.song,t.sumo_id,t.time_of_day,
         t.rating||'',t.selected?'YES':'',t.false_start?'YES':'',t.notes,t.session_name
       ].map(function(v){return '"'+(v||'').toString().replace(/"/g,'""')+'"';}).join(',');
     });
