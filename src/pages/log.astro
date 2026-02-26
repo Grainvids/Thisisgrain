@@ -134,13 +134,13 @@
   .log-scroll { flex: 1; overflow-y: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 12px; }
   thead th { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); background: var(--surface); position: sticky; top: 0; z-index: 10; white-space: nowrap; }
-  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; background: #0a0a0a; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; background: #0a0a0a !important; }
   tbody tr:hover { background: var(--surface2); }
   tbody tr.is-selected { background: var(--selected-bg); }
   tbody tr.is-false-start { background: var(--false-start-bg); opacity: 0.6; }
   tbody tr.is-selected:hover { background: #213010; }
-  tbody tr.zebra { background: #1a1a1a; }
-  tbody tr.zebra:hover { background: var(--surface2); }
+  tbody tr.zebra { background: #222222 !important; }
+  tbody tr.zebra:hover { background: #2a2a2a !important; }
   tbody tr.zebra.is-selected { background: #1c2a0e; }
   tbody tr.zebra.is-selected:hover { background: #1a2a0a; }
   tbody tr.zebra.is-false-start { background: #240a0a; }
@@ -153,9 +153,9 @@
   td.notes-cell { font-size: 11px; color: var(--text-dim); max-width: 160px; }
   td.rating-cell { width: 72px; }
   td.star-cell { width: 36px; text-align: center; }
-  .star-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #444; transition: all 0.15s; padding: 2px 6px; line-height: 1; display: block; }
-  .star-btn:hover { color: var(--amber); transform: scale(1.2); }
-  .star-btn.starred { color: var(--amber); filter: drop-shadow(0 0 4px rgba(245,166,35,0.6)); }
+  .star-btn { background: none !important; border: none !important; font-size: 20px; cursor: pointer; color: #555 !important; transition: all 0.15s; padding: 2px 6px; line-height: 1; display: block; }
+  .star-btn:hover { color: #f5a623 !important; transform: scale(1.2); }
+  .star-btn.starred { color: #f5a623 !important; filter: drop-shadow(0 0 4px rgba(245,166,35,0.8)); }
 
   .rating-dots { display: flex; gap: 6px; align-items: center; }
   .rating-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #444; cursor: pointer; transition: all 0.15s; flex-shrink: 0; background: #1a1a1a; }
@@ -502,14 +502,13 @@
     }
   }
 
-  function ratingDotsHtml(id, rating) {
-    var r = rating || 0;
-    var html = '<div class="rating-dots">';
-    html += '<div class="rating-dot r1' + (r >= 1 ? ' filled' : '') + '" data-id="' + id + '" data-r="1">&nbsp;</div>';
-    html += '<div class="rating-dot r2' + (r >= 2 ? ' filled' : '') + '" data-id="' + id + '" data-r="2">&nbsp;</div>';
-    html += '<div class="rating-dot r3' + (r >= 3 ? ' filled' : '') + '" data-id="' + id + '" data-r="3">&nbsp;</div>';
-    html += '</div>';
-    return html;
+  function ratingHtml(id, rating) {
+    var labels = {1:'Poor', 2:'Good', 3:'Great'};
+    var colors = {1:'var(--red)', 2:'var(--amber)', 3:'var(--green)'};
+    if (!rating) {
+      return '<span class="rating-empty" data-id="' + id + '" style="font-family:var(--font-mono);font-size:10px;color:#444;cursor:pointer;" title="Click to rate">—</span>';
+    }
+    return '<span class="rating-word" data-id="' + id + '" style="font-family:var(--font-mono);font-size:11px;font-weight:600;color:' + colors[rating] + ';cursor:pointer;letter-spacing:0.05em;" title="Click to clear rating">' + labels[rating] + '</span>';
   }
 
   // SESSIONS
@@ -680,7 +679,7 @@
         '<td>' + esc(t.song) + '</td>' +
         '<td class="tape-cell">' + esc(t.sumo_id) + '</td>' +
         '<td class="time-cell">' + (t.time_of_day||'') + '</td>' +
-        '<td class="rating-cell">' + ratingDotsHtml(t.id, t.rating||0) + '</td>' +
+        '<td class="rating-cell">' + ratingHtml(t.id, t.rating||0) + '</td>' +
         '<td>' + badge + '</td>' +
         '<td class="notes-cell">' + esc(t.notes) + '</td>' +
         '<td class="star-cell"><button class="' + starClass + '" data-id="' + t.id + '" data-track="' + esc(t.track_num) + '">&#9733;</button></td>' +
@@ -710,11 +709,17 @@
         showToast(newVal ? '&#9733; Starred!' : 'Star removed', 'amber');
       });
     });
-    tbody.querySelectorAll('.rating-dot').forEach(function(dot) {
-      dot.addEventListener('click', function() {
-        var id = this.getAttribute('data-id'), r = parseInt(this.getAttribute('data-r'));
-        var t = takes.find(function(t) { return t.id == id; });
-        updateTakeField(id, 'rating', (t && t.rating===r) ? 0 : r);
+    tbody.querySelectorAll('.rating-word, .rating-empty').forEach(function(el) {
+      el.addEventListener('click', function() {
+        var id = this.getAttribute('data-id');
+        var t = takes.find(function(t) { return String(t.id) === String(id); });
+        if (!t) return;
+        // Clicking existing rating clears it; clicking dash cycles through 1->2->3->0
+        var cur = t.rating || 0;
+        var next = cur >= 3 ? 0 : cur + 1;
+        updateTakeField(id, 'rating', next || null);
+        var labels = {1:'Poor', 2:'Good', 3:'Great'};
+        showToast(next ? labels[next] : 'Rating cleared', next===1?'red':next===2?'amber':next===3?'green':'amber');
       });
     });
     tbody.querySelectorAll('.delete-btn').forEach(function(b) { b.addEventListener('click', function() { deleteTake(this.getAttribute('data-id')); }); });
