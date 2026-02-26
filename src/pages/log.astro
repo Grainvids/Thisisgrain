@@ -134,12 +134,12 @@
   .log-scroll { flex: 1; overflow-y: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 12px; }
   thead th { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); background: var(--surface); position: sticky; top: 0; z-index: 10; white-space: nowrap; }
-  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; background: #0a0a0a; }
   tbody tr:hover { background: var(--surface2); }
   tbody tr.is-selected { background: var(--selected-bg); }
   tbody tr.is-false-start { background: var(--false-start-bg); opacity: 0.6; }
   tbody tr.is-selected:hover { background: #213010; }
-  tbody tr.zebra { background: #161616; }
+  tbody tr.zebra { background: #1a1a1a; }
   tbody tr.zebra:hover { background: var(--surface2); }
   tbody tr.zebra.is-selected { background: #1c2a0e; }
   tbody tr.zebra.is-selected:hover { background: #1a2a0a; }
@@ -153,12 +153,12 @@
   td.notes-cell { font-size: 11px; color: var(--text-dim); max-width: 160px; }
   td.rating-cell { width: 72px; }
   td.star-cell { width: 36px; text-align: center; }
-  .star-btn { background: none; border: none; font-size: 18px; cursor: pointer; color: var(--border2); transition: all 0.15s; padding: 2px 4px; line-height: 1; }
-  .star-btn:hover { color: var(--yellow); transform: scale(1.2); }
-  .star-btn.starred { color: var(--yellow); text-shadow: 0 0 6px rgba(251,191,36,0.5); }
+  .star-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #444; transition: all 0.15s; padding: 2px 6px; line-height: 1; display: block; }
+  .star-btn:hover { color: var(--amber); transform: scale(1.2); }
+  .star-btn.starred { color: var(--amber); filter: drop-shadow(0 0 4px rgba(245,166,35,0.6)); }
 
-  .rating-dots { display: flex; gap: 5px; align-items: center; }
-  .rating-dot { width: 11px; height: 11px; border-radius: 50%; border: 1px solid var(--border2); cursor: pointer; transition: all 0.15s; flex-shrink: 0; }
+  .rating-dots { display: flex; gap: 6px; align-items: center; }
+  .rating-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #444; cursor: pointer; transition: all 0.15s; flex-shrink: 0; background: #1a1a1a; }
   .rating-dot:hover { transform: scale(1.3); border-color: var(--text-dim); }
   .rating-dot.r1.filled { background: var(--red); border-color: var(--red); box-shadow: 0 0 4px rgba(248,113,113,0.4); }
   .rating-dot.r2.filled { background: var(--amber); border-color: var(--amber); box-shadow: 0 0 4px rgba(245,166,35,0.4); }
@@ -692,18 +692,22 @@
       btn.addEventListener('click', function() {
         var id = this.getAttribute('data-id');
         var track = this.getAttribute('data-track');
-        var t = takes.find(function(t) { return t.id == id; });
-        var newVal = t ? !t.starred : true;
-        // If starring, unstar all other takes with same track_num
+        var t = takes.find(function(t) { return String(t.id) === String(id); });
+        if (!t) return;
+        var newVal = !t.starred;
+        // If starring, first unstar all other takes with same track_num
         if (newVal) {
           takes.forEach(function(other) {
-            if (other.id != id && other.track_num == track && other.starred) {
-              updateTakeField(other.id, 'starred', false);
+            if (String(other.id) !== String(id) && String(other.track_num) === String(track) && other.starred) {
+              other.starred = false;
+              if (sb) { sb.from('takes').update({ starred: false }).eq('id', other.id); }
             }
           });
         }
-        updateTakeField(id, 'starred', newVal);
-        showToast(newVal ? '&#9733; Take starred' : 'Star removed', 'amber');
+        t.starred = newVal;
+        if (sb) { sb.from('takes').update({ starred: newVal }).eq('id', id); }
+        renderLog();
+        showToast(newVal ? '&#9733; Starred!' : 'Star removed', 'amber');
       });
     });
     tbody.querySelectorAll('.rating-dot').forEach(function(dot) {
