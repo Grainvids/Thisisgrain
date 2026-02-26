@@ -668,11 +668,12 @@
         rowIndex = 0;
       }
       rowIndex++;
-      var zebraClass = rowIndex % 2 === 1 ? ' zebra' : '';
-      var rowClass = (t.selected ? 'is-selected' : t.false_start ? 'is-false-start' : '') + zebraClass;
+      var zebraBg = rowIndex % 2 === 0 ? '#0a0a0a' : '#202020';
+      var rowClass = (t.selected ? 'is-selected' : t.false_start ? 'is-false-start' : '');
+      var rowStyle = (t.selected || t.false_start) ? '' : 'background:' + zebraBg + ';';
       var badge = t.selected ? '<span class="badge badge-selected">Selected</span>' : t.false_start ? '<span class="badge badge-false">False Start</span>' : '';
-      var starClass = t.starred ? 'star-btn starred' : 'star-btn';
-      html += '<tr class="' + rowClass + '">' +
+      var starStyle = t.starred ? 'background:none;border:none;font-size:20px;cursor:pointer;color:#f5a623;padding:2px 6px;line-height:1;display:block;filter:drop-shadow(0 0 4px rgba(245,166,35,0.7));' : 'background:none;border:none;font-size:20px;cursor:pointer;color:#555;padding:2px 6px;line-height:1;display:block;';
+      html += '<tr class="' + rowClass + '" style="' + rowStyle + '">' +
         '<td class="take-cell">' + (t.take_num||'') + '</td>' +
         '<td class="track-cell">' + esc(t.track_num) + '</td>' +
         '<td class="artist-cell">' + esc(t.artist) + '</td>' +
@@ -682,7 +683,7 @@
         '<td class="rating-cell">' + ratingHtml(t.id, t.rating||0) + '</td>' +
         '<td>' + badge + '</td>' +
         '<td class="notes-cell">' + esc(t.notes) + '</td>' +
-        '<td class="star-cell"><button class="' + starClass + '" data-id="' + t.id + '" data-track="' + esc(t.track_num) + '">&#9733;</button></td>' +
+        '<td style="width:36px;text-align:center;"><button class="star-btn" style="' + starStyle + '" data-id="' + t.id + '" data-track="' + esc(t.track_num) + '">&#9733;</button></td>' +
         '<td><button class="delete-btn" data-id="' + t.id + '">&#10005;</button></td>' +
         '</tr>';
     });
